@@ -56,7 +56,28 @@
                 <h2 class="text-lg font-bold gold mb-4">הוספת בושם חדש</h2>
                 <div class="grid grid-cols-2 gap-3 mb-3">
                     <div><label>שם הבושם *</label><input type="text" id="add-name" placeholder="Jean Lowe Verde Aura"></div>
-                    <div><label>מותג *</label><input type="text" id="add-brand" placeholder="Maison Alhambra"></div>
+                    <div><label>מותג *</label>
+                        <select id="add-brand">
+                            <option value="">בחר מותג...</option>
+                            <option value="Afnan">Afnan</option>
+                            <option value="Zimaya">Zimaya</option>
+                            <option value="French Avenue">French Avenue</option>
+                            <option value="Lattafa">Lattafa</option>
+                            <option value="Rasasi">Rasasi</option>
+                            <option value="Ibraq">Ibraq</option>
+                            <option value="Laverne">Laverne</option>
+                            <option value="Gulf Orchid">Gulf Orchid</option>
+                            <option value="Volare">Volare</option>
+                            <option value="Reef">Reef</option>
+                            <option value="Lavender">Lavender</option>
+                            <option value="Al Ezz">Al Ezz</option>
+                            <option value="Maison Asrar">Maison Asrar</option>
+                            <option value="Maison Alhambra">Maison Alhambra</option>
+                            <option value="Fragrance World">Fragrance World</option>
+                            <option value="ARMAF">ARMAF</option>
+                            <option value="SHAMS Perfumes">SHAMS Perfumes</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="grid grid-cols-2 gap-3 mb-3">
                     <div><label>מחיר (₪) *</label><input type="number" id="add-price" placeholder="139"></div>
@@ -112,7 +133,28 @@
             <input type="hidden" id="edit-original-id">
             <div class="grid grid-cols-2 gap-3 mb-3">
                 <div><label>שם</label><input type="text" id="edit-name"></div>
-                <div><label>מותג</label><input type="text" id="edit-brand"></div>
+                <div><label>מותג</label>
+                        <select id="edit-brand">
+                            <option value="">בחר מותג...</option>
+                            <option value="Afnan">Afnan</option>
+                            <option value="Zimaya">Zimaya</option>
+                            <option value="French Avenue">French Avenue</option>
+                            <option value="Lattafa">Lattafa</option>
+                            <option value="Rasasi">Rasasi</option>
+                            <option value="Ibraq">Ibraq</option>
+                            <option value="Laverne">Laverne</option>
+                            <option value="Gulf Orchid">Gulf Orchid</option>
+                            <option value="Volare">Volare</option>
+                            <option value="Reef">Reef</option>
+                            <option value="Lavender">Lavender</option>
+                            <option value="Al Ezz">Al Ezz</option>
+                            <option value="Maison Asrar">Maison Asrar</option>
+                            <option value="Maison Alhambra">Maison Alhambra</option>
+                            <option value="Fragrance World">Fragrance World</option>
+                            <option value="ARMAF">ARMAF</option>
+                            <option value="SHAMS Perfumes">SHAMS Perfumes</option>
+                        </select>
+                    </div>
             </div>
             <div class="grid grid-cols-3 gap-3 mb-3">
                 <div><label>מחיר</label><input type="number" id="edit-price"></div>
@@ -160,7 +202,7 @@
     </div>
 
 <script>
-const GITHUB_TOKEN = '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';
+const GITHUB_TOKEN = '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';
 const GITHUB_REPO = 'Lucaaa154/Lion-perfumes';
 const FILE_PATH = 'index.html';
 let allPerfumes = [];
