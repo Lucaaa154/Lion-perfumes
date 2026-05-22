@@ -276,6 +276,7 @@ async function getFile() {
         headers: { 'Authorization': 'token ' + GITHUB_TOKEN }
     });
     const data = await res.json();
+    if (!data.content) throw new Error('GitHub API error: ' + JSON.stringify(data));
     currentFileSha = data.sha;
     currentFileContent = decodeURIComponent(escape(atob(data.content.replace(/\n/g, ''))));
     return currentFileContent;
