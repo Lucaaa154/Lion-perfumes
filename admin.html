@@ -215,13 +215,18 @@ async function handleUpload(event, prefix) {
 }
 
 async function uploadImageToGithub(data, fileName) {
-    const res = await fetch('https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + fileName, {
-        method: 'PUT',
-        headers: { 'Authorization': 'token ' + GITHUB_TOKEN, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: 'Add image', content: data })
+    const formData = new FormData();
+    const blob = await fetch('data:image/jpeg;base64,' + data).then(r => r.blob());
+    formData.append('file', blob);
+    formData.append('upload_preset', 'lion-perfumes');
+    formData.append('cloud_name', 'dtsxyswbl');
+    const res = await fetch('https://api.cloudinary.com/v1_1/dtsxyswbl/image/upload', {
+        method: 'POST',
+        body: formData
     });
     const json = await res.json();
-    return json.content.download_url;
+    if (!json.secure_url) throw new Error('Cloudinary upload failed');
+    return json.secure_url;
 }
 
 async function getFile() {
