@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lion Perfumes - Admin Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #0a0a0a; color: #ffffff; font-family: 'Heebo', sans-serif; }
+        .gold { color: #D4AF37; }
+        .gold-border { border: 1px solid #D4AF37; }
+        .gold-bg { background: linear-gradient(135deg, #D4AF37 0%, #B8960C 100%); }
+        .dark-card { background: #1a1a1a; border: 1px solid #2a2a2a; }
+        input, select, textarea { background: #1a1a1a !important; border: 1px solid #3a3a3a !important; color: white !important; border-radius: 8px; padding: 10px 14px; width: 100%; font-family: 'Heebo', sans-serif; font-size: 14px; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: #D4AF37 !important; }
+        select option { background: #1a1a1a; }
+        .status-box { border-radius: 10px; padding: 14px; margin-top: 16px; font-size: 14px; }
+        .status-success { background: #0f2a1a; border: 1px solid #2a6a3a; color: #4ade80; }
+        .status-error { background: #2a0f0f; border: 1px solid #6a2a2a; color: #f87171; }
+        .status-loading { background: #1a1a2a; border: 1px solid #2a2a6a; color: #93c5fd; }
+        .img-row { display: flex; gap: 8px; margin-bottom: 8px; }
+        .img-row input { flex: 1; }
+        .remove-btn { background: #2a0f0f; border: 1px solid #6a2a2a; color: #f87171; border-radius: 8px; padding: 0 12px; cursor: pointer; font-size: 18px; flex-shrink: 0; }
+        label { display: block; color: #D4AF37; font-size: 13px; font-weight: 500; margin-bottom: 5px; }
+        .upload-area { border: 2px dashed #3a3a3a; border-radius: 10px; padding: 20px; text-align: center; cursor: pointer; transition: all 0.2s; }
+        .upload-area:hover { border-color: #D4AF37; background: #1a1a1a; }
+        .img-preview { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; border: 1px solid #D4AF37; }
+    </style>
+</head>
+<body class="min-h-screen p-4">
+
+    <!-- Header -->
+    <div class="text-center mb-6 pt-4">
+        <h1 class="text-2xl font-bold gold">🦁 LION PERFUMES</h1>
+        <p class="text-gray-400 text-sm mt-1">פאנל ניהול - הוספת בושם חדש</p>
+    </div>
+
+    <div class="max-w-lg mx-auto">
+        <div class="dark-card rounded-2xl p-5">
+
+            <!-- Name & Brand -->
+            <div class="grid grid-cols-2 gap-3 mb-4">
+                <div>
+                    <label>שם הבושם *</label>
+                    <input type="text" id="name" placeholder="Jean Lowe Verde Aura">
+                </div>
+                <div>
+                    <label>מותג *</label>
+                    <input type="text" id="brand" placeholder="Maison Alhambra">
+                </div>
+            </div>
+
+            <!-- Price, Size, ID -->
+            <div class="grid grid-cols-3 gap-3 mb-4">
+                <div>
+                    <label>מחיר (₪) *</label>
+                    <input type="number" id="price" placeholder="139">
+                </div>
+                <div>
+                    <label>גודל</label>
+                    <input type="text" id="size" placeholder="100ml" value="100ml">
+                </div>
+                <div>
+                    <label>ID</label>
+                    <input type="number" id="perfume-id" placeholder="102" value="102">
+                </div>
+            </div>
+
+            <!-- Season & Gender -->
+            <div class="grid grid-cols-2 gap-3 mb-4">
+                <div>
+                    <label>עונה</label>
+                    <select id="season">
+                        <option value="summer">☀️ קיץ</option>
+                        <option value="winter">❄️ חורף</option>
+                        <option value="joker" selected>🃏 ג'וקר</option>
+                    </select>
+                </div>
+                <div>
+                    <label>מגדר</label>
+                    <select id="gender">
+                        <option value="male">👨 גברים</option>
+                        <option value="female">👩 נשים</option>
+                        <option value="unisex">👥 יוניסקס</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Sold Out -->
+            <div class="flex items-center gap-3 mb-4 p-3 rounded-lg" style="background:#1a1a1a; border:1px solid #2a2a2a;">
+                <input type="checkbox" id="soldout" style="width:18px; height:18px; accent-color:#D4AF37; flex-shrink:0;">
+                <label for="soldout" style="color:white; margin:0; cursor:pointer;">אזל מהמלאי</label>
+            </div>
+
+            <!-- Images -->
+            <div class="mb-4">
+                <label>תמונות (העלה או הכנס לינק)</label>
+                
+                <!-- Upload -->
+                <div class="upload-area mb-3" onclick="document.getElementById('img-upload').click()">
+                    <input type="file" id="img-upload" accept="image/*" multiple style="display:none" onchange="handleImageUpload(event)">
+                    <p class="text-gray-400 text-sm">📷 לחץ להעלאת תמונות מהטלפון</p>
+                    <p class="text-gray-600 text-xs mt-1">JPG, PNG עד 5MB</p>
+                </div>
+
+                <!-- Uploaded previews -->
+                <div id="img-previews" class="flex flex-wrap gap-2 mb-3"></div>
+
+                <!-- URL inputs -->
+                <div id="img-urls"></div>
+                <button onclick="addUrlField()" style="background:none; border:1px dashed #3a3a3a; color:#888; border-radius:8px; padding:8px; width:100%; cursor:pointer; font-size:13px;">+ הוסף לינק תמונה</button>
+            </div>
+
+            <!-- Description -->
+            <div class="mb-5">
+                <label>תיאור הבושם</label>
+                <textarea id="description" rows="5" placeholder="תיאור הבושם בעברית..."></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <button onclick="addPerfume()" class="gold-bg text-black font-bold py-4 px-6 rounded-xl w-full text-lg" style="cursor:pointer;">
+                🚀 הוסף בושם לאתר
+            </button>
+
+            <!-- Status -->
+            <div id="status" style="display:none;"></div>
+
+        </div>
+
+        <p class="text-center text-gray-600 text-xs mt-4 mb-8">Lion Perfumes Admin Panel v1.0</p>
+    </div>
+
+<script>
+const GITHUB_TOKEN = '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';
+const GITHUB_REPO = 'Lucaaa154/Lion-perfumes';
+const FILE_PATH = 'index.html';
+
+let uploadedImages = []; // base64 images to upload to github
+
+function showStatus(msg, type) {
+    const el = document.getElementById('status');
+    el.style.display = 'block';
+    el.className = 'status-box status-' + type;
+    el.innerHTML = msg;
+}
+
+function addUrlField() {
+    const container = document.getElementById('img-urls');
+    const row = document.createElement('div');
+    row.className = 'img-row';
+    row.innerHTML = `
+        <input type="text" placeholder="https://...תמונה">
+        <button class="remove-btn" onclick="this.parentElement.remove()">×</button>
+    `;
+    container.appendChild(row);
+}
+
+async function handleImageUpload(event) {
+    const files = Array.from(event.target.files);
+    const previews = document.getElementById('img-previews');
+    
+    for (const file of files) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const base64 = e.target.result;
+            const fileName = 'images/' + Date.now() + '_' + file.name.replace(/\s/g, '_');
+            uploadedImages.push({ base64, fileName, data: base64.split(',')[1] });
+            
+            const img = document.createElement('img');
+            img.src = base64;
+            img.className = 'img-preview';
+            img.title = file.name;
+            previews.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+async function uploadImageToGithub(imageData, fileName) {
+    const response = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${fileName}`, {
+        method: 'PUT',
+        headers: {
+            'Authorization': `token ${GITHUB_TOKEN}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            message: `Add image: ${fileName}`,
+            content: imageData,
+        })
+    });
+    const data = await response.json();
+    return data.content.download_url;
+}
+
+async function getFileContent() {
+    const response = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${FILE_PATH}`, {
+        headers: { 'Authorization': `token ${GITHUB_TOKEN}` }
+    });
+    return await response.json();
+}
+
+async function updateFileContent(content, sha) {
+    const encoded = btoa(unescape(encodeURIComponent(content)));
+    const response = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${FILE_PATH}`, {
+        method: 'PUT',
+        headers: {
+            'Authorization': `token ${GITHUB_TOKEN}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            message: `Add perfume: ${document.getElementById('name').value}`,
+            content: encoded,
+            sha: sha
+        })
+    });
+    return await response.json();
+}
+
+async function addPerfume() {
+    const name = document.getElementById('name').value.trim();
+    const brand = document.getElementById('brand').value.trim();
+    const price = document.getElementById('price').value.trim();
+    const size = document.getElementById('size').value.trim() || '100ml';
+    const id = document.getElementById('perfume-id').value.trim() || '102';
+    const season = document.getElementById('season').value;
+    const gender = document.getElementById('gender').value;
+    const soldOut = document.getElementById('soldout').checked;
+    const description = document.getElementById('description').value.trim();
+
+    if (!name || !brand || !price) {
+        showStatus('❌ נא למלא שם, מותג ומחיר', 'error');
+        return;
+    }
+
+    showStatus('⏳ מעלה תמונות...', 'loading');
+
+    // Collect image URLs
+    let imageUrls = [];
+
+    // Upload local images to GitHub
+    for (const img of uploadedImages) {
+        try {
+            const url = await uploadImageToGithub(img.data, img.fileName);
+            imageUrls.push(url);
+        } catch(e) {
+            showStatus('❌ שגיאה בהעלאת תמונה: ' + e.message, 'error');
+            return;
+        }
+    }
+
+    // Add URL inputs
+    const urlInputs = document.querySelectorAll('#img-urls input');
+    urlInputs.forEach(input => {
+        if (input.value.trim()) imageUrls.push(input.value.trim());
+    });
+
+    if (imageUrls.length === 0) {
+        showStatus('❌ נא להוסיף לפחות תמונה אחת', 'error');
+        return;
+    }
+
+    showStatus('⏳ מעדכן את קובץ האתר...', 'loading');
+
+    try {
+        // Get current file
+        const fileData = await getFileContent();
+        const currentContent = decodeURIComponent(escape(atob(fileData.content.replace(/\n/g, ''))));
+        const sha = fileData.sha;
+
+        // Build new perfume object
+        const imagesStr = imageUrls.map(url => `                    "${url}"`).join(',\n');
+        const soldOutStr = soldOut ? '\n                soldOut: true,' : '';
+        const descEscaped = description.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\n');
+        
+        const newPerfume = `            {
+                id: ${id},
+                name: "${name}",
+                brand: "${brand}",
+                price: ${price},
+                season: "${season}",
+                gender: "${gender}",${soldOutStr}
+                images: [
+${imagesStr}
+                ],
+                description: "${descEscaped}",
+                size: "${size}"
+            },`;
+
+        // Insert after "const perfumes = ["
+        const insertAfter = 'const perfumes = [';
+        const insertPos = currentContent.indexOf(insertAfter) + insertAfter.length;
+        
+        if (insertPos === insertAfter.length - 1) {
+            showStatus('❌ לא נמצא מיקום להכנסה בקובץ', 'error');
+            return;
+        }
+
+        const newContent = currentContent.slice(0, insertPos) + '\n' + newPerfume + currentContent.slice(insertPos);
+
+        // Push to GitHub
+        await updateFileContent(newContent, sha);
+
+        showStatus(`✅ הבושם <strong>${name}</strong> נוסף בהצלחה!<br><span style="font-size:12px; color:#86efac;">האתר יתעדכן תוך כ-30 שניות 🚀</span>`, 'success');
+
+        // Reset form
+        document.getElementById('name').value = '';
+        document.getElementById('brand').value = '';
+        document.getElementById('price').value = '';
+        document.getElementById('description').value = '';
+        document.getElementById('soldout').checked = false;
+        document.getElementById('img-previews').innerHTML = '';
+        document.getElementById('img-urls').innerHTML = '';
+        document.getElementById('perfume-id').value = parseInt(id) + 1;
+        uploadedImages = [];
+
+    } catch(e) {
+        showStatus('❌ שגיאה: ' + e.message, 'error');
+    }
+}
+</script>
+</body>
+</html>
