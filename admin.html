@@ -58,10 +58,9 @@
                     <div><label>שם הבושם *</label><input type="text" id="add-name" placeholder="Jean Lowe Verde Aura"></div>
                     <div><label>מותג *</label><input type="text" id="add-brand" placeholder="Maison Alhambra"></div>
                 </div>
-                <div class="grid grid-cols-3 gap-3 mb-3">
+                <div class="grid grid-cols-2 gap-3 mb-3">
                     <div><label>מחיר (₪) *</label><input type="number" id="add-price" placeholder="139"></div>
                     <div><label>גודל</label><input type="text" id="add-size" value="100ml"></div>
-                    <div><label>ID</label><input type="number" id="add-id" value="102"></div>
                 </div>
                 <div class="grid grid-cols-2 gap-3 mb-3">
                     <div><label>עונה</label>
@@ -161,7 +160,7 @@
     </div>
 
 <script>
-const GITHUB_TOKEN = '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';
+const GITHUB_TOKEN = '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';
 const GITHUB_REPO = 'Lucaaa154/Lion-perfumes';
 const FILE_PATH = 'index.html';
 let allPerfumes = [];
@@ -381,12 +380,14 @@ async function addPerfume() {
     const brand = document.getElementById('add-brand').value.trim();
     const price = document.getElementById('add-price').value.trim();
     const size = document.getElementById('add-size').value.trim() || '100ml';
-    const id = document.getElementById('add-id').value.trim() || '102';
+    const id = allPerfumes.length > 0 ? Math.max(...allPerfumes.map(p => p.id)) + 1 : 102;
     const season = document.getElementById('add-season').value;
     const gender = document.getElementById('add-gender').value;
     const soldOut = document.getElementById('add-soldout').checked;
     const desc = document.getElementById('add-desc').value.trim();
     if (!name || !brand || !price) { showStatus('add-status', 'נא למלא שם, מותג ומחיר', 'error'); return; }
+    // Load perfumes first if not loaded
+    if (allPerfumes.length === 0) { try { const h = await getFile(); allPerfumes = parsePerfumes(h); } catch(e) {} }
     showStatus('add-status', 'מעלה תמונות...', 'loading');
     let imageUrls = [];
     for (const img of (uploadedImages.add || [])) {
@@ -414,7 +415,7 @@ async function addPerfume() {
         document.getElementById('add-soldout').checked = false;
         document.getElementById('add-img-previews').innerHTML = '';
         document.getElementById('add-img-urls').innerHTML = '';
-        document.getElementById('add-id').value = parseInt(id) + 1;
+        
         uploadedImages.add = [];
     } catch(e) { showStatus('add-status', 'שגיאה: ' + e.message, 'error'); }
 }
