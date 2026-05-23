@@ -267,13 +267,17 @@ async function uploadImageToCloudinary(data) {
 }
 
 async function getFile() {
-    const res = await fetch('https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + FILE_PATH, {
-        headers: { 'Authorization': 'token ' + GITHUB_TOKEN }
+    const res = await fetch('https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + FILE_PATH + '?ref=main&_=' + Date.now(), {
+        headers: { 'Authorization': 'token ' + GITHUB_TOKEN, 'Accept': 'application/vnd.github.v3+json' }
     });
     const data = await res.json();
-    if (!data.content) throw new Error('GitHub error: ' + (data.message || 'Unknown'));
+    if (!data || !data.content) {
+        const errMsg = (data && data.message) ? data.message : 'No content returned';
+        throw new Error('GitHub API: ' + errMsg + ' (Status: ' + res.status + ')');
+    }
     currentFileSha = data.sha;
-    currentFileContent = decodeURIComponent(escape(atob(data.content.replace(/\n/g, ''))));
+    const cleanContent = (data.content || '').replace(/\n/g, '');
+    currentFileContent = decodeURIComponent(escape(atob(cleanContent)));
     return currentFileContent;
 }
 
