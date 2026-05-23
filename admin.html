@@ -38,28 +38,9 @@
     </style>
 </head>
 <body class="min-h-screen">
-
-<!-- LOGIN SCREEN -->
-<div id="login-screen" style="min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px;">
-    <div class="dark-card p-8 w-full max-w-sm text-center">
-        <h1 class="text-2xl font-bold gold mb-2">🦁 LION PERFUMES</h1>
-        <p class="text-gray-500 text-sm mb-6">פאנל ניהול</p>
-        <div class="mb-4 text-right">
-            <label>GitHub Token</label>
-            <input type="password" id="token-input" placeholder="ghp_..." />
-            <p class="text-gray-600 text-xs mt-2 text-right">הטוקן נשמר במכשיר שלך בלבד</p>
-        </div>
-        <button class="btn-gold" onclick="login()">כניסה</button>
-        <div id="login-error" style="display:none;" class="status-box status-error mt-3"></div>
-    </div>
-</div>
-
-<!-- MAIN APP -->
-<div id="main-app" style="display:none;">
-    <div class="text-center pt-6 pb-4 px-4 flex justify-between items-center px-4">
-        <button onclick="logout()" style="background:none;border:1px solid #3a3a3a;color:#888;border-radius:8px;padding:6px 12px;cursor:pointer;font-size:12px;font-family:'Heebo',sans-serif;">החלף טוקן</button>
-        <h1 class="text-xl font-bold gold">🦁 LION PERFUMES</h1>
-        <div style="width:80px;"></div>
+    <div class="text-center pt-6 pb-4 px-4">
+        <h1 class="text-2xl font-bold gold">🦁 LION PERFUMES</h1>
+        <p class="text-gray-500 text-sm mt-1">פאנל ניהול</p>
     </div>
 
     <div class="flex gap-2 px-4 mb-4 overflow-x-auto pb-1">
@@ -143,139 +124,91 @@
             <div id="perfumes-list"><div class="text-center text-gray-500 py-8">טוען...</div></div>
         </div>
     </div>
-</div>
 
-<!-- EDIT MODAL -->
-<div id="edit-modal" class="modal-overlay" style="display:none;">
-    <div class="modal">
-        <h2 class="text-lg font-bold gold mb-4">עריכת בושם</h2>
-        <input type="hidden" id="edit-original-id">
-        <div class="grid grid-cols-2 gap-3 mb-3">
-            <div><label>שם</label><input type="text" id="edit-name"></div>
-            <div><label>מותג</label>
-                <select id="edit-brand">
-                    <option value="">בחר מותג...</option>
-                    <option value="Afnan">Afnan</option>
-                    <option value="Zimaya">Zimaya</option>
-                    <option value="French Avenue">French Avenue</option>
-                    <option value="Lattafa">Lattafa</option>
-                    <option value="Rasasi">Rasasi</option>
-                    <option value="Ibraq">Ibraq</option>
-                    <option value="Laverne">Laverne</option>
-                    <option value="Gulf Orchid">Gulf Orchid</option>
-                    <option value="Volare">Volare</option>
-                    <option value="Reef">Reef</option>
-                    <option value="Lavender">Lavender</option>
-                    <option value="Al Ezz">Al Ezz</option>
-                    <option value="Maison Asrar">Maison Asrar</option>
-                    <option value="Maison Alhambra">Maison Alhambra</option>
-                    <option value="Fragrance World">Fragrance World</option>
-                    <option value="ARMAF">ARMAF</option>
-                    <option value="SHAMS Perfumes">SHAMS Perfumes</option>
-                </select>
+    <!-- EDIT MODAL -->
+    <div id="edit-modal" class="modal-overlay" style="display:none;">
+        <div class="modal">
+            <h2 class="text-lg font-bold gold mb-4">עריכת בושם</h2>
+            <input type="hidden" id="edit-original-id">
+            <div class="grid grid-cols-2 gap-3 mb-3">
+                <div><label>שם</label><input type="text" id="edit-name"></div>
+                <div><label>מותג</label>
+                    <select id="edit-brand">
+                        <option value="">בחר מותג...</option>
+                        <option value="Afnan">Afnan</option>
+                        <option value="Zimaya">Zimaya</option>
+                        <option value="French Avenue">French Avenue</option>
+                        <option value="Lattafa">Lattafa</option>
+                        <option value="Rasasi">Rasasi</option>
+                        <option value="Ibraq">Ibraq</option>
+                        <option value="Laverne">Laverne</option>
+                        <option value="Gulf Orchid">Gulf Orchid</option>
+                        <option value="Volare">Volare</option>
+                        <option value="Reef">Reef</option>
+                        <option value="Lavender">Lavender</option>
+                        <option value="Al Ezz">Al Ezz</option>
+                        <option value="Maison Asrar">Maison Asrar</option>
+                        <option value="Maison Alhambra">Maison Alhambra</option>
+                        <option value="Fragrance World">Fragrance World</option>
+                        <option value="ARMAF">ARMAF</option>
+                        <option value="SHAMS Perfumes">SHAMS Perfumes</option>
+                    </select>
+                </div>
             </div>
-        </div>
-        <div class="grid grid-cols-3 gap-3 mb-3">
-            <div><label>מחיר</label><input type="number" id="edit-price"></div>
-            <div><label>גודל</label><input type="text" id="edit-size"></div>
-            <div><label>ID</label><input type="number" id="edit-id"></div>
-        </div>
-        <div class="grid grid-cols-2 gap-3 mb-3">
-            <div><label>עונה</label>
-                <select id="edit-season">
-                    <option value="summer">קיץ</option>
-                    <option value="winter">חורף</option>
-                    <option value="joker">ג'וקר</option>
-                </select>
+            <div class="grid grid-cols-3 gap-3 mb-3">
+                <div><label>מחיר</label><input type="number" id="edit-price"></div>
+                <div><label>גודל</label><input type="text" id="edit-size"></div>
+                <div><label>ID</label><input type="number" id="edit-id"></div>
             </div>
-            <div><label>מגדר</label>
-                <select id="edit-gender">
-                    <option value="male">גברים</option>
-                    <option value="female">נשים</option>
-                    <option value="unisex">יוניסקס</option>
-                </select>
+            <div class="grid grid-cols-2 gap-3 mb-3">
+                <div><label>עונה</label>
+                    <select id="edit-season">
+                        <option value="summer">קיץ</option>
+                        <option value="winter">חורף</option>
+                        <option value="joker">ג'וקר</option>
+                    </select>
+                </div>
+                <div><label>מגדר</label>
+                    <select id="edit-gender">
+                        <option value="male">גברים</option>
+                        <option value="female">נשים</option>
+                        <option value="unisex">יוניסקס</option>
+                    </select>
+                </div>
             </div>
+            <div class="flex items-center gap-3 mb-3 p-3 rounded-lg" style="background:#111;border:1px solid #2a2a2a;">
+                <input type="checkbox" id="edit-soldout" style="width:18px;height:18px;accent-color:#D4AF37;flex-shrink:0;">
+                <label for="edit-soldout" style="color:white;margin:0;cursor:pointer;">אזל מהמלאי</label>
+            </div>
+            <div class="mb-3"><label>תמונות (לינק אחד לכל שורה)</label><textarea id="edit-images" rows="3"></textarea></div>
+            <div class="mb-4"><label>תיאור</label><textarea id="edit-desc" rows="4"></textarea></div>
+            <button class="btn-gold" onclick="saveEdit()">שמור שינויים</button>
+            <button class="btn-secondary" onclick="closeModal()">ביטול</button>
+            <div id="edit-status" style="display:none;"></div>
         </div>
-        <div class="flex items-center gap-3 mb-3 p-3 rounded-lg" style="background:#111;border:1px solid #2a2a2a;">
-            <input type="checkbox" id="edit-soldout" style="width:18px;height:18px;accent-color:#D4AF37;flex-shrink:0;">
-            <label for="edit-soldout" style="color:white;margin:0;cursor:pointer;">אזל מהמלאי</label>
-        </div>
-        <div class="mb-3"><label>תמונות (לינק אחד לכל שורה)</label><textarea id="edit-images" rows="3"></textarea></div>
-        <div class="mb-4"><label>תיאור</label><textarea id="edit-desc" rows="4"></textarea></div>
-        <button class="btn-gold" onclick="saveEdit()">שמור שינויים</button>
-        <button class="btn-secondary" onclick="closeModal()">ביטול</button>
-        <div id="edit-status" style="display:none;"></div>
     </div>
-</div>
 
-<!-- DELETE MODAL -->
-<div id="delete-modal" class="modal-overlay" style="display:none;">
-    <div class="modal text-center">
-        <p class="text-4xl mb-4">🗑️</p>
-        <h2 class="text-lg font-bold mb-2">למחוק את הבושם?</h2>
-        <p class="text-gray-400 text-sm mb-6" id="delete-name-display"></p>
-        <button class="btn-gold" style="background:linear-gradient(135deg,#c0392b,#922b21);margin-bottom:8px;" onclick="confirmDelete()">כן, מחק</button>
-        <button class="btn-secondary" onclick="closeDeleteModal()">ביטול</button>
-        <div id="delete-status" style="display:none;"></div>
+    <!-- DELETE MODAL -->
+    <div id="delete-modal" class="modal-overlay" style="display:none;">
+        <div class="modal text-center">
+            <p class="text-4xl mb-4">🗑️</p>
+            <h2 class="text-lg font-bold mb-2">למחוק את הבושם?</h2>
+            <p class="text-gray-400 text-sm mb-6" id="delete-name-display"></p>
+            <button class="btn-gold" style="background:linear-gradient(135deg,#c0392b,#922b21);margin-bottom:8px;" onclick="confirmDelete()">כן, מחק</button>
+            <button class="btn-secondary" onclick="closeDeleteModal()">ביטול</button>
+            <div id="delete-status" style="display:none;"></div>
+        </div>
     </div>
-</div>
 
 <script>
+const GITHUB_TOKEN = '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';
 const GITHUB_REPO = 'Lucaaa154/Lion-perfumes';
 const FILE_PATH = 'index.html';
-let GITHUB_TOKEN = '';
 let allPerfumes = [];
 let uploadedImages = { add: [] };
 let deleteTargetId = null;
 let currentFileContent = '';
 let currentFileSha = '';
-
-// LOGIN
-function init() {
-    const saved = localStorage.getItem('lion_github_token');
-    if (saved) {
-        GITHUB_TOKEN = saved;
-        showApp();
-    } else {
-        document.getElementById('login-screen').style.display = 'flex';
-    }
-}
-
-async function login() {
-    const token = document.getElementById('token-input').value.trim();
-    if (!token) return;
-    document.getElementById('login-error').style.display = 'none';
-    try {
-        const res = await fetch('https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + FILE_PATH, {
-            headers: { 'Authorization': 'token ' + token }
-        });
-        const data = await res.json();
-        if (!data.content) {
-            document.getElementById('login-error').style.display = 'block';
-            document.getElementById('login-error').textContent = 'טוקן לא תקין, נסה שוב';
-            return;
-        }
-        GITHUB_TOKEN = token;
-        localStorage.setItem('lion_github_token', token);
-        showApp();
-    } catch(e) {
-        document.getElementById('login-error').style.display = 'block';
-        document.getElementById('login-error').textContent = 'שגיאה: ' + e.message;
-    }
-}
-
-function logout() {
-    localStorage.removeItem('lion_github_token');
-    GITHUB_TOKEN = '';
-    document.getElementById('main-app').style.display = 'none';
-    document.getElementById('login-screen').style.display = 'flex';
-    document.getElementById('token-input').value = '';
-}
-
-function showApp() {
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('main-app').style.display = 'block';
-}
 
 function switchTab(tab) {
     document.getElementById('panel-add').style.display = tab === 'add' ? 'block' : 'none';
@@ -309,8 +242,7 @@ async function handleUpload(event, prefix) {
             const reader = new FileReader();
             reader.onload = (e) => {
                 const base64 = e.target.result;
-                const fileName = 'images/' + Date.now() + '_' + file.name.replace(/\s/g, '_');
-                uploadedImages[prefix].push({ data: base64.split(',')[1], fileName });
+                uploadedImages[prefix].push({ data: base64.split(',')[1] });
                 const img = document.createElement('img');
                 img.src = base64;
                 img.style.cssText = 'width:60px;height:60px;object-fit:cover;border-radius:8px;border:1px solid #D4AF37;';
@@ -328,12 +260,9 @@ async function uploadImageToCloudinary(data) {
     formData.append('file', blob);
     formData.append('upload_preset', 'lion-perfumes');
     formData.append('cloud_name', 'dtsxyswbl');
-    const res = await fetch('https://api.cloudinary.com/v1_1/dtsxyswbl/image/upload', {
-        method: 'POST',
-        body: formData
-    });
+    const res = await fetch('https://api.cloudinary.com/v1_1/dtsxyswbl/image/upload', { method: 'POST', body: formData });
     const json = await res.json();
-    if (!json.secure_url) throw new Error('Cloudinary upload failed');
+    if (!json.secure_url) throw new Error('Upload failed');
     return json.secure_url;
 }
 
@@ -342,13 +271,7 @@ async function getFile() {
         headers: { 'Authorization': 'token ' + GITHUB_TOKEN }
     });
     const data = await res.json();
-    if (!data.content) {
-        if (data.message && data.message.includes('Bad credentials')) {
-            logout();
-            throw new Error('הטוקן פג תוקף, נא להתחבר מחדש');
-        }
-        throw new Error('GitHub API error: ' + JSON.stringify(data));
-    }
+    if (!data.content) throw new Error('GitHub error: ' + (data.message || 'Unknown'));
     currentFileSha = data.sha;
     currentFileContent = decodeURIComponent(escape(atob(data.content.replace(/\n/g, ''))));
     return currentFileContent;
@@ -359,7 +282,7 @@ async function pushFile(content, message) {
     const res = await fetch('https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + FILE_PATH, {
         method: 'PUT',
         headers: { 'Authorization': 'token ' + GITHUB_TOKEN, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: message, content: encoded, sha: currentFileSha })
+        body: JSON.stringify({ message, content: encoded, sha: currentFileSha })
     });
     return await res.json();
 }
@@ -395,7 +318,7 @@ async function loadPerfumes() {
         allPerfumes = parsePerfumes(html);
         renderList();
     } catch(e) {
-        document.getElementById('perfumes-list').innerHTML = '<div class="text-center text-red-400 py-8">' + e.message + '</div>';
+        document.getElementById('perfumes-list').innerHTML = '<div class="text-center text-red-400 py-8">שגיאה: ' + e.message + '</div>';
     }
 }
 
@@ -461,13 +384,13 @@ async function saveEdit() {
         const newBlock = '{\n                id: ' + newId + ',\n                name: "' + name + '",\n                brand: "' + brand + '",\n                price: ' + price + ',\n                season: "' + season + '",\n                gender: "' + gender + '",' + soldOutStr + '\n                images: [\n' + imagesStr + '\n                ],\n                description: "' + descEscaped + '",\n                size: "' + size + '"\n            }';
         const idPattern = new RegExp('\\{[^{}]*id:\\s*' + originalId + '[\\s\\S]*?size:\\s*"[^"]*"\\s*\\}', 's');
         const newContent = html.replace(idPattern, newBlock);
-        if (newContent === html) { showStatus('edit-status', 'שגיאה: לא נמצא הבושם בקובץ', 'error'); return; }
+        if (newContent === html) { showStatus('edit-status', 'שגיאה: לא נמצא הבושם', 'error'); return; }
         await pushFile(newContent, 'Edit perfume: ' + name);
-        showStatus('edit-status', 'נשמר! האתר יתעדכן תוך 30 שניות', 'success');
+        showStatus('edit-status', '✅ נשמר! האתר יתעדכן תוך 30 שניות', 'success');
         allPerfumes = parsePerfumes(newContent);
         currentFileContent = newContent;
         renderList();
-    } catch(e) { showStatus('edit-status', 'שגיאה: ' + e.message, 'error'); }
+    } catch(e) { showStatus('edit-status', '❌ שגיאה: ' + e.message, 'error'); }
 }
 
 function openDelete(id, name) {
@@ -487,12 +410,12 @@ async function confirmDelete() {
         const newContent = html.replace(idPattern, '');
         if (newContent === html) { showStatus('delete-status', 'שגיאה: לא נמצא הבושם', 'error'); return; }
         await pushFile(newContent, 'Delete perfume ID: ' + deleteTargetId);
-        showStatus('delete-status', 'נמחק! האתר יתעדכן תוך 30 שניות', 'success');
+        showStatus('delete-status', '✅ נמחק! האתר יתעדכן תוך 30 שניות', 'success');
         allPerfumes = allPerfumes.filter(p => p.id !== deleteTargetId);
         currentFileContent = newContent;
         renderList();
         setTimeout(closeDeleteModal, 2000);
-    } catch(e) { showStatus('delete-status', 'שגיאה: ' + e.message, 'error'); }
+    } catch(e) { showStatus('delete-status', '❌ שגיאה: ' + e.message, 'error'); }
 }
 
 async function addPerfume() {
@@ -504,18 +427,18 @@ async function addPerfume() {
     const gender = document.getElementById('add-gender').value;
     const soldOut = document.getElementById('add-soldout').checked;
     const desc = document.getElementById('add-desc').value.trim();
-    if (!name || !brand || !price) { showStatus('add-status', 'נא למלא שם, מותג ומחיר', 'error'); return; }
+    if (!name || !brand || !price) { showStatus('add-status', '❌ נא למלא שם, מותג ומחיר', 'error'); return; }
     if (allPerfumes.length === 0) { try { const h = await getFile(); allPerfumes = parsePerfumes(h); } catch(e) {} }
     const id = allPerfumes.length > 0 ? Math.max(...allPerfumes.map(p => p.id)) + 1 : 102;
-    showStatus('add-status', 'מעלה תמונות...', 'loading');
+    showStatus('add-status', '📸 מעלה תמונות...', 'loading');
     let imageUrls = [];
     for (const img of (uploadedImages.add || [])) {
         try { imageUrls.push(await uploadImageToCloudinary(img.data)); }
-        catch(e) { showStatus('add-status', 'שגיאה בהעלאת תמונה: ' + e.message, 'error'); return; }
+        catch(e) { showStatus('add-status', '❌ שגיאה בהעלאת תמונה: ' + e.message, 'error'); return; }
     }
     document.querySelectorAll('#add-img-urls input').forEach(i => { if (i.value.trim()) imageUrls.push(i.value.trim()); });
-    if (imageUrls.length === 0) { showStatus('add-status', 'נא להוסיף לפחות תמונה אחת', 'error'); return; }
-    showStatus('add-status', 'מעדכן את האתר...', 'loading');
+    if (imageUrls.length === 0) { showStatus('add-status', '❌ נא להוסיף לפחות תמונה אחת', 'error'); return; }
+    showStatus('add-status', '⏳ מעדכן את האתר...', 'loading');
     try {
         const html = await getFile();
         const imagesStr = imageUrls.map(url => '                    "' + url + '"').join(',\n');
@@ -526,7 +449,7 @@ async function addPerfume() {
         const insertPos = html.indexOf(insertAfter) + insertAfter.length;
         const newContent = html.slice(0, insertPos) + newPerfume + html.slice(insertPos);
         await pushFile(newContent, 'Add perfume: ' + name);
-        showStatus('add-status', 'הבושם ' + name + ' נוסף! האתר יתעדכן תוך 30 שניות', 'success');
+        showStatus('add-status', '✅ הבושם ' + name + ' נוסף! האתר יתעדכן תוך 30 שניות', 'success');
         document.getElementById('add-name').value = '';
         document.getElementById('add-brand').value = '';
         document.getElementById('add-price').value = '';
@@ -535,10 +458,10 @@ async function addPerfume() {
         document.getElementById('add-img-previews').innerHTML = '';
         document.getElementById('add-img-urls').innerHTML = '';
         uploadedImages.add = [];
-    } catch(e) { showStatus('add-status', 'שגיאה: ' + e.message, 'error'); }
+    } catch(e) { showStatus('add-status', '❌ שגיאה: ' + e.message, 'error'); }
 }
 
-init();
+loadPerfumes();
 </script>
 </body>
 </html>
