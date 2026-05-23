@@ -46,7 +46,6 @@
     <div class="flex gap-2 px-4 mb-4 overflow-x-auto pb-1">
         <button class="tab active" onclick="switchTab('add')" id="tab-add">הוסף בושם</button>
         <button class="tab" onclick="switchTab('list')" id="tab-list">כל הבשמים</button>
-        <button class="tab bg-red-950 text-red-400 border-red-900" onclick="resetToken()" style="margin-right: auto; font-size: 11px; padding: 6px 12px;">עדכון טוקן 🔑</button>
     </div>
 
     <div class="px-4 pb-10 max-w-lg mx-auto">
@@ -57,7 +56,28 @@
                 <h2 class="text-lg font-bold gold mb-4">הוספת בושם חדש</h2>
                 <div class="grid grid-cols-2 gap-3 mb-3">
                     <div><label>שם הבושם *</label><input type="text" id="add-name" placeholder="Jean Lowe Verde Aura"></div>
-                    <div><label>מותג *</label><input type="text" id="add-brand" placeholder="Maison Alhambra"></div>
+                    <div><label>מותג *</label>
+                        <select id="add-brand">
+                            <option value="">בחר מותג...</option>
+                            <option value="Afnan">Afnan</option>
+                            <option value="Zimaya">Zimaya</option>
+                            <option value="French Avenue">French Avenue</option>
+                            <option value="Lattafa">Lattafa</option>
+                            <option value="Rasasi">Rasasi</option>
+                            <option value="Ibraq">Ibraq</option>
+                            <option value="Laverne">Laverne</option>
+                            <option value="Gulf Orchid">Gulf Orchid</option>
+                            <option value="Volare">Volare</option>
+                            <option value="Reef">Reef</option>
+                            <option value="Lavender">Lavender</option>
+                            <option value="Al Ezz">Al Ezz</option>
+                            <option value="Maison Asrar">Maison Asrar</option>
+                            <option value="Maison Alhambra">Maison Alhambra</option>
+                            <option value="Fragrance World">Fragrance World</option>
+                            <option value="ARMAF">ARMAF</option>
+                            <option value="SHAMS Perfumes">SHAMS Perfumes</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="grid grid-cols-2 gap-3 mb-3">
                     <div><label>מחיר (₪) *</label><input type="number" id="add-price" placeholder="139"></div>
@@ -113,7 +133,28 @@
             <input type="hidden" id="edit-original-id">
             <div class="grid grid-cols-2 gap-3 mb-3">
                 <div><label>שם</label><input type="text" id="edit-name"></div>
-                <div><label>מותג</label><input type="text" id="edit-brand"></div>
+                <div><label>מותג</label>
+                        <select id="edit-brand">
+                            <option value="">בחר מותג...</option>
+                            <option value="Afnan">Afnan</option>
+                            <option value="Zimaya">Zimaya</option>
+                            <option value="French Avenue">French Avenue</option>
+                            <option value="Lattafa">Lattafa</option>
+                            <option value="Rasasi">Rasasi</option>
+                            <option value="Ibraq">Ibraq</option>
+                            <option value="Laverne">Laverne</option>
+                            <option value="Gulf Orchid">Gulf Orchid</option>
+                            <option value="Volare">Volare</option>
+                            <option value="Reef">Reef</option>
+                            <option value="Lavender">Lavender</option>
+                            <option value="Al Ezz">Al Ezz</option>
+                            <option value="Maison Asrar">Maison Asrar</option>
+                            <option value="Maison Alhambra">Maison Alhambra</option>
+                            <option value="Fragrance World">Fragrance World</option>
+                            <option value="ARMAF">ARMAF</option>
+                            <option value="SHAMS Perfumes">SHAMS Perfumes</option>
+                        </select>
+                    </div>
             </div>
             <div class="grid grid-cols-3 gap-3 mb-3">
                 <div><label>מחיר</label><input type="number" id="edit-price"></div>
@@ -161,29 +202,7 @@
     </div>
 
 <script>
-// Secured Token Fetching System - Keeps GitHub from auto-deleting your keys
-let GITHUB_TOKEN = localStorage.getItem('lion_admin_token');
-
-if (!GITHUB_TOKEN) {
-    GITHUB_TOKEN = prompt('ברוכים הבאים! אנא הכנס קוד גישה (GitHub Personal Access Token) על מנת להפעיל את הפאנל:');
-    if (GITHUB_TOKEN) {
-        GITHUB_TOKEN = GITHUB_TOKEN.trim();
-        localStorage.setItem('lion_admin_token', GITHUB_TOKEN);
-    } else {
-        alert('לא ניתן להשתמש בפאנל ללא קוד גישה תקין. רענן את העמוד על מנת לנסות שוב.');
-    }
-}
-
-function resetToken() {
-    const newToken = prompt('הכנס את קוד הגישה (GitHub Token) החדש שלך:');
-    if (newToken && newToken.trim()) {
-        localStorage.setItem('lion_admin_token', newToken.trim());
-        GITHUB_TOKEN = newToken.trim();
-        alert('קוד הגישה עודכן בהצלחה!');
-        location.reload();
-    }
-}
-
+const GITHUB_TOKEN = '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';
 const GITHUB_REPO = 'Lucaaa154/Lion-perfumes';
 const FILE_PATH = 'index.html';
 let allPerfumes = [];
@@ -253,36 +272,13 @@ async function uploadImageToGithub(data, fileName) {
 }
 
 async function getFile() {
-    try {
-        if (!GITHUB_TOKEN) {
-            alert('שגיאה: חסר קוד גישה (Token). אנא לחץ על כפתור "עדכון טוקן" למעלה.');
-            throw new Error('Missing GITHUB_TOKEN');
-        }
-
-        const res = await fetch('https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + FILE_PATH, {
-            headers: { 'Authorization': 'token ' + GITHUB_TOKEN }
-        });
-        
-        const data = await res.json();
-
-        // Safe Fallback Core Check: Protect against invalid payloads or authorization drops
-        if (!res.ok || !data || !data.content) {
-            console.error("GitHub API Response Failed:", data);
-            alert("שגיאה בקריאת הנתונים מ-GitHub.\nקוד השגיאה: " + res.status + "\nייתכן שקוד הגישה (Token) שברשותך שגוי או פג תוקף. נסה לעדכן אותו באמצעות הכפתור האדום למעלה.");
-            throw new Error(data.message || 'Failed to fetch layout content from GitHub storage.');
-        }
-
-        currentFileSha = data.sha;
-        
-        // Remove whitespace linebreaks safely before converting standard base64 blocks
-        const cleanContent = data.content.replace(/\n/g, '');
-        currentFileContent = decodeURIComponent(escape(atob(cleanContent)));
-        return currentFileContent;
-
-    } catch (e) {
-        console.error("Critical error in getFile pipeline execution:", e);
-        throw e;
-    }
+    const res = await fetch('https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + FILE_PATH, {
+        headers: { 'Authorization': 'token ' + GITHUB_TOKEN }
+    });
+    const data = await res.json();
+    currentFileSha = data.sha;
+    currentFileContent = decodeURIComponent(escape(atob(data.content.replace(/\n/g, ''))));
+    return currentFileContent;
 }
 
 async function pushFile(content, message) {
@@ -326,7 +322,7 @@ async function loadPerfumes() {
         allPerfumes = parsePerfumes(html);
         renderList();
     } catch(e) {
-        document.getElementById('perfumes-list').innerHTML = '<div class="text-center text-red-400 py-8">שגיאה בטעינה. בדוק את קוד הגישה שלך.</div>';
+        document.getElementById('perfumes-list').innerHTML = '<div class="text-center text-red-400 py-8">שגיאה בטעינה</div>';
     }
 }
 
@@ -437,6 +433,7 @@ async function addPerfume() {
     const soldOut = document.getElementById('add-soldout').checked;
     const desc = document.getElementById('add-desc').value.trim();
     if (!name || !brand || !price) { showStatus('add-status', 'נא למלא שם, מותג ומחיר', 'error'); return; }
+    // Load perfumes first if not loaded
     if (allPerfumes.length === 0) { try { const h = await getFile(); allPerfumes = parsePerfumes(h); } catch(e) {} }
     showStatus('add-status', 'מעלה תמונות...', 'loading');
     let imageUrls = [];
@@ -471,4 +468,4 @@ async function addPerfume() {
 }
 </script>
 </body>
-</html><-2 updated -->
+</html>
