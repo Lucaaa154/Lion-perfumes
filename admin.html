@@ -46,6 +46,7 @@
     <div class="flex gap-2 px-4 mb-4 overflow-x-auto pb-1">
         <button class="tab active" onclick="switchTab('add')" id="tab-add">הוסף בושם</button>
         <button class="tab" onclick="switchTab('list')" id="tab-list">כל הבשמים</button>
+        <button class="tab bg-red-950 text-red-400 border-red-900" onclick="resetToken()" style="margin-right: auto; font-size: 11px; padding: 6px 12px;">עדכון טוקן 🔑</button>
     </div>
 
     <div class="px-4 pb-10 max-w-lg mx-auto">
@@ -160,7 +161,29 @@
     </div>
 
 <script>
-const GITHUB_TOKEN = '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';
+// Secured Token Fetching System - Keeps GitHub from auto-deleting your keys
+let GITHUB_TOKEN = localStorage.getItem('lion_admin_token');
+
+if (!GITHUB_TOKEN) {
+    GITHUB_TOKEN = prompt('ברוכים הבאים! אנא הכנס קוד גישה (GitHub Personal Access Token) על מנת להפעיל את הפאנל:');
+    if (GITHUB_TOKEN) {
+        GITHUB_TOKEN = GITHUB_TOKEN.trim();
+        localStorage.setItem('lion_admin_token', GITHUB_TOKEN);
+    } else {
+        alert('לא ניתן להשתמש בפאנל ללא קוד גישה תקין. רענן את העמוד על מנת לנסות שוב.');
+    }
+}
+
+function resetToken() {
+    const newToken = prompt('הכנס את קוד הגישה (GitHub Token) החדש שלך:');
+    if (newToken && newToken.trim()) {
+        localStorage.setItem('lion_admin_token', newToken.trim());
+        GITHUB_TOKEN = newToken.trim();
+        alert('קוד הגישה עודכן בהצלחה!');
+        location.reload();
+    }
+}
+
 const GITHUB_REPO = 'Lucaaa154/Lion-perfumes';
 const FILE_PATH = 'index.html';
 let allPerfumes = [];
@@ -231,28 +254,33 @@ async function uploadImageToGithub(data, fileName) {
 
 async function getFile() {
     try {
+        if (!GITHUB_TOKEN) {
+            alert('שגיאה: חסר קוד גישה (Token). אנא לחץ על כפתור "עדכון טוקן" למעלה.');
+            throw new Error('Missing GITHUB_TOKEN');
+        }
+
         const res = await fetch('https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + FILE_PATH, {
             headers: { 'Authorization': 'token ' + GITHUB_TOKEN }
         });
         
         const data = await res.json();
 
-        // Safety Guard: Stop crash if data or content from GitHub is invalid/missing
+        // Safe Fallback Core Check: Protect against invalid payloads or authorization drops
         if (!res.ok || !data || !data.content) {
-            console.error("GitHub API Error Structure:", data);
-            alert("שגיאה בקריאת הנתונים מ-GitHub. אנא ודא שהטוקנר או נתיב הקובץ תקינים.");
-            throw new Error(data.message || 'Failed to load file contents from GitHub');
+            console.error("GitHub API Response Failed:", data);
+            alert("שגיאה בקריאת הנתונים מ-GitHub.\nקוד השגיאה: " + res.status + "\nייתכן שקוד הגישה (Token) שברשותך שגוי או פג תוקף. נסה לעדכן אותו באמצעות הכפתור האדום למעלה.");
+            throw new Error(data.message || 'Failed to fetch layout content from GitHub storage.');
         }
 
         currentFileSha = data.sha;
         
-        // Safe string filtering and cleaning
+        // Remove whitespace linebreaks safely before converting standard base64 blocks
         const cleanContent = data.content.replace(/\n/g, '');
         currentFileContent = decodeURIComponent(escape(atob(cleanContent)));
         return currentFileContent;
 
     } catch (e) {
-        console.error("Critical error in getFile():", e);
+        console.error("Critical error in getFile pipeline execution:", e);
         throw e;
     }
 }
@@ -298,7 +326,7 @@ async function loadPerfumes() {
         allPerfumes = parsePerfumes(html);
         renderList();
     } catch(e) {
-        document.getElementById('perfumes-list').innerHTML = '<div class="text-center text-red-400 py-8">שגיאה בטעינה</div>';
+        document.getElementById('perfumes-list').innerHTML = '<div class="text-center text-red-400 py-8">שגיאה בטעינה. בדוק את קוד הגישה שלך.</div>';
     }
 }
 
