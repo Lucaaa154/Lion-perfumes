@@ -504,11 +504,24 @@ async function saveEdit() {
         const soldOutStr = soldOut ? '\n                soldOut: true,' : '';
         const salePriceStr = salePrice ? '\n                salePrice: ' + salePrice + ',' : '';
         const descEscaped = desc.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\n');
-        const newBlock = '{\n                id: ' + newId + ',\n                name: "' + name + '",\n                brand: "' + brand + '",\n                price: ' + price + ',\n                season: "' + season + '",\n                gender: "' + gender + '",' + soldOutStr + salePriceStr + '\n                images: [\n' + imagesStr + '\n                ],\n                description: "' + descEscaped + '",\n                size: "' + size + '"\n            }';
-        const newContent = html.replace(new RegExp('\\{[^{}]*id:\\s*' + originalId + '[\\s\\S]*?size:\\s*"[^"]*"\\s*\\}', 's'), newBlock);
-        if (newContent === html) { showStatus('edit-status', '❌ לא נמצא הבושם', 'error'); return; }
+        const newBlock = '\n            {\n                id: ' + newId + ',\n                name: "' + name + '",\n                brand: "' + brand + '",\n                price: ' + price + ',\n                season: "' + season + '",\n                gender: "' + gender + '",' + soldOutStr + salePriceStr + '\n                images: [\n' + imagesStr + '\n                ],\n                description: "' + descEscaped + '",\n                size: "' + size + '"\n            },';
+        // Step 1: Delete old perfume
+        const deletePattern = new RegExp('\\s*\\{[^{}]*id:\\s*' + originalId + ',(?:[^{}]|\\n)*?size:\\s*"[^"]*"\\s*\\},?', 'g');
+        let cleaned = html.replace(deletePattern, '');
+        if (cleaned === html) { showStatus('edit-status', '❌ לא נמצא הבושם', 'error'); return; }
+        // Step 2: Add updated perfume at the top
+        const insertPos = cleaned.indexOf('const perfumes = [') + 'const perfumes = ['.length;
+        const newContent = cleaned.slice(0, insertPos) + newBlock + cleaned.slice(insertPos);
         await pushFile(newContent, 'Edit: ' + name);
-        await syncProductHtml(newBlock, 'edit', originalId);
+        // Sync product.html with same delete-then-add
+        try {
+            const prod = await getFileByPath('product.html');
+            let pc = prod.content;
+            pc = pc.replace(deletePattern, '');
+            const pInsertPos = pc.indexOf('const perfumes = [') + 'const perfumes = ['.length;
+            if (pInsertPos > 18) pc = pc.slice(0, pInsertPos) + newBlock + pc.slice(pInsertPos);
+            await pushFileByPath('product.html', pc, prod.sha, 'Edit in product.html: ' + name);
+        } catch(e) { console.error('Sync failed:', e); }
         showStatus('edit-status', '✅ נשמר!', 'success');
         allPerfumes = parsePerfumes(newContent); currentFileContent = newContent; renderList();
     } catch(e) { showStatus('edit-status', '❌ ' + e.message, 'error'); }
@@ -521,10 +534,16 @@ async function confirmDelete() {
     showStatus('delete-status', '⏳ מוחק...', 'loading');
     try {
         const html = await getFile();
-        const newContent = html.replace(new RegExp('\\s*\\{[^{}]*id:\\s*' + deleteTargetId + '[\\s\\S]*?size:\\s*"[^"]*"\\s*\\},?', 's'), '');
+        const deletePattern = new RegExp('\\s*\\{[^{}]*id:\\s*' + deleteTargetId + ',(?:[^{}]|\\n)*?size:\\s*"[^"]*"\\s*\\},?', 'g');
+        const newContent = html.replace(deletePattern, '');
         if (newContent === html) { showStatus('delete-status', '❌ לא נמצא', 'error'); return; }
         await pushFile(newContent, 'Delete ID: ' + deleteTargetId);
-        await syncProductHtml(null, 'delete', deleteTargetId);
+        // Sync delete to product.html
+        try {
+            const prod = await getFileByPath('product.html');
+            let pc = prod.content.replace(deletePattern, '');
+            await pushFileByPath('product.html', pc, prod.sha, 'Delete from product.html ID: ' + deleteTargetId);
+        } catch(e) { console.error('Sync delete failed:', e); }
         showStatus('delete-status', '✅ נמחק!', 'success');
         allPerfumes = allPerfumes.filter(p => p.id !== deleteTargetId); currentFileContent = newContent; renderList();
         setTimeout(closeDeleteModal, 1500);
