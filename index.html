@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
-ewe
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -122,10 +121,7 @@ ewe
 
         @media (max-width: 640px) {
             .product-image {
-                aspect-ratio: 3/4;
-                height: auto;
-                max-height: none;
-                min-height: 160px;
+                height: 200px;
             }
         }
 
@@ -2161,7 +2157,7 @@ ewe
             
             let filtered = perfumes.filter(p => {
                 const matchBrand = currentFilter === "הכל" || p.brand === currentFilter;
-                const matchPrice = p.price <= maxPrice;
+                const matchPrice = (p.salePrice || p.price) <= maxPrice;
                 const matchSeason = currentSeason === "all" || p.season === currentSeason;
                 const matchGender = currentGender === "all" || p.gender === currentGender;
                 const searchLower = searchQuery.toLowerCase().trim();
@@ -2215,7 +2211,7 @@ ewe
                             <h4 class="font-serif text-base sm:text-xl font-bold mb-2 sm:mb-3 text-white group-hover:text-gold-400 transition-colors line-clamp-1">${perfume.name}</h4>
                             
                             <div class="flex items-center justify-between mt-auto">
-                                <span class="text-lg sm:text-2xl font-bold text-gold-400">₪${perfume.price}</span>
+                                ${perfume.salePrice ? `<div class="flex items-center gap-2"><span class="text-lg sm:text-2xl font-bold text-gold-400">₪${perfume.salePrice}</span><span class="text-sm sm:text-base text-red-500 line-through">₪${perfume.price}</span></div>` : `<span class="text-lg sm:text-2xl font-bold text-gold-400">₪${perfume.price}</span>`}
                                 <span class="text-xs sm:text-sm text-gray-400 group-hover:text-gold-400 transition-colors">צפה בפרטים</span>
                             </div>
                         </div>
@@ -2364,7 +2360,7 @@ ewe
         }
 
         function updateCartTotals() {
-            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const subtotal = cart.reduce((sum, item) => sum + ((item.salePrice || item.price) * item.quantity), 0);
             const total = subtotal + payMoreAmount;
             
             document.getElementById('cart-subtotal').textContent = `₪${subtotal}`;
@@ -2402,7 +2398,7 @@ ewe
                         <img src="${item.images[0]}" class="w-16 h-16 object-cover rounded" onerror="this.src='https://static.photos/luxury/640x360/999'">
                         <div class="flex-1">
                             <h4 class="font-bold text-sm text-white mb-1">${item.name}</h4>
-                            <div class="text-gold-400 text-sm mb-2">₪${item.price}</div>
+                            <div class="text-gold-400 text-sm mb-2">${item.salePrice ? '₪' + item.salePrice + ' <span class="text-red-500 line-through text-xs">₪' + item.price + '</span>' : '₪' + item.price}</div>
                             <div class="flex items-center gap-2">
                                 <button onclick="updateQuantity(${item.id}, -1)" class="w-6 h-6 rounded-full bg-dark-700 hover:bg-dark-600 flex items-center justify-center text-xs transition-colors">-</button>
                                 <span class="text-sm w-4 text-center">${item.quantity}</span>
@@ -2461,8 +2457,8 @@ ewe
             let subtotal = 0;
             
             cart.forEach(item => {
-                message += `• ${item.name} (${item.brand}) - כמות: ${item.quantity} - מחיר: ₪${item.price * item.quantity}\n`;
-                subtotal += item.price * item.quantity;
+                message += `• ${item.name} (${item.brand}) - כמות: ${item.quantity} - מחיר: ₪${(item.salePrice || item.price) * item.quantity}\n`;
+                subtotal += (item.salePrice || item.price) * item.quantity;
             });
             
             message += `\nסכום מוצרים: ₪${subtotal}`;
