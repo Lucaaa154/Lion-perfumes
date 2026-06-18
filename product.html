@@ -1086,7 +1086,7 @@
                         </div>
                         <h1 class="font-serif text-4xl md:text-5xl font-bold text-white mb-4">${currentProduct.name}</h1>
                         <div class="flex items-center gap-4 mb-6">
-                            <span class="text-3xl font-bold text-gold-400">₪${currentProduct.price}</span>
+                            ${currentProduct.salePrice ? `<span class="text-3xl font-bold text-gold-400">₪${currentProduct.salePrice}</span><span class="text-xl text-red-500 line-through mr-3">₪${currentProduct.price}</span>` : `<span class="text-3xl font-bold text-gold-400">₪${currentProduct.price}</span>`}
                             <span class="bg-gold-400/20 text-gold-400 px-3 py-1 rounded-full text-sm border border-gold-400/30">${currentProduct.size}</span>
                         </div>
                     </div>
@@ -1264,7 +1264,7 @@
         }
 
         function updateCartTotals() {
-            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const subtotal = cart.reduce((sum, item) => sum + ((item.salePrice || item.price) * item.quantity), 0);
             const total = subtotal + payMoreAmount;
             
             document.getElementById('cart-subtotal').textContent = `₪${subtotal}`;
@@ -1301,7 +1301,7 @@
                         <img src="${item.images[0]}" class="w-16 h-16 object-cover rounded" onerror="this.src='https://static.photos/luxury/640x360/999'">
                         <div class="flex-1">
                             <h4 class="font-bold text-sm text-white mb-1">${item.name}</h4>
-                            <div class="text-gold-400 text-sm mb-2">₪${item.price}</div>
+                            <div class="text-gold-400 text-sm mb-2">${item.salePrice ? '₪' + item.salePrice + ' <span class="text-red-500 line-through text-xs">₪' + item.price + '</span>' : '₪' + item.price}</div>
                             <div class="flex items-center gap-2">
                                 <button onclick="updateQuantity(${item.id}, -1)" class="w-6 h-6 rounded-full bg-dark-700 hover:bg-dark-600 flex items-center justify-center text-xs transition-colors">-</button>
                                 <span class="text-sm w-4 text-center">${item.quantity}</span>
@@ -1360,8 +1360,8 @@
             let subtotal = 0;
             
             cart.forEach(item => {
-                message += `• ${item.name} (${item.brand}) - כמות: ${item.quantity} - מחיר: ₪${item.price * item.quantity}\n`;
-                subtotal += item.price * item.quantity;
+                message += `• ${item.name} (${item.brand}) - כמות: ${item.quantity} - מחיר: ₪${(item.salePrice || item.price) * item.quantity}\n`;
+                subtotal += (item.salePrice || item.price) * item.quantity;
             });
             
             message += `\nסכום מוצרים: ₪${subtotal}`;
