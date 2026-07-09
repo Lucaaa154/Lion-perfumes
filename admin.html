@@ -48,6 +48,7 @@
         <button class="tab active" onclick="switchTab('add')" id="tab-add">הוסף בושם</button>
         <button class="tab" onclick="switchTab('list')" id="tab-list">כל הבשמים</button>
         <button class="tab" onclick="switchTab('brands')" id="tab-brands">ניהול מותגים</button>
+        <button class="tab" onclick="switchTab('bestsellers')" id="tab-bestsellers">👑 נמכרים ביותר</button>
     </div>
 
     <div class="px-4 pb-10 max-w-lg mx-auto">
@@ -113,6 +114,20 @@
             </div>
             <h3 class="gold font-bold mb-3">מותגים קיימים</h3>
             <div id="brands-list"><div class="text-center text-gray-500 py-8">טוען...</div></div>
+        </div>
+
+        <!-- BEST SELLERS TAB -->
+        <div id="panel-bestsellers" style="display:none;">
+            <div class="dark-card p-5 mb-4">
+                <h2 class="text-lg font-bold gold mb-1">👑 הנמכרים ביותר</h2>
+                <p class="text-gray-500 text-sm mb-4">עד 8 מוצרים. הסדר כאן הוא הסדר שיוצג באתר. מוצרים שאזלו מהמלאי מוסתרים אוטומטית באתר.</p>
+                <div id="bs-current"><div class="text-center text-gray-500 py-8">טוען...</div></div>
+                <button class="btn-gold" onclick="saveBestSellers()" style="margin-top:12px;">שמור שינויים באתר</button>
+                <div id="bs-status" style="display:none;"></div>
+            </div>
+            <h3 class="gold font-bold mb-3">הוסף מוצרים לרשימה</h3>
+            <input type="text" id="bs-search" placeholder="חפש בושם..." oninput="renderBestSellersAdmin()" style="margin-bottom:14px;">
+            <div id="bs-all"></div>
         </div>
     </div>
 
@@ -183,11 +198,14 @@ function switchTab(tab) {
     document.getElementById('panel-add').style.display = tab === 'add' ? 'block' : 'none';
     document.getElementById('panel-list').style.display = tab === 'list' ? 'block' : 'none';
     document.getElementById('panel-brands').style.display = tab === 'brands' ? 'block' : 'none';
+    document.getElementById('panel-bestsellers').style.display = tab === 'bestsellers' ? 'block' : 'none';
     document.getElementById('tab-add').className = 'tab' + (tab === 'add' ? ' active' : '');
     document.getElementById('tab-list').className = 'tab' + (tab === 'list' ? ' active' : '');
     document.getElementById('tab-brands').className = 'tab' + (tab === 'brands' ? ' active' : '');
+    document.getElementById('tab-bestsellers').className = 'tab' + (tab === 'bestsellers' ? ' active' : '');
     if (tab === 'list') loadPerfumes();
     if (tab === 'brands') loadBrands();
+    if (tab === 'bestsellers') loadBestSellers();
 }
 
 function showStatus(id, msg, type) {
@@ -293,6 +311,108 @@ async function syncProductHtml(newBlock, action, targetId) {
         }
         await pushFileByPath('product.html', c, prod.sha, action + ' in product.html');
     } catch(e) { console.error('Sync product.html failed:', e); }
+}
+
+// ===== BEST SELLERS MANAGEMENT =====
+const BS_MAX = 8;
+let bestSellerSelection = [];
+
+function parseBestSellers(html) {
+    const m = html.match(/const bestSellerIds = \[([^\]]*)\];/);
+    if (!m) return null;
+    return m[1].split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n));
+}
+
+async function loadBestSellers() {
+    const box = document.getElementById('bs-current');
+    box.innerHTML = '<div class="text-center text-gray-500 py-8">טוען...</div>';
+    document.getElementById('bs-status').style.display = 'none';
+    try {
+        const html = await getFile();
+        allPerfumes = parsePerfumes(html);
+        const ids = parseBestSellers(html);
+        if (ids === null) {
+            box.innerHTML = '<div class="text-center text-red-400 py-8">שורת bestSellerIds לא נמצאה ב-index.html — יש להעלות קודם את הגרסה החדשה של האתר</div>';
+            document.getElementById('bs-all').innerHTML = '';
+            return;
+        }
+        bestSellerSelection = ids.filter(id => allPerfumes.some(p => p.id === id));
+        renderBestSellersAdmin();
+    } catch (e) {
+        box.innerHTML = '<div class="text-center text-red-400 py-8">שגיאה: ' + e.message + '</div>';
+    }
+}
+
+function bsCard(p, inner) {
+    return '<div class="perfume-card">' +
+        '<img src="' + (p.images && p.images[0] ? p.images[0] : '') + '" onerror="this.style.display=\'none\'">' +
+        '<div style="flex:1;min-width:0;">' +
+        '<div style="font-weight:700;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + (p.soldOut ? '<span class="soldout-badge">אזל</span>' : '') + p.name + '</div>' +
+        '<div style="color:#D4AF37;font-size:12px;">' + (p.brand || '') + ' · ₪' + p.price + '</div>' +
+        '</div>' + inner + '</div>';
+}
+
+function renderBestSellersAdmin() {
+    const cur = document.getElementById('bs-current');
+    if (!bestSellerSelection.length) {
+        cur.innerHTML = '<div class="text-center text-gray-500 py-6">הרשימה ריקה — הוסיפו מוצרים מלמטה 👇</div>';
+    } else {
+        cur.innerHTML = bestSellerSelection.map((id, i) => {
+            const p = allPerfumes.find(x => x.id === id);
+            if (!p) return '';
+            const rank = '<span style="background:linear-gradient(135deg,#D4AF37,#B8960C);color:#000;font-weight:700;border-radius:9999px;min-width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;">' + (i + 1) + '</span>';
+            const controls = '<div style="display:flex;flex-direction:column;gap:4px;flex-shrink:0;">' +
+                '<button class="btn-edit" ' + (i === 0 ? 'disabled style="opacity:.3;"' : '') + ' onclick="bsMove(' + id + ',-1)">▲</button>' +
+                '<button class="btn-edit" ' + (i === bestSellerSelection.length - 1 ? 'disabled style="opacity:.3;"' : '') + ' onclick="bsMove(' + id + ',1)">▼</button>' +
+                '</div>' +
+                '<button class="btn-delete" onclick="bsRemove(' + id + ')">✕</button>';
+            return '<div style="display:flex;align-items:center;gap:10px;">' + rank + '<div style="flex:1;min-width:0;">' + bsCard(p, controls) + '</div></div>';
+        }).join('');
+    }
+
+    const search = (document.getElementById('bs-search').value || '').toLowerCase();
+    const avail = allPerfumes.filter(p => !bestSellerSelection.includes(p.id) &&
+        (p.name.toLowerCase().includes(search) || (p.brand || '').toLowerCase().includes(search)));
+    document.getElementById('bs-all').innerHTML = avail.length
+        ? avail.map(p => bsCard(p, '<button class="btn-edit" onclick="bsAdd(' + p.id + ')">➕ הוסף</button>')).join('')
+        : '<div class="text-center text-gray-500 py-8">לא נמצאו בשמים</div>';
+}
+
+function bsAdd(id) {
+    if (bestSellerSelection.length >= BS_MAX) {
+        showStatus('bs-status', '⚠️ ניתן לבחור עד ' + BS_MAX + ' מוצרים. הסירו מוצר לפני הוספה.', 'error');
+        return;
+    }
+    document.getElementById('bs-status').style.display = 'none';
+    bestSellerSelection.push(id);
+    renderBestSellersAdmin();
+}
+
+function bsRemove(id) {
+    bestSellerSelection = bestSellerSelection.filter(x => x !== id);
+    renderBestSellersAdmin();
+}
+
+function bsMove(id, dir) {
+    const i = bestSellerSelection.indexOf(id);
+    const j = i + dir;
+    if (i < 0 || j < 0 || j >= bestSellerSelection.length) return;
+    [bestSellerSelection[i], bestSellerSelection[j]] = [bestSellerSelection[j], bestSellerSelection[i]];
+    renderBestSellersAdmin();
+}
+
+async function saveBestSellers() {
+    showStatus('bs-status', '⏳ שומר...', 'loading');
+    try {
+        const html = await getFile(); // fresh content + sha
+        if (!/const bestSellerIds = \[[^\]]*\];/.test(html)) throw new Error('שורת bestSellerIds לא נמצאה ב-index.html');
+        const updated = html.replace(/const bestSellerIds = \[[^\]]*\];/, 'const bestSellerIds = [' + bestSellerSelection.join(', ') + '];');
+        const res = await pushFile(updated, 'Update best sellers');
+        if (res.content) showStatus('bs-status', '✅ נשמר! הנמכרים ביותר עודכנו באתר (העדכון באתר החי עשוי לקחת כדקה)', 'success');
+        else throw new Error(res.message || 'Push failed');
+    } catch (e) {
+        showStatus('bs-status', '❌ ' + e.message, 'error');
+    }
 }
 
 // ===== BRAND MANAGEMENT =====
