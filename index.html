@@ -93,6 +93,38 @@
             transform: translateX(0);
         }
 
+        .menu-sidebar {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .menu-sidebar.open {
+            transform: translateX(0);
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            width: 100%;
+            text-align: right;
+            padding: 0.85rem 1rem;
+            border-radius: 0.6rem;
+            color: #ffffff;
+            font-size: 1rem;
+            font-family: 'Heebo', sans-serif;
+            border: 1px solid transparent;
+            background: none;
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .menu-item:hover {
+            background: #2a2a2a;
+            color: #D4AF37;
+            border-color: rgba(212, 175, 55, 0.25);
+        }
+
         .shimmer {
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
             background-size: 200% 100%;
@@ -461,13 +493,175 @@
 
 <body class="min-h-screen overflow-x-hidden">
 
+    <!-- ===== LION PERFUMES · Entrance Animation (added) ===== -->
+    <div id="lion-intro" aria-hidden="true">
+        <div class="lion-intro__glow"></div>
+        <div class="lion-intro__inner">
+            <svg class="lion-svg" viewBox="0 0 400 400" role="img" aria-label="Lion Perfumes">
+                <g class="lion-mane" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke">
+                    <path class="draw draw-mane" pathLength="1" d="M 200.0,30.0 L 225.0,74.5 L 265.1,42.9 L 271.1,93.6 L 320.2,79.8 L 306.4,128.9 L 357.1,134.9 L 325.5,175.0 L 370.0,200.0 L 325.5,225.0 L 357.1,265.1 L 306.4,271.1 L 320.2,320.2 L 271.1,306.4 L 265.1,357.1 L 225.0,325.5 L 200.0,370.0 L 175.0,325.5 L 134.9,357.1 L 128.9,306.4 L 79.8,320.2 L 93.6,271.1 L 42.9,265.1 L 74.5,225.0 L 30.0,200.0 L 74.5,175.0 L 42.9,134.9 L 93.6,128.9 L 79.8,79.8 L 128.9,93.6 L 134.9,42.9 L 175.0,74.5 Z"/>
+                    <path class="draw draw-mane2" pathLength="1" d="M 224.6,76.4 L 238.3,107.6 L 270.0,95.2 L 270.7,129.3 L 304.8,130.0 L 292.4,161.7 L 323.6,175.4 L 300.0,200.0 L 323.6,224.6 L 292.4,238.3 L 304.8,270.0 L 270.7,270.7 L 270.0,304.8 L 238.3,292.4 L 224.6,323.6 L 200.0,300.0 L 175.4,323.6 L 161.7,292.4 L 130.0,304.8 L 129.3,270.7 L 95.2,270.0 L 107.6,238.3 L 76.4,224.6 L 100.0,200.0 L 76.4,175.4 L 107.6,161.7 L 95.2,130.0 L 129.3,129.3 L 130.0,95.2 L 161.7,107.6 L 175.4,76.4 L 200.0,100.0 Z"/>
+                </g>
+                <g class="lion-face" fill="none" stroke="#F4E5C2" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke">
+                    <path class="draw draw-face" pathLength="1" d="M200,148 C163,148 148,180 151,214 C153,251 176,281 200,289 C224,281 247,251 249,214 C252,180 237,148 200,148 Z"/>
+                    <path class="draw draw-feat" pathLength="1" d="M160,196 C169,185 187,185 194,197 C186,205 169,205 160,196 Z"/>
+                    <path class="draw draw-feat" pathLength="1" d="M206,197 C213,185 231,185 240,196 C231,205 214,205 206,197 Z"/>
+                    <path class="draw draw-feat" pathLength="1" d="M185,216 C191,211 209,211 215,216 C215,229 207,239 200,241 C193,239 185,229 185,216 Z"/>
+                    <path class="draw draw-feat2" pathLength="1" d="M200,241 L200,254"/>
+                    <path class="draw draw-feat2" pathLength="1" d="M200,254 C191,266 176,265 168,258"/>
+                    <path class="draw draw-feat2" pathLength="1" d="M200,254 C209,266 224,265 232,258"/>
+                    <path class="draw draw-feat2" pathLength="1" d="M151,214 C133,210 120,214 110,222"/>
+                    <path class="draw draw-feat2" pathLength="1" d="M249,214 C267,210 280,214 290,222"/>
+                </g>
+                <g class="lion-fills" fill="#F4E5C2" opacity="0">
+                    <circle cx="177" cy="196" r="3.4"/>
+                    <circle cx="223" cy="196" r="3.4"/>
+                </g>
+                <g class="lion-fills nose-fill" fill="#D4AF37" opacity="0">
+                    <path d="M185,216 C191,211 209,211 215,216 C215,229 207,239 200,241 C193,239 185,229 185,216 Z"/>
+                </g>
+            </svg>
+            <div class="lion-wordmark">
+                <p class="lion-eyebrow">THE HOUSE OF FRAGRANCE</p>
+                <h1 class="lion-title">LION PERFUMES</h1>
+                <span class="lion-rule"></span>
+            </div>
+        </div>
+        <button class="lion-skip" type="button" aria-label="Enter site">דלג ›</button>
+    </div>
+
+    <style>
+        html.lion-lock, body.lion-lock { overflow: hidden !important; }
+
+        #lion-intro {
+            position: fixed; inset: 0; z-index: 9999;
+            background: radial-gradient(circle at 50% 45%, #141414 0%, #0a0a0a 60%, #060606 100%);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            direction: ltr;
+            opacity: 1;
+            transition: opacity 0.9s ease, visibility 0.9s ease;
+        }
+        #lion-intro.lion-done { opacity: 0; visibility: hidden; pointer-events: none; }
+
+        .lion-intro__glow {
+            position: absolute; width: 620px; height: 620px; max-width: 92vw; max-height: 92vw;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(212,175,55,0.16) 0%, rgba(212,175,55,0.05) 40%, transparent 70%);
+            filter: blur(6px);
+            opacity: 0; animation: lionGlow 2.6s ease 0.4s forwards;
+            pointer-events: none;
+        }
+        @keyframes lionGlow { to { opacity: 1; } }
+
+        .lion-intro__inner {
+            position: relative; display: flex; flex-direction: column; align-items: center;
+            animation: lionOutro 1s ease 3.5s forwards;
+        }
+        @keyframes lionOutro { to { transform: scale(1.06); opacity: 0.0; } }
+
+        .lion-svg {
+            width: 300px; height: 300px; max-width: 74vw; max-height: 44vh;
+            filter: drop-shadow(0 0 14px rgba(212,175,55,0.28));
+        }
+
+        .draw {
+            stroke-dasharray: 1; stroke-dashoffset: 1;
+            animation-fill-mode: forwards; animation-timing-function: ease-in-out;
+        }
+        .draw-mane  { animation: lionDraw 1.5s 0.15s forwards; }
+        .draw-mane2 { animation: lionDraw 1.5s 0.45s forwards; }
+        .draw-face  { animation: lionDraw 1.2s 0.9s forwards; }
+        .draw-feat  { animation: lionDraw 0.9s 1.5s forwards; }
+        .draw-feat2 { animation: lionDraw 0.8s 1.8s forwards; }
+        @keyframes lionDraw { to { stroke-dashoffset: 0; } }
+
+        .lion-fills { animation: lionFill 0.7s ease 2.2s forwards; }
+        @keyframes lionFill { to { opacity: 1; } }
+
+        .lion-wordmark { margin-top: 26px; text-align: center; }
+        .lion-eyebrow {
+            font-family: 'Heebo', sans-serif; color: rgba(212,175,55,0.85);
+            letter-spacing: 0.35em; font-size: 11px; margin: 0 0 10px;
+            opacity: 0; transform: translateY(8px);
+            animation: lionUp 0.8s ease 2.35s forwards;
+        }
+        .lion-title {
+            font-family: 'Playfair Display', serif; font-weight: 900; font-size: 40px;
+            margin: 0; letter-spacing: 0.04em;
+            background: linear-gradient(135deg, #D4AF37 0%, #F4E5C2 50%, #D4AF37 100%);
+            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+            opacity: 0; transform: translateY(10px);
+            animation: lionUp 0.9s ease 2.55s forwards;
+        }
+        .lion-rule {
+            display: block; width: 0; height: 2px; margin: 16px auto 0;
+            background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+            animation: lionRule 1s ease 2.8s forwards;
+        }
+        @keyframes lionUp { to { opacity: 1; transform: translateY(0); } }
+        @keyframes lionRule { to { width: 220px; } }
+
+        .lion-skip {
+            position: absolute; bottom: 34px; right: 34px;
+            background: transparent; border: 1px solid rgba(212,175,55,0.35);
+            color: rgba(212,175,55,0.9); font-family: 'Heebo', sans-serif; font-size: 13px;
+            letter-spacing: 0.15em; padding: 8px 18px; border-radius: 999px; cursor: pointer;
+            opacity: 0; animation: lionUp 0.6s ease 1.2s forwards; transition: background 0.25s, color 0.25s;
+        }
+        .lion-skip:hover { background: rgba(212,175,55,0.12); color: #F4E5C2; }
+
+        @media (max-width: 640px) {
+            .lion-title { font-size: 30px; }
+            .lion-skip { bottom: 24px; right: 24px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .draw { stroke-dashoffset: 0; animation: none; }
+            .lion-fills, .lion-eyebrow, .lion-title { opacity: 1; transform: none; animation: none; }
+            .lion-rule { width: 220px; animation: none; }
+            .lion-intro__inner, .lion-intro__glow { animation: none; opacity: 1; }
+        }
+    </style>
+
+    <script>
+        (function () {
+            var intro = document.getElementById('lion-intro');
+            if (!intro) return;
+            var root = document.documentElement;
+            // Shows once per browser session. To show on EVERY visit, delete the next 4 lines.
+            try {
+                if (sessionStorage.getItem('lionIntroSeen')) { intro.remove(); return; }
+                sessionStorage.setItem('lionIntroSeen', '1');
+            } catch (e) {}
+
+            root.classList.add('lion-lock');
+            document.body.classList.add('lion-lock');
+
+            var finished = false;
+            function endIntro() {
+                if (finished) return; finished = true;
+                intro.classList.add('lion-done');
+                root.classList.remove('lion-lock');
+                document.body.classList.remove('lion-lock');
+                setTimeout(function () { if (intro && intro.parentNode) intro.parentNode.removeChild(intro); }, 1000);
+            }
+            var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            var timer = setTimeout(endIntro, reduce ? 1400 : 4600);
+            intro.addEventListener('click', function () { clearTimeout(timer); endIntro(); });
+        })();
+    </script>
+    <!-- ===== end Entrance Animation ===== -->
+
     <!-- Header -->
     <header class="fixed top-0 w-full bg-dark-900/95 backdrop-blur-md border-b border-gold-400/20 z-40">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="/" class="flex items-center gap-3">
-                
-                <h1 class="font-serif text-2xl font-bold gold-gradient">LION PERFUMES</h1>
-            </a>
+            <div class="flex items-center gap-3">
+                <button onclick="openMenu()" aria-label="תפריט" class="w-10 h-10 flex items-center justify-center rounded-full border border-gold-400/30 text-gold-400 hover:bg-gold-400 hover:text-dark-900 transition-all">
+                    <i data-lucide="menu" class="w-5 h-5"></i>
+                </button>
+                <a href="/" class="flex items-center gap-3">
+                    <h1 class="font-serif text-2xl font-bold gold-gradient">LION PERFUMES</h1>
+                </a>
+            </div>
 
             <button onclick="toggleCart()" class="relative px-4 py-2 hover:bg-dark-800 rounded-full transition-colors text-gold-400 font-bold text-sm border border-gold-400/30 flex items-center gap-2">
                 <i data-lucide="shopping-bag" class="w-5 h-5"></i>
@@ -518,6 +712,20 @@
         <div class="marquee-track" id="marquee-track"></div>
     </div>
 
+    <!-- New Arrivals -->
+    <section id="sec-new-arrivals" class="py-12 px-4">
+        <div class="container mx-auto">
+            <div class="text-center mb-8">
+                <p class="text-gold-400/80 tracking-[0.3em] text-xs mb-2">NEW ARRIVALS</p>
+                <h3 class="font-serif text-3xl md:text-4xl font-bold gold-gradient mb-4">חדש באתר</h3>
+                <div class="gold-line"></div>
+            </div>
+            <div id="new-arrivals-track" class="flex gap-4 overflow-x-auto pb-4">
+                <!-- rendered by JS -->
+            </div>
+        </div>
+    </section>
+
     <!-- Best Sellers -->
     <section id="best-sellers" class="py-12 px-4">
         <div class="container mx-auto">
@@ -532,8 +740,36 @@
         </div>
     </section>
 
+    <!-- Back In Stock -->
+    <section id="sec-back-in-stock" class="py-12 px-4">
+        <div class="container mx-auto">
+            <div class="text-center mb-8">
+                <p class="text-gold-400/80 tracking-[0.3em] text-xs mb-2">BACK IN STOCK</p>
+                <h3 class="font-serif text-3xl md:text-4xl font-bold gold-gradient mb-4">חזרו למלאי</h3>
+                <div class="gold-line"></div>
+            </div>
+            <div id="back-in-stock-track" class="flex gap-4 overflow-x-auto pb-4">
+                <!-- rendered by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Picks -->
+    <section id="sec-recommended" class="py-12 px-4">
+        <div class="container mx-auto">
+            <div class="text-center mb-8">
+                <p class="text-gold-400/80 tracking-[0.3em] text-xs mb-2">OUR PICKS</p>
+                <h3 class="font-serif text-3xl md:text-4xl font-bold gold-gradient mb-4">המומלצים שלנו</h3>
+                <div class="gold-line"></div>
+            </div>
+            <div id="recommended-track" class="flex gap-4 overflow-x-auto pb-4">
+                <!-- rendered by JS -->
+            </div>
+        </div>
+    </section>
+
     <!-- Filters Section -->
-    <section class="py-8 px-4 bg-dark-800 border-y border-gold-400/10">
+    <section id="filters-section" style="display:none;" class="py-8 px-4 bg-dark-800 border-y border-gold-400/10">
         <div class="container mx-auto">
             <div class="flex flex-col md:flex-row gap-6 items-center justify-between mb-6">
                 <h3 onclick="toggleBrandFilters()"
@@ -663,22 +899,69 @@
     <!-- Products Grid -->
     <section class="py-12 px-4">
         <div class="container mx-auto">
-            <p id="product-count" class="text-gray-400 text-sm mb-4 flex items-center gap-2">
-                <i data-lucide="layout-grid" class="w-4 h-4 text-gold-400/60"></i>
-                <span id="product-count-text"></span>
-            </p>
-            <div id="products-grid"
-                class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
-                <!-- Products will be inserted here as clickable cards -->
-            </div>
+            <div id="catalog-body" style="display:none;">
+                <p id="product-count" class="text-gray-400 text-sm mb-4 flex items-center gap-2">
+                    <i data-lucide="layout-grid" class="w-4 h-4 text-gold-400/60"></i>
+                    <span id="product-count-text"></span>
+                </p>
+                <div id="products-grid"
+                    class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
+                    <!-- Products will be inserted here as clickable cards -->
+                </div>
 
-            <div id="no-products" class="hidden text-center py-16">
-                <i data-lucide="package" class="w-16 h-16 text-gray-600 mx-auto mb-4"></i>
-                <p class="text-gray-400 text-xl mb-2">אין מוצרים להצגה</p>
-                <p class="text-gray-500 text-sm">נסה לשנות את מסנני החיפוש</p>
+                <div id="no-products" class="hidden text-center py-16">
+                    <i data-lucide="package" class="w-16 h-16 text-gray-600 mx-auto mb-4"></i>
+                    <p class="text-gray-400 text-xl mb-2">אין מוצרים להצגה</p>
+                    <p class="text-gray-500 text-sm">נסה לשנות את מסנני החיפוש</p>
+                </div>
             </div>
         </div>
     </section>
+
+    <!-- Menu Drawer (☰) -->
+    <div id="menu-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden" onclick="closeMenu()"></div>
+    <div id="menu-sidebar" class="menu-sidebar fixed top-0 right-0 h-full w-full max-w-xs bg-dark-800 border-l border-gold-400/20 z-50 overflow-y-auto">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-6 border-b border-gold-400/20 pb-4">
+                <h3 class="font-serif text-2xl text-gold-400">תפריט</h3>
+                <button onclick="closeMenu()" aria-label="סגור" class="text-gray-400 hover:text-gold-400 transition-colors">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <nav class="flex flex-col gap-1">
+                <button onclick="menuShowAll()" class="menu-item">
+                    <i data-lucide="layout-grid" class="w-5 h-5 text-gold-400"></i>
+                    <span>הצג את כל הבשמים</span>
+                </button>
+                <div class="h-px bg-gold-400/15 my-2"></div>
+                <button onclick="menuGo('sec-new-arrivals')" class="menu-item">
+                    <i data-lucide="sparkles" class="w-5 h-5 text-gold-400"></i>
+                    <span>חדש באתר</span>
+                </button>
+                <button onclick="menuGo('best-sellers')" class="menu-item">
+                    <i data-lucide="crown" class="w-5 h-5 text-gold-400"></i>
+                    <span>הנמכרים ביותר</span>
+                </button>
+                <button onclick="menuGo('sec-back-in-stock')" class="menu-item">
+                    <i data-lucide="rotate-ccw" class="w-5 h-5 text-gold-400"></i>
+                    <span>חזרו למלאי</span>
+                </button>
+                <button onclick="menuGo('sec-recommended')" class="menu-item">
+                    <i data-lucide="star" class="w-5 h-5 text-gold-400"></i>
+                    <span>המומלצים שלנו</span>
+                </button>
+                <div class="h-px bg-gold-400/15 my-2"></div>
+                <button onclick="closeMenu(); toggleCart();" class="menu-item">
+                    <i data-lucide="shopping-bag" class="w-5 h-5 text-gold-400"></i>
+                    <span>עגלת הקניות</span>
+                </button>
+                <a href="https://wa.me/972543102706?text=היי!%20ראיתי%20את%20האתר%20ומעוניין%20לקבל%20מידע%20על%20בשמים" target="_blank" class="menu-item">
+                    <i data-lucide="message-circle" class="w-5 h-5 text-gold-400"></i>
+                    <span>צור קשר בוואטסאפ</span>
+                </a>
+            </nav>
+        </div>
+    </div>
 
     <!-- Cart Sidebar -->
     <div id="cart-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden" onclick="closeCart()"></div>
@@ -788,6 +1071,8 @@
             sessionStorage.setItem('lionPerfumesMaxPrice', maxPrice);
             sessionStorage.setItem('lionPerfumesSort', currentSort);
             sessionStorage.setItem('lionPerfumesBrandsExpanded', brandsExpanded);
+            sessionStorage.setItem('lionPerfumesCatalogOpen', catalogOpen ? '1' : '0');
+            sessionStorage.setItem('lionPerfumesFiltersOpen', filtersOpen ? '1' : '0');
         }
 
         // Restore state when returning to page
@@ -813,11 +1098,22 @@
                 document.getElementById('sort-select').value = currentSort;
                 document.getElementById('price-value').textContent = `עד ${maxPrice} ש"ח`;
                 
-                // Restore season buttons
+                // Restore season + gender buttons without auto-opening the catalog
+                suppressCatalogAuto = true;
                 filterBySeason(currentSeason);
-                
                 // Restore gender buttons (must happen before scroll restore)
                 filterByGender(currentGender);
+                suppressCatalogAuto = false;
+
+                // Re-open the filter panel / catalog only if they were open before navigating
+                if (sessionStorage.getItem('lionPerfumesFiltersOpen') === '1') {
+                    openFilters(false);
+                }
+                if (sessionStorage.getItem('lionPerfumesCatalogOpen') === '1') {
+                    openCatalog(false);
+                }
+                sessionStorage.removeItem('lionPerfumesCatalogOpen');
+                sessionStorage.removeItem('lionPerfumesFiltersOpen');
                 
                 // Restore brand filters visibility
                 if (brandsExpanded) {
@@ -2632,6 +2928,7 @@
 
         // Sorting Function
         function sortProducts() {
+            autoOpenCatalog();
             currentSort = document.getElementById('sort-select').value;
             renderProducts();
         }
@@ -2681,6 +2978,7 @@
 
         let hideSoldOut = false;
         function toggleSoldOut() {
+            autoOpenCatalog();
             hideSoldOut = !hideSoldOut;
             const btn = document.getElementById('soldout-toggle');
             btn.classList.toggle('text-gold-400', hideSoldOut);
@@ -2704,6 +3002,7 @@
         }
 
         function filterBySeason(season) {
+            autoOpenCatalog();
             currentSeason = season;
             updateFilterBadge('season-current', seasonLabels[season] || season, season !== 'all');
 
@@ -2725,6 +3024,7 @@
 
         // Filter by Gender
         function filterByGender(gender) {
+            autoOpenCatalog();
             currentGender = gender;
             updateFilterBadge('gender-current', genderLabels[gender] || gender, gender !== 'all');
 
@@ -2742,6 +3042,81 @@
             
             lucide.createIcons();
             renderProducts();
+        }
+
+        // ===== Filter panel show/hide =====
+        let filtersOpen = false;
+        function openFilters(scroll) {
+            const el = document.getElementById('filters-section');
+            if (el) el.style.display = '';
+            filtersOpen = true;
+            if (scroll && el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // ===== Full catalog show/hide =====
+        let catalogOpen = false;
+        let suppressCatalogAuto = false;
+        function autoOpenCatalog() { if (!suppressCatalogAuto) { openFilters(false); openCatalog(false); } }
+        function revealCatalogCards() {
+            document.querySelectorAll('#catalog-body .reveal-card:not(.revealed)')
+                .forEach(el => el.classList.add('revealed'));
+        }
+        function openCatalog(scroll) {
+            const body = document.getElementById('catalog-body');
+            if (body) body.style.display = 'block';
+            const chev = document.getElementById('catalog-toggle-chevron');
+            if (chev) chev.style.transform = 'rotate(180deg)';
+            const txt = document.getElementById('catalog-toggle-text');
+            if (txt) txt.textContent = 'הסתר את כל הבשמים';
+            const wasClosed = !catalogOpen;
+            catalogOpen = true;
+            revealCatalogCards();
+            if (scroll && wasClosed && body) {
+                body.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+        function closeCatalog() {
+            const body = document.getElementById('catalog-body');
+            if (body) body.style.display = 'none';
+            const chev = document.getElementById('catalog-toggle-chevron');
+            if (chev) chev.style.transform = '';
+            const txt = document.getElementById('catalog-toggle-text');
+            if (txt) txt.textContent = 'הצג את כל הבשמים';
+            catalogOpen = false;
+        }
+        function toggleCatalog() {
+            if (catalogOpen) {
+                closeCatalog();
+                const btn = document.getElementById('catalog-toggle');
+                if (btn) btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else {
+                openCatalog(true);
+            }
+        }
+
+        // ===== Header ☰ menu drawer =====
+        function openMenu() {
+            document.getElementById('menu-sidebar').classList.add('open');
+            document.getElementById('menu-overlay').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeMenu() {
+            document.getElementById('menu-sidebar').classList.remove('open');
+            document.getElementById('menu-overlay').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+        function menuGo(id) {
+            closeMenu();
+            const el = document.getElementById(id);
+            if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 180);
+        }
+        function menuShowAll() {
+            closeMenu();
+            setTimeout(() => { openFilters(false); openCatalog(true); }, 180);
+        }
+        function menuShowFilters() {
+            closeMenu();
+            setTimeout(() => openFilters(true), 180);
         }
 
         // Render Products
@@ -2778,6 +3153,9 @@
                     ? `${perfumes.length} מוצרים`
                     : `מציג ${filtered.length} מתוך ${perfumes.length} מוצרים`;
             }
+            const catCount = document.getElementById('catalog-toggle-count');
+            if (catCount) catCount.textContent = `(${perfumes.length})`;
+            if (catalogOpen) revealCatalogCards();
             
             if (filtered.length === 0) {
                 grid.innerHTML = '';
@@ -2870,6 +3248,7 @@
         }
 
         function updatePriceDisplay() {
+            autoOpenCatalog();
             maxPrice = document.getElementById('price-range').value;
             document.getElementById('price-value').textContent = `עד ${maxPrice} ש"ח`;
             renderProducts();
@@ -2902,6 +3281,7 @@
         }
 
         function handleSearch(value) {
+            autoOpenCatalog();
             searchQuery = value;
             const clearBtn = document.getElementById('search-clear');
             if (clearBtn) {
@@ -3174,6 +3554,46 @@
                         <span class="text-lg font-bold text-gold-400">₪${p.price}</span>
                     </div>
                 </a>`).join('');
+        })();
+
+        // ===== Curated product sections (ניתן לנהל מפאנל הניהול) =====
+        // כדי לשנות אילו מוצרים מופיעים בכל מדור — ערכו את רשימות המזהים כאן (או דרך פאנל הניהול):
+        const newArrivalIds  = [141, 142, 134, 138, 139, 140];
+        const backInStockIds = [118, 136, 137, 101, 131];
+        const recommendedIds = [50, 3, 132, 133, 38, 42];
+
+        (function renderCuratedSections() {
+            const sections = [
+                { ids: newArrivalIds,  track: 'new-arrivals-track',  wrap: 'sec-new-arrivals' },
+                { ids: backInStockIds, track: 'back-in-stock-track', wrap: 'sec-back-in-stock' },
+                { ids: recommendedIds, track: 'recommended-track',   wrap: 'sec-recommended' },
+            ];
+            sections.forEach(sec => {
+                const track = document.getElementById(sec.track);
+                if (!track) return;
+                const items = sec.ids
+                    .map(id => perfumes.find(p => p.id === id))
+                    .filter(p => p && !p.soldOut);
+                if (!items.length) {
+                    const w = document.getElementById(sec.wrap);
+                    if (w) w.style.display = 'none';
+                    return;
+                }
+                track.innerHTML = items.map(p => `
+                    <a href="product.html?id=${p.id}" onclick="savePageState()" class="bs-card reveal-card tilt-card bg-dark-800 rounded-lg overflow-hidden border border-gold-400/30 card-hover group block relative">
+                        <span class="gold-sweep"></span>
+                        <div class="relative overflow-hidden">
+                            <img src="${p.images[0]}" alt="${p.name}" class="w-full product-image" loading="lazy" decoding="async"
+                                 onerror="this.src='https://static.photos/luxury/640x360/999'">
+                            <div class="absolute inset-0 bg-gradient-to-t from-dark-900 to-transparent opacity-60"></div>
+                        </div>
+                        <div class="p-3">
+                            <div class="text-[11px] text-gold-400 mb-0.5">${p.brand}</div>
+                            <h4 class="font-serif text-base font-bold text-white group-hover:text-gold-400 transition-colors line-clamp-1">${p.name}</h4>
+                            <span class="text-lg font-bold text-gold-400">₪${p.price}</span>
+                        </div>
+                    </a>`).join('');
+            });
         })();
 
         // ===== Cinematic redesign layer =====

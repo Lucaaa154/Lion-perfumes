@@ -49,6 +49,7 @@
         <button class="tab" onclick="switchTab('list')" id="tab-list">כל הבשמים</button>
         <button class="tab" onclick="switchTab('brands')" id="tab-brands">ניהול מותגים</button>
         <button class="tab" onclick="switchTab('bestsellers')" id="tab-bestsellers">👑 נמכרים ביותר</button>
+        <button class="tab" onclick="switchTab('sections')" id="tab-sections">🗂️ מדורים</button>
     </div>
 
     <div class="px-4 pb-10 max-w-lg mx-auto">
@@ -128,6 +129,25 @@
             <h3 class="gold font-bold mb-3">הוסף מוצרים לרשימה</h3>
             <input type="text" id="bs-search" placeholder="חפש בושם..." oninput="renderBestSellersAdmin()" style="margin-bottom:14px;">
             <div id="bs-all"></div>
+        </div>
+
+        <!-- SECTIONS TAB -->
+        <div id="panel-sections" style="display:none;">
+            <div class="dark-card p-5 mb-4">
+                <h2 class="text-lg font-bold gold mb-1">🗂️ מדורי מוצרים</h2>
+                <p class="text-gray-500 text-sm mb-4">בחרו מדור, הוסיפו/הסירו מוצרים וסדרו אותם. מוצרים שאזלו מהמלאי מוסתרים אוטומטית באתר. מדור ריק לא יוצג באתר.</p>
+                <div class="flex gap-2 mb-4 overflow-x-auto pb-1">
+                    <button class="tab active" id="sectab-newArrival" onclick="secSwitch('newArrival')">חדש באתר</button>
+                    <button class="tab" id="sectab-backInStock" onclick="secSwitch('backInStock')">חזרו למלאי</button>
+                    <button class="tab" id="sectab-recommended" onclick="secSwitch('recommended')">המומלצים שלנו</button>
+                </div>
+                <div id="sec-current"><div class="text-center text-gray-500 py-8">טוען...</div></div>
+                <button class="btn-gold" onclick="secSave()" style="margin-top:12px;">שמור שינויים באתר</button>
+                <div id="sec-status" style="display:none;"></div>
+            </div>
+            <h3 class="gold font-bold mb-3">הוסף מוצרים למדור</h3>
+            <input type="text" id="sec-search" placeholder="חפש בושם..." oninput="renderSectionAdmin()" style="margin-bottom:14px;">
+            <div id="sec-all"></div>
         </div>
     </div>
 
@@ -218,10 +238,13 @@ function switchTab(tab) {
     document.getElementById('panel-list').style.display = tab === 'list' ? 'block' : 'none';
     document.getElementById('panel-brands').style.display = tab === 'brands' ? 'block' : 'none';
     document.getElementById('panel-bestsellers').style.display = tab === 'bestsellers' ? 'block' : 'none';
+    document.getElementById('panel-sections').style.display = tab === 'sections' ? 'block' : 'none';
     document.getElementById('tab-add').className = 'tab' + (tab === 'add' ? ' active' : '');
     document.getElementById('tab-list').className = 'tab' + (tab === 'list' ? ' active' : '');
     document.getElementById('tab-brands').className = 'tab' + (tab === 'brands' ? ' active' : '');
     document.getElementById('tab-bestsellers').className = 'tab' + (tab === 'bestsellers' ? ' active' : '');
+    document.getElementById('tab-sections').className = 'tab' + (tab === 'sections' ? ' active' : '');
+    if (tab === 'sections') loadSections();
     if (tab === 'list') loadPerfumes();
     if (tab === 'brands') loadBrands();
     if (tab === 'bestsellers') loadBestSellers();
@@ -431,6 +454,132 @@ async function saveBestSellers() {
         else throw new Error(res.message || 'Push failed');
     } catch (e) {
         showStatus('bs-status', '❌ ' + e.message, 'error');
+    }
+}
+
+// ===== Product Sections (חדש באתר / חזרו למלאי / המומלצים שלנו) =====
+const SECTION_DEFS = {
+    newArrival:  { constName: 'newArrivalIds',  label: 'חדש באתר' },
+    backInStock: { constName: 'backInStockIds', label: 'חזרו למלאי' },
+    recommended: { constName: 'recommendedIds', label: 'המומלצים שלנו' },
+};
+const SEC_MAX = 12;
+let secActive = 'newArrival';
+let secData = { newArrival: [], backInStock: [], recommended: [] };
+let secLoaded = false;
+
+function secParse(html, constName) {
+    const m = html.match(new RegExp('const ' + constName + '\\s*=\\s*\\[([^\\]]*)\\];'));
+    if (!m) return null;
+    return m[1].split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n));
+}
+
+async function loadSections() {
+    const box = document.getElementById('sec-current');
+    box.innerHTML = '<div class="text-center text-gray-500 py-8">טוען...</div>';
+    document.getElementById('sec-status').style.display = 'none';
+    try {
+        const html = await getFile();
+        allPerfumes = parsePerfumes(html);
+        let missing = [];
+        Object.keys(SECTION_DEFS).forEach(key => {
+            const ids = secParse(html, SECTION_DEFS[key].constName);
+            if (ids === null) { missing.push(SECTION_DEFS[key].constName); secData[key] = []; }
+            else secData[key] = ids.filter(id => allPerfumes.some(p => p.id === id));
+        });
+        secLoaded = true;
+        if (missing.length === Object.keys(SECTION_DEFS).length) {
+            box.innerHTML = '<div class="text-center text-red-400 py-8">מדורי המוצרים לא נמצאו ב-index.html — יש להעלות קודם את הגרסה החדשה של האתר</div>';
+            document.getElementById('sec-all').innerHTML = '';
+            return;
+        }
+        renderSectionAdmin();
+    } catch (e) {
+        box.innerHTML = '<div class="text-center text-red-400 py-8">שגיאה: ' + e.message + '</div>';
+    }
+}
+
+function secSwitch(key) {
+    secActive = key;
+    Object.keys(SECTION_DEFS).forEach(k => {
+        const t = document.getElementById('sectab-' + k);
+        if (t) t.className = 'tab' + (k === key ? ' active' : '');
+    });
+    document.getElementById('sec-search').value = '';
+    document.getElementById('sec-status').style.display = 'none';
+    renderSectionAdmin();
+}
+
+function renderSectionAdmin() {
+    if (!secLoaded) return;
+    const sel = secData[secActive];
+    const cur = document.getElementById('sec-current');
+    if (!sel.length) {
+        cur.innerHTML = '<div class="text-center text-gray-500 py-6">המדור ריק — הוסיפו מוצרים מלמטה 👇</div>';
+    } else {
+        cur.innerHTML = sel.map((id, i) => {
+            const p = allPerfumes.find(x => x.id === id);
+            if (!p) return '';
+            const rank = '<span style="background:linear-gradient(135deg,#D4AF37,#B8960C);color:#000;font-weight:700;border-radius:9999px;min-width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;">' + (i + 1) + '</span>';
+            const controls = '<div style="display:flex;flex-direction:column;gap:4px;flex-shrink:0;">' +
+                '<button class="btn-edit" ' + (i === 0 ? 'disabled style="opacity:.3;"' : '') + ' onclick="secMove(' + id + ',-1)">▲</button>' +
+                '<button class="btn-edit" ' + (i === sel.length - 1 ? 'disabled style="opacity:.3;"' : '') + ' onclick="secMove(' + id + ',1)">▼</button>' +
+                '</div>' +
+                '<button class="btn-delete" onclick="secRemove(' + id + ')">✕</button>';
+            return '<div style="display:flex;align-items:center;gap:10px;">' + rank + '<div style="flex:1;min-width:0;">' + bsCard(p, controls) + '</div></div>';
+        }).join('');
+    }
+    const search = (document.getElementById('sec-search').value || '').toLowerCase();
+    const avail = allPerfumes.filter(p => !sel.includes(p.id) &&
+        (p.name.toLowerCase().includes(search) || (p.brand || '').toLowerCase().includes(search)));
+    document.getElementById('sec-all').innerHTML = avail.length
+        ? avail.map(p => bsCard(p, '<button class="btn-edit" onclick="secAdd(' + p.id + ')">➕ הוסף</button>')).join('')
+        : '<div class="text-center text-gray-500 py-8">לא נמצאו בשמים</div>';
+}
+
+function secAdd(id) {
+    const sel = secData[secActive];
+    if (sel.length >= SEC_MAX) {
+        showStatus('sec-status', '⚠️ ניתן לבחור עד ' + SEC_MAX + ' מוצרים במדור. הסירו מוצר לפני הוספה.', 'error');
+        return;
+    }
+    document.getElementById('sec-status').style.display = 'none';
+    sel.push(id);
+    renderSectionAdmin();
+}
+
+function secRemove(id) {
+    secData[secActive] = secData[secActive].filter(x => x !== id);
+    renderSectionAdmin();
+}
+
+function secMove(id, dir) {
+    const sel = secData[secActive];
+    const i = sel.indexOf(id);
+    const j = i + dir;
+    if (i < 0 || j < 0 || j >= sel.length) return;
+    [sel[i], sel[j]] = [sel[j], sel[i]];
+    renderSectionAdmin();
+}
+
+async function secSave() {
+    showStatus('sec-status', '⏳ שומר...', 'loading');
+    try {
+        let html = await getFile();
+        let changed = 0, missing = [];
+        Object.keys(SECTION_DEFS).forEach(key => {
+            const cn = SECTION_DEFS[key].constName;
+            const re = new RegExp('const ' + cn + '\\s*=\\s*\\[[^\\]]*\\];');
+            if (!re.test(html)) { missing.push(cn); return; }
+            html = html.replace(re, 'const ' + cn + ' = [' + secData[key].join(', ') + '];');
+            changed++;
+        });
+        if (!changed) throw new Error('מדורי המוצרים לא נמצאו ב-index.html');
+        const res = await pushFile(html, 'Update product sections');
+        if (res.content) showStatus('sec-status', '✅ נשמר! המדורים עודכנו באתר (העדכון באתר החי עשוי לקחת כדקה)' + (missing.length ? ' — לא עודכנו: ' + missing.join(', ') : ''), 'success');
+        else throw new Error(res.message || 'Push failed');
+    } catch (e) {
+        showStatus('sec-status', '❌ ' + e.message, 'error');
     }
 }
 
