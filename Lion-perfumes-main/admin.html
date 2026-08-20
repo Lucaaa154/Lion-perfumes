@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lion Perfumes - Admin Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #0a0a0a; color: #ffffff; font-family: 'Heebo', sans-serif; }
+        .gold { color: #D4AF37; }
+        .dark-card { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 16px; }
+        input, select, textarea { background: #111 !important; border: 1px solid #3a3a3a !important; color: white !important; border-radius: 8px; padding: 10px 14px; width: 100%; font-family: 'Heebo', sans-serif; font-size: 14px; box-sizing: border-box; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: #D4AF37 !important; }
+        select option { background: #1a1a1a; }
+        label { display: block; color: #D4AF37; font-size: 13px; font-weight: 500; margin-bottom: 5px; }
+        .tab { padding: 10px 16px; border-radius: 10px; cursor: pointer; font-weight: 500; font-size: 13px; border: 1px solid #2a2a2a; color: #888; background: none; font-family: 'Heebo', sans-serif; white-space: nowrap; }
+        .tab.active { background: linear-gradient(135deg, #D4AF37 0%, #B8960C 100%); color: #000; border-color: #D4AF37; }
+        .perfume-card { background: #111; border: 1px solid #2a2a2a; border-radius: 12px; padding: 12px; display: flex; gap: 12px; align-items: center; margin-bottom: 10px; }
+        .perfume-card img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; border: 1px solid #D4AF37; flex-shrink: 0; }
+        .btn-edit { background: #1a2a1a; border: 1px solid #2a6a2a; color: #4ade80; border-radius: 8px; padding: 6px 12px; cursor: pointer; font-size: 12px; font-family: 'Heebo', sans-serif; }
+        .btn-delete { background: #2a1a1a; border: 1px solid #6a2a2a; color: #f87171; border-radius: 8px; padding: 6px 12px; cursor: pointer; font-size: 12px; font-family: 'Heebo', sans-serif; }
+        .btn-gold { background: linear-gradient(135deg, #D4AF37 0%, #B8960C 100%); color: #000; font-weight: 700; border: none; border-radius: 12px; padding: 14px; width: 100%; font-size: 16px; cursor: pointer; font-family: 'Heebo', sans-serif; }
+        .btn-secondary { background: #1a1a1a; color: #888; border: 1px solid #3a3a3a; border-radius: 12px; padding: 14px; width: 100%; font-size: 15px; cursor: pointer; font-family: 'Heebo', sans-serif; margin-top: 8px; }
+        .status-box { border-radius: 10px; padding: 14px; margin-top: 12px; font-size: 14px; }
+        .status-success { background: #0f2a1a; border: 1px solid #2a6a3a; color: #4ade80; }
+        .status-error { background: #2a0f0f; border: 1px solid #6a2a2a; color: #f87171; }
+        .status-loading { background: #1a1a2a; border: 1px solid #2a2a6a; color: #93c5fd; }
+        .img-row { display: flex; gap: 8px; margin-bottom: 8px; }
+        .img-row input { flex: 1; }
+        .remove-btn { background: #2a0f0f; border: 1px solid #6a2a2a; color: #f87171; border-radius: 8px; padding: 0 12px; cursor: pointer; font-size: 18px; flex-shrink: 0; }
+        .soldout-badge { background: #6a2a2a; color: #f87171; font-size: 10px; padding: 2px 6px; border-radius: 4px; margin-left: 4px; }
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); z-index: 100; overflow-y: auto; padding: 20px; box-sizing: border-box; }
+        .modal { background: #1a1a1a; border: 1px solid #D4AF37; border-radius: 16px; padding: 20px; max-width: 500px; margin: 0 auto; }
+        .upload-area { border: 2px dashed #3a3a3a; border-radius: 10px; padding: 16px; text-align: center; cursor: pointer; }
+        .upload-area:hover { border-color: #D4AF37; }
+        .brand-card { background: #111; border: 1px solid #2a2a2a; border-radius: 12px; padding: 12px; display: flex; gap: 12px; align-items: center; margin-bottom: 10px; }
+        .brand-card img { width: 50px; height: 50px; object-fit: cover; border-radius: 8px; border: 1px solid #D4AF37; flex-shrink: 0; }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="text-center pt-6 pb-4 px-4">
+        <h1 class="text-2xl font-bold gold">🦁 LION PERFUMES</h1>
+        <p class="text-gray-500 text-sm mt-1">פאנל ניהול</p>
+    </div>
+
+    <div class="flex gap-2 px-4 mb-4 overflow-x-auto pb-1">
+        <button class="tab active" onclick="switchTab('add')" id="tab-add">הוסף בושם</button>
+        <button class="tab" onclick="switchTab('list')" id="tab-list">כל הבשמים</button>
+        <button class="tab" onclick="switchTab('brands')" id="tab-brands">ניהול מותגים</button>
+        <button class="tab" onclick="switchTab('bestsellers')" id="tab-bestsellers">👑 נמכרים ביותר</button>
+        <button class="tab" onclick="switchTab('sections')" id="tab-sections">🗂️ מדורים</button>
+    </div>
+
+    <div class="px-4 pb-10 max-w-lg mx-auto">
+        <!-- ADD TAB -->
+        <div id="panel-add">
+            <div class="dark-card p-5">
+                <h2 class="text-lg font-bold gold mb-4">הוספת בושם חדש</h2>
+                <div class="grid grid-cols-2 gap-3 mb-3">
+                    <div><label>שם הבושם *</label><input type="text" id="add-name" placeholder="Jean Lowe Verde Aura"></div>
+                    <div><label>מותג *</label><select id="add-brand"><option value="">בחר מותג...</option></select></div>
+                </div>
+                <div class="grid grid-cols-3 gap-3 mb-3">
+                    <div><label>מחיר (₪) *</label><input type="number" id="add-price" placeholder="139"></div>
+                    <div><label>מחיר מבצע (₪)</label><input type="number" id="add-saleprice" placeholder="ריק = ללא מבצע"></div>
+                    <div><label>גודל</label><input type="text" id="add-size" value="100ml"></div>
+                </div>
+                <div class="grid grid-cols-2 gap-3 mb-3">
+                    <div><label>עונה</label><select id="add-season"><option value="summer">קיץ</option><option value="winter">חורף</option><option value="joker" selected>ג'וקר</option></select></div>
+                    <div><label>מגדר</label><select id="add-gender"><option value="male">גברים</option><option value="female">נשים</option><option value="unisex">יוניסקס</option></select></div>
+                </div>
+                <div class="flex items-center gap-3 mb-3 p-3 rounded-lg" style="background:#111;border:1px solid #2a2a2a;">
+                    <input type="checkbox" id="add-soldout" style="width:18px;height:18px;accent-color:#D4AF37;flex-shrink:0;">
+                    <label for="add-soldout" style="color:white;margin:0;cursor:pointer;">אזל מהמלאי</label>
+                </div>
+                <div class="mb-3">
+                    <label>תמונות</label>
+                    <div class="upload-area mb-2" onclick="document.getElementById('add-img-upload').click()">
+                        <input type="file" id="add-img-upload" accept="image/*" multiple style="display:none" onchange="handleUpload(event,'add')">
+                        <p class="text-gray-400 text-sm">העלה תמונות מהטלפון</p>
+                    </div>
+                    <div id="add-img-previews" class="flex flex-wrap gap-2 mb-2"></div>
+                    <div id="add-img-urls"></div>
+                    <button onclick="addUrlField('add')" style="background:none;border:1px dashed #3a3a3a;color:#888;border-radius:8px;padding:8px;width:100%;cursor:pointer;font-size:13px;font-family:'Heebo',sans-serif;">+ הוסף לינק תמונה</button>
+                </div>
+                <div class="mb-4"><label>תיאור</label><textarea id="add-desc" rows="4" placeholder="תיאור הבושם..."></textarea></div>
+                <button class="btn-gold" onclick="addPerfume()">🕐 הוסף לרשימת הפרסום</button>
+                <div id="add-status" style="display:none;"></div>
+            </div>
+        </div>
+
+        <!-- LIST TAB -->
+        <div id="panel-list" style="display:none;">
+            <input type="text" id="search-box" placeholder="חפש בושם..." oninput="renderList()" style="margin-bottom:14px;">
+            <div id="perfumes-list"><div class="text-center text-gray-500 py-8">טוען...</div></div>
+        </div>
+
+        <!-- BRANDS TAB -->
+        <div id="panel-brands" style="display:none;">
+            <div class="dark-card p-5 mb-4">
+                <h2 class="text-lg font-bold gold mb-4">הוסף מותג חדש</h2>
+                <div class="mb-3"><label>שם המותג *</label><input type="text" id="brand-name" placeholder="Brand Name"></div>
+                <div class="mb-3">
+                    <label>לוגו המותג *</label>
+                    <div class="upload-area mb-2" onclick="document.getElementById('brand-img-upload').click()">
+                        <input type="file" id="brand-img-upload" accept="image/*" style="display:none" onchange="handleBrandUpload(event)">
+                        <p class="text-gray-400 text-sm">העלה תמונת לוגו</p>
+                    </div>
+                    <div id="brand-img-preview" class="flex flex-wrap gap-2 mb-2"></div>
+                    <div class="mb-2"><label>או הכנס לינק לתמונה</label><input type="text" id="brand-img-url" placeholder="https://..."></div>
+                </div>
+                <button class="btn-gold" onclick="addBrand()">🕐 הוסף מותג לרשימת הפרסום</button>
+                <div id="brand-status" style="display:none;"></div>
+            </div>
+            <h3 class="gold font-bold mb-3">מותגים קיימים</h3>
+            <div id="brands-list"><div class="text-center text-gray-500 py-8">טוען...</div></div>
+        </div>
+
+        <!-- BEST SELLERS TAB -->
+        <div id="panel-bestsellers" style="display:none;">
+            <div class="dark-card p-5 mb-4">
+                <h2 class="text-lg font-bold gold mb-1">👑 הנמכרים ביותר</h2>
+                <p class="text-gray-500 text-sm mb-4">עד 8 מוצרים. הסדר כאן הוא הסדר שיוצג באתר. מוצרים שאזלו מהמלאי מוסתרים אוטומטית באתר.</p>
+                <div id="bs-current"><div class="text-center text-gray-500 py-8">טוען...</div></div>
+                <button class="btn-gold" onclick="saveBestSellers()" style="margin-top:12px;">שמור שינויים באתר</button>
+                <div id="bs-status" style="display:none;"></div>
+            </div>
+            <h3 class="gold font-bold mb-3">הוסף מוצרים לרשימה</h3>
+            <input type="text" id="bs-search" placeholder="חפש בושם..." oninput="renderBestSellersAdmin()" style="margin-bottom:14px;">
+            <div id="bs-all"></div>
+        </div>
+
+        <!-- SECTIONS TAB -->
+        <div id="panel-sections" style="display:none;">
+            <div class="dark-card p-5 mb-4">
+                <h2 class="text-lg font-bold gold mb-1">🗂️ מדורי מוצרים</h2>
+                <p class="text-gray-500 text-sm mb-4">בחרו מדור, הוסיפו/הסירו מוצרים וסדרו אותם. מוצרים שאזלו מהמלאי מוסתרים אוטומטית באתר. מדור ריק לא יוצג באתר.</p>
+                <div class="flex gap-2 mb-4 overflow-x-auto pb-1">
+                    <button class="tab active" id="sectab-newArrival" onclick="secSwitch('newArrival')">חדש באתר</button>
+                    <button class="tab" id="sectab-backInStock" onclick="secSwitch('backInStock')">חזרו למלאי</button>
+                    <button class="tab" id="sectab-recommended" onclick="secSwitch('recommended')">המומלצים שלנו</button>
+                </div>
+                <div id="sec-current"><div class="text-center text-gray-500 py-8">טוען...</div></div>
+                <button class="btn-gold" onclick="secSave()" style="margin-top:12px;">שמור שינויים באתר</button>
+                <div id="sec-status" style="display:none;"></div>
+            </div>
+            <h3 class="gold font-bold mb-3">הוסף מוצרים למדור</h3>
+            <input type="text" id="sec-search" placeholder="חפש בושם..." oninput="renderSectionAdmin()" style="margin-bottom:14px;">
+            <div id="sec-all"></div>
+        </div>
+    </div>
+
+    <!-- EDIT MODAL -->
+    <div id="edit-modal" class="modal-overlay" style="display:none;">
+        <div class="modal">
+            <h2 class="text-lg font-bold gold mb-4">עריכת בושם</h2>
+            <input type="hidden" id="edit-original-id">
+            <div class="grid grid-cols-2 gap-3 mb-3">
+                <div><label>שם</label><input type="text" id="edit-name"></div>
+                <div><label>מותג</label><select id="edit-brand"><option value="">בחר מותג...</option></select></div>
+            </div>
+            <div class="grid grid-cols-2 gap-3 mb-3">
+                <div><label>מחיר</label><input type="number" id="edit-price"></div>
+                <div><label>מחיר מבצע (₪)</label><input type="number" id="edit-saleprice" placeholder="ריק = ללא מבצע"></div>
+            </div>
+            <div class="grid grid-cols-2 gap-3 mb-3">
+                <div><label>גודל</label><input type="text" id="edit-size"></div>
+                <div><label>ID</label><input type="number" id="edit-id"></div>
+            </div>
+            <div class="grid grid-cols-2 gap-3 mb-3">
+                <div><label>עונה</label><select id="edit-season"><option value="summer">קיץ</option><option value="winter">חורף</option><option value="joker">ג'וקר</option></select></div>
+                <div><label>מגדר</label><select id="edit-gender"><option value="male">גברים</option><option value="female">נשים</option><option value="unisex">יוניסקס</option></select></div>
+            </div>
+            <div class="flex items-center gap-3 mb-3 p-3 rounded-lg" style="background:#111;border:1px solid #2a2a2a;">
+                <input type="checkbox" id="edit-soldout" style="width:18px;height:18px;accent-color:#D4AF37;flex-shrink:0;">
+                <label for="edit-soldout" style="color:white;margin:0;cursor:pointer;">אזל מהמלאי</label>
+            </div>
+            <div class="mb-3"><label>תמונות (לינק אחד לכל שורה)</label><textarea id="edit-images" rows="3"></textarea></div>
+            <div class="mb-4"><label>תיאור</label><textarea id="edit-desc" rows="4"></textarea></div>
+            <button class="btn-gold" onclick="saveEdit()">שמור שינויים</button>
+            <button class="btn-secondary" onclick="closeModal()">ביטול</button>
+            <div id="edit-status" style="display:none;"></div>
+        </div>
+    </div>
+
+    <!-- DELETE MODAL -->
+    <div id="delete-modal" class="modal-overlay" style="display:none;">
+        <div class="modal text-center">
+            <p class="text-4xl mb-4">🗑️</p>
+            <h2 class="text-lg font-bold mb-2">למחוק את הבושם?</h2>
+            <p class="text-gray-400 text-sm mb-6" id="delete-name-display"></p>
+            <button class="btn-gold" style="background:linear-gradient(135deg,#c0392b,#922b21);margin-bottom:8px;" onclick="confirmDelete()">כן, מחק</button>
+            <button class="btn-secondary" onclick="closeDeleteModal()">ביטול</button>
+            <div id="delete-status" style="display:none;"></div>
+        </div>
+    </div>
+
+<!-- PUBLISH BAR (batch mode) -->
+<div id="publish-bar" style="position:fixed;bottom:0;left:0;right:0;z-index:90;background:#111;border-top:2px solid #D4AF37;padding:10px 16px;display:none;align-items:center;gap:10px;box-shadow:0 -6px 20px rgba(0,0,0,.5);">
+    <div style="flex:1;min-width:0;">
+        <div class="gold" style="font-weight:700;font-size:14px;" id="queue-summary"></div>
+        <button onclick="openQueueModal()" style="background:none;border:none;color:#888;font-size:12px;cursor:pointer;padding:0;font-family:'Heebo',sans-serif;text-decoration:underline;">הצג / ערוך רשימה</button>
+    </div>
+    <button onclick="publishAll()" id="publish-btn" style="background:linear-gradient(135deg,#D4AF37,#B8960C);color:#000;font-weight:700;border:none;border-radius:10px;padding:12px 20px;font-size:15px;cursor:pointer;font-family:'Heebo',sans-serif;white-space:nowrap;">🚀 פרסם הכל</button>
+</div>
+
+<!-- QUEUE MODAL -->
+<div id="queue-modal" class="modal-overlay" style="display:none;">
+    <div class="modal">
+        <h2 class="text-lg font-bold gold mb-1">🕐 ממתינים לפרסום</h2>
+        <p class="text-gray-500 text-sm mb-4">כל אלה יפורסמו יחד בלחיצה אחת על "פרסם הכל" — קומיט אחד בלבד</p>
+        <div id="queue-list"></div>
+        <button class="btn-secondary" onclick="document.getElementById('queue-modal').style.display='none'">סגור</button>
+    </div>
+</div>
+
+<script>
+// Token from localStorage
+let GITHUB_TOKEN = localStorage.getItem('lion_admin_token');
+if (!GITHUB_TOKEN) {
+    GITHUB_TOKEN = prompt('🦁 הכנס GitHub Token:');
+    if (GITHUB_TOKEN) { GITHUB_TOKEN = GITHUB_TOKEN.trim(); localStorage.setItem('lion_admin_token', GITHUB_TOKEN); }
+}
+if (!GITHUB_TOKEN) { document.body.innerHTML = '<div style="text-align:center;padding:60px;"><h1 style="color:#D4AF37;">🦁 LION PERFUMES</h1><p style="color:#888;">נדרש טוקן</p><button onclick="localStorage.removeItem(\'lion_admin_token\');location.reload();" style="background:#D4AF37;color:#000;border:none;padding:12px 24px;border-radius:8px;cursor:pointer;margin-top:20px;">נסה שוב</button></div>'; }
+
+const GITHUB_REPO = 'Lucaaa154/Lion-perfumes';
+const FILE_PATH = 'index.html';
+let allPerfumes = [];
+let uploadedImages = { add: [] };
+let brandUploadData = null;
+let deleteTargetId = null;
+let currentFileContent = '';
+let currentFileSha = '';
+
+function switchTab(tab) {
+    document.getElementById('panel-add').style.display = tab === 'add' ? 'block' : 'none';
+    document.getElementById('panel-list').style.display = tab === 'list' ? 'block' : 'none';
+    document.getElementById('panel-brands').style.display = tab === 'brands' ? 'block' : 'none';
+    document.getElementById('panel-bestsellers').style.display = tab === 'bestsellers' ? 'block' : 'none';
+    document.getElementById('panel-sections').style.display = tab === 'sections' ? 'block' : 'none';
+    document.getElementById('tab-add').className = 'tab' + (tab === 'add' ? ' active' : '');
+    document.getElementById('tab-list').className = 'tab' + (tab === 'list' ? ' active' : '');
+    document.getElementById('tab-brands').className = 'tab' + (tab === 'brands' ? ' active' : '');
+    document.getElementById('tab-bestsellers').className = 'tab' + (tab === 'bestsellers' ? ' active' : '');
+    document.getElementById('tab-sections').className = 'tab' + (tab === 'sections' ? ' active' : '');
+    if (tab === 'sections') loadSections();
+    if (tab === 'list') loadPerfumes();
+    if (tab === 'brands') loadBrands();
+    if (tab === 'bestsellers') loadBestSellers();
+}
+
+function showStatus(id, msg, type) {
+    const el = document.getElementById(id);
+    el.style.display = 'block';
+    el.className = 'status-box status-' + type;
+    el.innerHTML = msg;
+}
+
+function addUrlField(prefix) {
+    const container = document.getElementById(prefix + '-img-urls');
+    const row = document.createElement('div');
+    row.className = 'img-row';
+    row.innerHTML = '<input type="text" placeholder="https://..."><button class="remove-btn" onclick="this.parentElement.remove()">×</button>';
+    container.appendChild(row);
+}
+
+async function handleUpload(event, prefix) {
+    const files = Array.from(event.target.files);
+    const previews = document.getElementById(prefix + '-img-previews');
+    if (!uploadedImages[prefix]) uploadedImages[prefix] = [];
+    for (const file of files) {
+        await new Promise(resolve => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                uploadedImages[prefix].push({ data: e.target.result.split(',')[1] });
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.cssText = 'width:60px;height:60px;object-fit:cover;border-radius:8px;border:1px solid #D4AF37;';
+                previews.appendChild(img);
+                resolve();
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+}
+
+async function handleBrandUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        brandUploadData = e.target.result.split(',')[1];
+        const preview = document.getElementById('brand-img-preview');
+        preview.innerHTML = '<img src="' + e.target.result + '" style="width:60px;height:60px;object-fit:cover;border-radius:8px;border:1px solid #D4AF37;">';
+    };
+    reader.readAsDataURL(file);
+}
+
+async function uploadToCloudinary(base64data) {
+    const formData = new FormData();
+    const blob = await fetch('data:image/jpeg;base64,' + base64data).then(r => r.blob());
+    formData.append('file', blob);
+    formData.append('upload_preset', 'lion-perfumes');
+    formData.append('cloud_name', 'dtsxyswbl');
+    const res = await fetch('https://api.cloudinary.com/v1_1/dtsxyswbl/image/upload', { method: 'POST', body: formData });
+    const json = await res.json();
+    if (!json.secure_url) throw new Error('Upload failed');
+    return json.secure_url;
+}
+
+async function getFileByPath(path) {
+    const res = await fetch('https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + path, {
+        headers: { 'Authorization': 'token ' + GITHUB_TOKEN }
+    });
+    const data = await res.json();
+    if (!res.ok || !data || !data.content) throw new Error('GitHub: ' + (data.message || 'Error') + ' (Status: ' + res.status + ')');
+    const content = decodeURIComponent(escape(atob(data.content.replace(/\n/g, ''))));
+    return { content, sha: data.sha };
+}
+
+async function pushFileByPath(path, content, sha, message) {
+    const encoded = btoa(unescape(encodeURIComponent(content)));
+    return await fetch('https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + path, {
+        method: 'PUT',
+        headers: { 'Authorization': 'token ' + GITHUB_TOKEN, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message, content: encoded, sha })
+    }).then(r => r.json());
+}
+
+async function getFile() {
+    const result = await getFileByPath(FILE_PATH);
+    currentFileSha = result.sha;
+    currentFileContent = result.content;
+    return currentFileContent;
+}
+
+async function pushFile(content, message) {
+    return await pushFileByPath(FILE_PATH, content, currentFileSha, message);
+}
+
+async function syncProductHtml(newBlock, action, targetId) {
+    try {
+        const prod = await getFileByPath('product.html');
+        let c = prod.content;
+        if (action === 'add') {
+            const pos = c.indexOf('const perfumes = [') + 'const perfumes = ['.length;
+            if (pos > 18) c = c.slice(0, pos) + newBlock + c.slice(pos);
+        } else if (action === 'edit') {
+            c = c.replace(new RegExp('\\{[^{}]*id:\\s*' + targetId + '[\\s\\S]*?size:\\s*"[^"]*"\\s*\\}', 's'), newBlock);
+        } else if (action === 'delete') {
+            c = c.replace(new RegExp('\\s*\\{[^{}]*id:\\s*' + targetId + '[\\s\\S]*?size:\\s*"[^"]*"\\s*\\},?', 's'), '');
+        }
+        await pushFileByPath('product.html', c, prod.sha, action + ' in product.html');
+    } catch(e) { console.error('Sync product.html failed:', e); }
+}
+
+// ===== BEST SELLERS MANAGEMENT =====
+const BS_MAX = 8;
+let bestSellerSelection = [];
+
+function parseBestSellers(html) {
+    const m = html.match(/const bestSellerIds = \[([^\]]*)\];/);
+    if (!m) return null;
+    return m[1].split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n));
+}
+
+async function loadBestSellers() {
+    const box = document.getElementById('bs-current');
+    box.innerHTML = '<div class="text-center text-gray-500 py-8">טוען...</div>';
+    document.getElementById('bs-status').style.display = 'none';
+    try {
+        const html = await getFile();
+        allPerfumes = parsePerfumes(html);
+        const ids = parseBestSellers(html);
+        if (ids === null) {
+            box.innerHTML = '<div class="text-center text-red-400 py-8">שורת bestSellerIds לא נמצאה ב-index.html — יש להעלות קודם את הגרסה החדשה של האתר</div>';
+            document.getElementById('bs-all').innerHTML = '';
+            return;
+        }
+        bestSellerSelection = ids.filter(id => allPerfumes.some(p => p.id === id));
+        renderBestSellersAdmin();
+    } catch (e) {
+        box.innerHTML = '<div class="text-center text-red-400 py-8">שגיאה: ' + e.message + '</div>';
+    }
+}
+
+function bsCard(p, inner) {
+    return '<div class="perfume-card">' +
+        '<img src="' + (p.images && p.images[0] ? p.images[0] : '') + '" onerror="this.style.display=\'none\'">' +
+        '<div style="flex:1;min-width:0;">' +
+        '<div style="font-weight:700;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + (p.soldOut ? '<span class="soldout-badge">אזל</span>' : '') + p.name + '</div>' +
+        '<div style="color:#D4AF37;font-size:12px;">' + (p.brand || '') + ' · ₪' + p.price + '</div>' +
+        '</div>' + inner + '</div>';
+}
+
+function renderBestSellersAdmin() {
+    const cur = document.getElementById('bs-current');
+    if (!bestSellerSelection.length) {
+        cur.innerHTML = '<div class="text-center text-gray-500 py-6">הרשימה ריקה — הוסיפו מוצרים מלמטה 👇</div>';
+    } else {
+        cur.innerHTML = bestSellerSelection.map((id, i) => {
+            const p = allPerfumes.find(x => x.id === id);
+            if (!p) return '';
+            const rank = '<span style="background:linear-gradient(135deg,#D4AF37,#B8960C);color:#000;font-weight:700;border-radius:9999px;min-width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;">' + (i + 1) + '</span>';
+            const controls = '<div style="display:flex;flex-direction:column;gap:4px;flex-shrink:0;">' +
+                '<button class="btn-edit" ' + (i === 0 ? 'disabled style="opacity:.3;"' : '') + ' onclick="bsMove(' + id + ',-1)">▲</button>' +
+                '<button class="btn-edit" ' + (i === bestSellerSelection.length - 1 ? 'disabled style="opacity:.3;"' : '') + ' onclick="bsMove(' + id + ',1)">▼</button>' +
+                '</div>' +
+                '<button class="btn-delete" onclick="bsRemove(' + id + ')">✕</button>';
+            return '<div style="display:flex;align-items:center;gap:10px;">' + rank + '<div style="flex:1;min-width:0;">' + bsCard(p, controls) + '</div></div>';
+        }).join('');
+    }
+
+    const search = (document.getElementById('bs-search').value || '').toLowerCase();
+    const avail = allPerfumes.filter(p => !bestSellerSelection.includes(p.id) &&
+        (p.name.toLowerCase().includes(search) || (p.brand || '').toLowerCase().includes(search)));
+    document.getElementById('bs-all').innerHTML = avail.length
+        ? avail.map(p => bsCard(p, '<button class="btn-edit" onclick="bsAdd(' + p.id + ')">➕ הוסף</button>')).join('')
+        : '<div class="text-center text-gray-500 py-8">לא נמצאו בשמים</div>';
+}
+
+function bsAdd(id) {
+    if (bestSellerSelection.length >= BS_MAX) {
+        showStatus('bs-status', '⚠️ ניתן לבחור עד ' + BS_MAX + ' מוצרים. הסירו מוצר לפני הוספה.', 'error');
+        return;
+    }
+    document.getElementById('bs-status').style.display = 'none';
+    bestSellerSelection.push(id);
+    renderBestSellersAdmin();
+}
+
+function bsRemove(id) {
+    bestSellerSelection = bestSellerSelection.filter(x => x !== id);
+    renderBestSellersAdmin();
+}
+
+function bsMove(id, dir) {
+    const i = bestSellerSelection.indexOf(id);
+    const j = i + dir;
+    if (i < 0 || j < 0 || j >= bestSellerSelection.length) return;
+    [bestSellerSelection[i], bestSellerSelection[j]] = [bestSellerSelection[j], bestSellerSelection[i]];
+    renderBestSellersAdmin();
+}
+
+async function saveBestSellers() {
+    showStatus('bs-status', '⏳ שומר...', 'loading');
+    try {
+        const html = await getFile(); // fresh content + sha
+        if (!/const bestSellerIds = \[[^\]]*\];/.test(html)) throw new Error('שורת bestSellerIds לא נמצאה ב-index.html');
+        const updated = html.replace(/const bestSellerIds = \[[^\]]*\];/, 'const bestSellerIds = [' + bestSellerSelection.join(', ') + '];');
+        const res = await pushFile(updated, 'Update best sellers');
+        if (res.content) showStatus('bs-status', '✅ נשמר! הנמכרים ביותר עודכנו באתר (העדכון באתר החי עשוי לקחת כדקה)', 'success');
+        else throw new Error(res.message || 'Push failed');
+    } catch (e) {
+        showStatus('bs-status', '❌ ' + e.message, 'error');
+    }
+}
+
+// ===== Product Sections (חדש באתר / חזרו למלאי / המומלצים שלנו) =====
+const SECTION_DEFS = {
+    newArrival:  { constName: 'newArrivalIds',  label: 'חדש באתר' },
+    backInStock: { constName: 'backInStockIds', label: 'חזרו למלאי' },
+    recommended: { constName: 'recommendedIds', label: 'המומלצים שלנו' },
+};
+const SEC_MAX = 12;
+let secActive = 'newArrival';
+let secData = { newArrival: [], backInStock: [], recommended: [] };
+let secLoaded = false;
+
+function secParse(html, constName) {
+    const m = html.match(new RegExp('const ' + constName + '\\s*=\\s*\\[([^\\]]*)\\];'));
+    if (!m) return null;
+    return m[1].split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n));
+}
+
+async function loadSections() {
+    const box = document.getElementById('sec-current');
+    box.innerHTML = '<div class="text-center text-gray-500 py-8">טוען...</div>';
+    document.getElementById('sec-status').style.display = 'none';
+    try {
+        const html = await getFile();
+        allPerfumes = parsePerfumes(html);
+        let missing = [];
+        Object.keys(SECTION_DEFS).forEach(key => {
+            const ids = secParse(html, SECTION_DEFS[key].constName);
+            if (ids === null) { missing.push(SECTION_DEFS[key].constName); secData[key] = []; }
+            else secData[key] = ids.filter(id => allPerfumes.some(p => p.id === id));
+        });
+        secLoaded = true;
+        if (missing.length === Object.keys(SECTION_DEFS).length) {
+            box.innerHTML = '<div class="text-center text-red-400 py-8">מדורי המוצרים לא נמצאו ב-index.html — יש להעלות קודם את הגרסה החדשה של האתר</div>';
+            document.getElementById('sec-all').innerHTML = '';
+            return;
+        }
+        renderSectionAdmin();
+    } catch (e) {
+        box.innerHTML = '<div class="text-center text-red-400 py-8">שגיאה: ' + e.message + '</div>';
+    }
+}
+
+function secSwitch(key) {
+    secActive = key;
+    Object.keys(SECTION_DEFS).forEach(k => {
+        const t = document.getElementById('sectab-' + k);
+        if (t) t.className = 'tab' + (k === key ? ' active' : '');
+    });
+    document.getElementById('sec-search').value = '';
+    document.getElementById('sec-status').style.display = 'none';
+    renderSectionAdmin();
+}
+
+function renderSectionAdmin() {
+    if (!secLoaded) return;
+    const sel = secData[secActive];
+    const cur = document.getElementById('sec-current');
+    if (!sel.length) {
+        cur.innerHTML = '<div class="text-center text-gray-500 py-6">המדור ריק — הוסיפו מוצרים מלמטה 👇</div>';
+    } else {
+        cur.innerHTML = sel.map((id, i) => {
+            const p = allPerfumes.find(x => x.id === id);
+            if (!p) return '';
+            const rank = '<span style="background:linear-gradient(135deg,#D4AF37,#B8960C);color:#000;font-weight:700;border-radius:9999px;min-width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;">' + (i + 1) + '</span>';
+            const controls = '<div style="display:flex;flex-direction:column;gap:4px;flex-shrink:0;">' +
+                '<button class="btn-edit" ' + (i === 0 ? 'disabled style="opacity:.3;"' : '') + ' onclick="secMove(' + id + ',-1)">▲</button>' +
+                '<button class="btn-edit" ' + (i === sel.length - 1 ? 'disabled style="opacity:.3;"' : '') + ' onclick="secMove(' + id + ',1)">▼</button>' +
+                '</div>' +
+                '<button class="btn-delete" onclick="secRemove(' + id + ')">✕</button>';
+            return '<div style="display:flex;align-items:center;gap:10px;">' + rank + '<div style="flex:1;min-width:0;">' + bsCard(p, controls) + '</div></div>';
+        }).join('');
+    }
+    const search = (document.getElementById('sec-search').value || '').toLowerCase();
+    const avail = allPerfumes.filter(p => !sel.includes(p.id) &&
+        (p.name.toLowerCase().includes(search) || (p.brand || '').toLowerCase().includes(search)));
+    document.getElementById('sec-all').innerHTML = avail.length
+        ? avail.map(p => bsCard(p, '<button class="btn-edit" onclick="secAdd(' + p.id + ')">➕ הוסף</button>')).join('')
+        : '<div class="text-center text-gray-500 py-8">לא נמצאו בשמים</div>';
+}
+
+function secAdd(id) {
+    const sel = secData[secActive];
+    if (sel.length >= SEC_MAX) {
+        showStatus('sec-status', '⚠️ ניתן לבחור עד ' + SEC_MAX + ' מוצרים במדור. הסירו מוצר לפני הוספה.', 'error');
+        return;
+    }
+    document.getElementById('sec-status').style.display = 'none';
+    sel.push(id);
+    renderSectionAdmin();
+}
+
+function secRemove(id) {
+    secData[secActive] = secData[secActive].filter(x => x !== id);
+    renderSectionAdmin();
+}
+
+function secMove(id, dir) {
+    const sel = secData[secActive];
+    const i = sel.indexOf(id);
+    const j = i + dir;
+    if (i < 0 || j < 0 || j >= sel.length) return;
+    [sel[i], sel[j]] = [sel[j], sel[i]];
+    renderSectionAdmin();
+}
+
+async function secSave() {
+    showStatus('sec-status', '⏳ שומר...', 'loading');
+    try {
+        let html = await getFile();
+        let changed = 0, missing = [];
+        Object.keys(SECTION_DEFS).forEach(key => {
+            const cn = SECTION_DEFS[key].constName;
+            const re = new RegExp('const ' + cn + '\\s*=\\s*\\[[^\\]]*\\];');
+            if (!re.test(html)) { missing.push(cn); return; }
+            html = html.replace(re, 'const ' + cn + ' = [' + secData[key].join(', ') + '];');
+            changed++;
+        });
+        if (!changed) throw new Error('מדורי המוצרים לא נמצאו ב-index.html');
+        const res = await pushFile(html, 'Update product sections');
+        if (res.content) showStatus('sec-status', '✅ נשמר! המדורים עודכנו באתר (העדכון באתר החי עשוי לקחת כדקה)' + (missing.length ? ' — לא עודכנו: ' + missing.join(', ') : ''), 'success');
+        else throw new Error(res.message || 'Push failed');
+    } catch (e) {
+        showStatus('sec-status', '❌ ' + e.message, 'error');
+    }
+}
+
+// ===== BATCH QUEUE (one commit for everything) =====
+let queue = { perfumes: [], brands: [] };
+try {
+    const saved = JSON.parse(localStorage.getItem('lionAdminQueue'));
+    if (saved && Array.isArray(saved.perfumes) && Array.isArray(saved.brands)) queue = saved;
+} catch (e) {}
+
+function saveQueue() { localStorage.setItem('lionAdminQueue', JSON.stringify(queue)); }
+
+function updateQueueUI() {
+    const bar = document.getElementById('publish-bar');
+    const total = queue.perfumes.length + queue.brands.length;
+    if (total === 0) { bar.style.display = 'none'; document.body.style.paddingBottom = ''; return; }
+    bar.style.display = 'flex';
+    document.body.style.paddingBottom = '90px';
+    const parts = [];
+    if (queue.perfumes.length) parts.push(queue.perfumes.length + ' בשמים');
+    if (queue.brands.length) parts.push(queue.brands.length + ' מותגים');
+    document.getElementById('queue-summary').textContent = '🕐 ממתינים לפרסום: ' + parts.join(' + ');
+}
+
+function openQueueModal() {
+    renderQueueList();
+    document.getElementById('queue-modal').style.display = 'block';
+}
+
+function renderQueueList() {
+    const el = document.getElementById('queue-list');
+    let h = '';
+    queue.brands.forEach((b, i) => {
+        h += '<div class="brand-card"><img src="' + (b.logoUrl || '') + '" onerror="this.style.display=\'none\'"><div style="flex:1;min-width:0;"><div style="font-weight:700;font-size:14px;">🏷️ ' + b.name + '</div><div style="color:#888;font-size:11px;">מותג חדש</div></div><button class="btn-delete" onclick="removeQueued(\'brand\',' + i + ')">✕</button></div>';
+    });
+    queue.perfumes.forEach((p, i) => {
+        h += '<div class="perfume-card"><img src="' + (p.imageUrls[0] || '') + '" onerror="this.style.display=\'none\'"><div style="flex:1;min-width:0;"><div style="font-weight:700;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + p.name + '</div><div style="color:#D4AF37;font-size:12px;">' + p.brand + ' · ₪' + p.price + '</div></div><button class="btn-delete" onclick="removeQueued(\'perfume\',' + i + ')">✕</button></div>';
+    });
+    el.innerHTML = h || '<div class="text-center text-gray-500 py-6">הרשימה ריקה</div>';
+}
+
+function removeQueued(type, i) {
+    if (type === 'brand') queue.brands.splice(i, 1);
+    else queue.perfumes.splice(i, 1);
+    saveQueue();
+    updateQueueUI();
+    renderQueueList();
+    refreshBrandDropdowns();
+}
+
+function refreshBrandDropdowns() {
+    let base = [];
+    try { base = parseBrands(currentFileContent || ''); } catch (e) {}
+    populateBrandDropdowns(base.concat(queue.brands.map(b => b.name)));
+}
+
+function buildPerfumeBlock(p, id) {
+    const imagesStr = p.imageUrls.map(url => '                    "' + url + '"').join(',\n');
+    const soldOutStr = p.soldOut ? '\n                soldOut: true,' : '';
+    const salePriceStr = p.salePrice ? '\n                salePrice: ' + p.salePrice + ',' : '';
+    const descEscaped = (p.desc || '').replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\n');
+    return '\n            {\n                id: ' + id + ',\n                name: "' + p.name + '",\n                brand: "' + p.brand + '",\n                price: ' + p.price + ',\n                season: "' + p.season + '",\n                gender: "' + p.gender + '",' + soldOutStr + salePriceStr + '\n                images: [\n' + imagesStr + '\n                ],\n                description: "' + descEscaped + '",\n                size: "' + p.size + '"\n            },';
+}
+
+function applyQueueToHtml(html, ids) {
+    let c = html;
+    // brands (reversed so the first queued ends up first)
+    [...queue.brands].reverse().forEach(b => {
+        const bi = c.indexOf('const brands = ["הכל"');
+        if (bi > -1) {
+            const pos = bi + 'const brands = ["הכל"'.length;
+            c = c.slice(0, pos) + ', "' + b.name + '"' + c.slice(pos);
+        }
+        const mi = c.indexOf('const brandImages = {');
+        if (mi > -1 && b.logoUrl) {
+            const pos = mi + 'const brandImages = {'.length;
+            c = c.slice(0, pos) + '\n            "' + b.name + '": "' + b.logoUrl + '",' + c.slice(pos);
+        }
+    });
+    // perfumes (reversed so queue order is kept top-first)
+    for (let i = queue.perfumes.length - 1; i >= 0; i--) {
+        const pos = c.indexOf('const perfumes = [') + 'const perfumes = ['.length;
+        c = c.slice(0, pos) + buildPerfumeBlock(queue.perfumes[i], ids[i]) + c.slice(pos);
+    }
+    return c;
+}
+
+async function ghApi(path, method, body) {
+    const res = await fetch('https://api.github.com/repos/' + GITHUB_REPO + path, {
+        method: method || 'GET',
+        headers: { 'Authorization': 'token ' + GITHUB_TOKEN, 'Content-Type': 'application/json' },
+        body: body ? JSON.stringify(body) : undefined
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || ('GitHub error ' + res.status));
+    return data;
+}
+
+// One commit that updates BOTH index.html and product.html = one Netlify build
+async function commitBothFiles(indexContent, productContent, message) {
+    const repo = await ghApi('');
+    const branch = repo.default_branch || 'main';
+    const ref = await ghApi('/git/ref/heads/' + branch);
+    const tipSha = ref.object.sha;
+    const tipCommit = await ghApi('/git/commits/' + tipSha);
+    const b1 = await ghApi('/git/blobs', 'POST', { content: indexContent, encoding: 'utf-8' });
+    const b2 = await ghApi('/git/blobs', 'POST', { content: productContent, encoding: 'utf-8' });
+    const tree = await ghApi('/git/trees', 'POST', {
+        base_tree: tipCommit.tree.sha,
+        tree: [
+            { path: 'index.html', mode: '100644', type: 'blob', sha: b1.sha },
+            { path: 'product.html', mode: '100644', type: 'blob', sha: b2.sha }
+        ]
+    });
+    const commit = await ghApi('/git/commits', 'POST', { message, tree: tree.sha, parents: [tipSha] });
+    await ghApi('/git/refs/heads/' + branch, 'PATCH', { sha: commit.sha });
+    return commit.sha;
+}
+
+async function publishAll() {
+    const total = queue.perfumes.length + queue.brands.length;
+    if (!total) return;
+    if (!confirm('לפרסם ' + queue.perfumes.length + ' בשמים ו-' + queue.brands.length + ' מותגים בקומיט אחד?')) return;
+    const btn = document.getElementById('publish-btn');
+    btn.disabled = true;
+    btn.textContent = '⏳ מפרסם...';
+    document.getElementById('queue-summary').textContent = '⏳ מפרסם את כל השינויים...';
+    try {
+        const idx = await getFileByPath(FILE_PATH);
+        const prod = await getFileByPath('product.html');
+        const existing = parsePerfumes(idx.content);
+        let nextId = existing.length ? Math.max(...existing.map(p => p.id)) + 1 : 102;
+        const ids = queue.perfumes.map(() => nextId++);
+        const newIndex = applyQueueToHtml(idx.content, ids);
+        const newProd = applyQueueToHtml(prod.content, ids);
+        const msg = 'Batch update: ' + queue.perfumes.length + ' perfumes, ' + queue.brands.length + ' brands';
+        try {
+            await commitBothFiles(newIndex, newProd, msg);
+        } catch (e) {
+            console.warn('Single-commit API failed, falling back to two commits:', e);
+            await pushFileByPath(FILE_PATH, newIndex, idx.sha, msg + ' (index)');
+            const prod2 = await getFileByPath('product.html');
+            await pushFileByPath('product.html', newProd, prod2.sha, msg + ' (product)');
+        }
+        currentFileContent = newIndex;
+        allPerfumes = parsePerfumes(newIndex);
+        queue = { perfumes: [], brands: [] };
+        saveQueue();
+        refreshBrandDropdowns();
+        alert('✅ פורסם בהצלחה בקומיט אחד! האתר יתעדכן תוך כדקה.');
+    } catch (e) {
+        alert('❌ שגיאה בפרסום: ' + e.message + '\nהרשימה נשמרה — אפשר לנסות שוב.');
+    } finally {
+        btn.disabled = false;
+        btn.textContent = '🚀 פרסם הכל';
+        updateQueueUI();
+    }
+}
+
+// ===== BRAND MANAGEMENT =====
+function parseBrands(html) {
+    const brandsMatch = html.match(/const brands = \[([\s\S]*?)\];/);
+    if (!brandsMatch) return [];
+    return [...brandsMatch[1].matchAll(/"([^"]+)"/g)].map(m => m[1]).filter(b => b !== 'הכל');
+}
+
+function parseBrandImages(html) {
+    const obj = {};
+    const match = html.match(/const brandImages = \{([\s\S]*?)\};/);
+    if (!match) return obj;
+    const entries = [...match[1].matchAll(/"([^"]+)":\s*"([^"]+)"/g)];
+    entries.forEach(e => { obj[e[1]] = e[2]; });
+    return obj;
+}
+
+function populateBrandDropdowns(brands) {
+    ['add-brand', 'edit-brand'].forEach(id => {
+        const sel = document.getElementById(id);
+        const currentVal = sel.value;
+        sel.innerHTML = '<option value="">בחר מותג...</option>';
+        brands.forEach(b => {
+            sel.innerHTML += '<option value="' + b + '">' + b + '</option>';
+        });
+        sel.value = currentVal;
+    });
+}
+
+async function loadBrands() {
+    const list = document.getElementById('brands-list');
+    list.innerHTML = '<div class="text-center text-gray-500 py-8">טוען...</div>';
+    try {
+        const html = await getFile();
+        const brands = parseBrands(html);
+        const images = parseBrandImages(html);
+        populateBrandDropdowns(brands.concat(queue.brands.map(b => b.name)));
+        if (brands.length === 0 && queue.brands.length === 0) { list.innerHTML = '<div class="text-center text-gray-500 py-8">אין מותגים</div>'; return; }
+        const queuedHtml = queue.brands.map((b, i) => `
+            <div class="brand-card" style="border-color:#D4AF37;">
+                <img src="${b.logoUrl || ''}" onerror="this.style.display='none'">
+                <div style="flex:1;min-width:0;">
+                    <div style="font-weight:700;font-size:14px;">${b.name} <span style="background:#D4AF37;color:#000;font-size:10px;padding:2px 6px;border-radius:4px;">🕐 ממתין לפרסום</span></div>
+                    <div style="color:#888;font-size:11px;">יפורסם בלחיצה על 'פרסם הכל'</div>
+                </div>
+                <button class="btn-delete" onclick="removeQueued('brand',${i});loadBrands()">✕</button>
+            </div>
+        `).join('');
+        list.innerHTML = queuedHtml + brands.map(b => `
+            <div class="brand-card">
+                <img src="${images[b] || ''}" onerror="this.style.display='none'">
+                <div style="flex:1;min-width:0;">
+                    <div style="font-weight:700;font-size:14px;">${b}</div>
+                    <div style="color:#888;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${images[b] ? 'יש לוגו' : 'ללא לוגו'}</div>
+                </div>
+                <button class="btn-delete" onclick="deleteBrand('${b.replace(/'/g, "\\'")}')">🗑️ מחק</button>
+            </div>
+        `).join('');
+    } catch(e) { list.innerHTML = '<div class="text-center text-red-400 py-8">שגיאה: ' + e.message + '</div>'; }
+}
+
+async function addBrand() {
+    const name = document.getElementById('brand-name').value.trim();
+    const urlInput = document.getElementById('brand-img-url').value.trim();
+    if (!name) { showStatus('brand-status', '❌ נא להכניס שם מותג', 'error'); return; }
+
+    showStatus('brand-status', '📸 מעלה לוגו...', 'loading');
+    let logoUrl = urlInput;
+    if (brandUploadData) {
+        try { logoUrl = await uploadToCloudinary(brandUploadData); }
+        catch(e) { showStatus('brand-status', '❌ שגיאה בהעלאת לוגו', 'error'); return; }
+    }
+    if (!logoUrl) { showStatus('brand-status', '❌ נא להוסיף תמונת לוגו', 'error'); return; }
+
+    // Duplicate check (existing site + pending queue)
+    let existingBrands = [];
+    try { existingBrands = parseBrands(currentFileContent || ''); } catch (e) {}
+    if (existingBrands.concat(queue.brands.map(b => b.name)).some(b => b.toLowerCase() === name.toLowerCase())) {
+        showStatus('brand-status', '❌ המותג "' + name + '" כבר קיים', 'error');
+        return;
+    }
+    // Add to queue — NO commit yet. The brand is immediately available in the perfume form!
+    queue.brands.push({ name, logoUrl });
+    saveQueue();
+    updateQueueUI();
+    refreshBrandDropdowns();
+    showStatus('brand-status', '🕐 המותג "' + name + '" נוסף לרשימת ההמתנה — אפשר כבר להוסיף עליו בשמים! לחצו \'🚀 פרסם הכל\' כשתסיימו.', 'success');
+    document.getElementById('brand-name').value = '';
+    document.getElementById('brand-img-url').value = '';
+    document.getElementById('brand-img-preview').innerHTML = '';
+    brandUploadData = null;
+    loadBrands();
+}
+
+async function deleteBrand(name) {
+    if (!confirm('למחוק את המותג "' + name + '"?')) return;
+    try {
+        const html = await getFile();
+        let newHtml = html.replace(', "' + name + '"', '').replace(',"' + name + '"', '');
+        const imgPattern = new RegExp('\\s*"' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '":\\s*"[^"]*",?', 'g');
+        newHtml = newHtml.replace(imgPattern, '');
+        await pushFile(newHtml, 'Delete brand: ' + name);
+        currentFileContent = newHtml;
+        showStatus('brand-status', '✅ המותג ' + name + ' נמחק!', 'success');
+        loadBrands();
+    } catch(e) { showStatus('brand-status', '❌ שגיאה: ' + e.message, 'error'); }
+}
+
+// ===== PERFUME FUNCTIONS =====
+function parsePerfumes(html) {
+    const arr = [];
+    const match = html.match(/const perfumes = \[([\s\S]*?)\];\s*\n/);
+    if (!match) return arr;
+    const regex = /\{\s*id:\s*(\d+),[\s\S]*?size:\s*"([^"]*)"\s*\}/g;
+    let m;
+    while ((m = regex.exec(match[1])) !== null) {
+        const e = m[0];
+        const id = parseInt((e.match(/id:\s*(\d+)/) || [])[1]);
+        const name = (e.match(/name:\s*"((?:[^"\\]|\\.)*)"/) || [])[1] || '';
+        const brand = (e.match(/brand:\s*"((?:[^"\\]|\\.)*)"/) || [])[1] || '';
+        const price = parseInt((e.match(/price:\s*(\d+)/) || [])[1]) || 0;
+        const season = (e.match(/season:\s*"(\w+)"/) || [])[1] || 'joker';
+        const gender = (e.match(/gender:\s*"(\w+)"/) || [])[1] || 'male';
+        const size = (e.match(/size:\s*"([^"]+)"/) || [])[1] || '100ml';
+        const soldOut = /soldOut:\s*true/.test(e);
+        const salePrice = parseInt((e.match(/salePrice:\s*(\d+)/) || [])[1]) || 0;
+        const desc = (e.match(/description:\s*"((?:[^"\\]|\\.)*)"/) || [])[1] || '';
+        const imgs = [...e.matchAll(/"(https?:\/\/[^"]+)"/g)].map(x => x[1]);
+        if (id && name) arr.push({ id, name, brand, price, season, gender, size, soldOut, salePrice, description: desc, images: imgs });
+    }
+    return arr;
+}
+
+async function loadPerfumes() {
+    document.getElementById('perfumes-list').innerHTML = '<div class="text-center text-gray-500 py-8">טוען...</div>';
+    try {
+        const html = await getFile();
+        allPerfumes = parsePerfumes(html);
+        populateBrandDropdowns(parseBrands(html));
+        renderList();
+    } catch(e) { document.getElementById('perfumes-list').innerHTML = '<div class="text-center text-red-400 py-8">שגיאה: ' + e.message + '</div>'; }
+}
+
+function renderList() {
+    const search = (document.getElementById('search-box').value || '').toLowerCase();
+    const filtered = allPerfumes.filter(p => p.name.toLowerCase().includes(search) || (p.brand || '').toLowerCase().includes(search));
+    const container = document.getElementById('perfumes-list');
+    if (filtered.length === 0) { container.innerHTML = '<div class="text-center text-gray-500 py-8">לא נמצאו בשמים</div>'; return; }
+    container.innerHTML = filtered.map(p => `
+        <div class="perfume-card">
+            <img src="${p.images && p.images[0] ? p.images[0] : ''}" onerror="this.style.display='none'">
+            <div style="flex:1;min-width:0;">
+                <div style="font-weight:700;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${p.soldOut ? '<span class="soldout-badge">אזל</span>' : ''}${p.name}</div>
+                <div style="color:#D4AF37;font-size:12px;">${p.brand || ''}</div>
+                <div style="color:#888;font-size:12px;">${p.salePrice ? '₪' + p.salePrice + ' <span style="text-decoration:line-through;color:#f87171;">₪' + p.price + '</span>' : '₪' + p.price} · ${p.size || '100ml'}</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0;">
+                <button class="btn-edit" onclick="openEdit(${p.id})">✏️ ערוך</button>
+                <button class="btn-delete" onclick="openDelete(${p.id},'${p.name.replace(/'/g, "\\'")}')">🗑️ מחק</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function openEdit(id) {
+    const p = allPerfumes.find(x => x.id === id);
+    if (!p) return;
+    document.getElementById('edit-original-id').value = id;
+    document.getElementById('edit-name').value = p.name || '';
+    document.getElementById('edit-brand').value = p.brand || '';
+    document.getElementById('edit-price').value = p.price || '';
+    document.getElementById('edit-saleprice').value = p.salePrice || '';
+    document.getElementById('edit-size').value = p.size || '100ml';
+    document.getElementById('edit-id').value = p.id || '';
+    document.getElementById('edit-season').value = p.season || 'joker';
+    document.getElementById('edit-gender').value = p.gender || 'male';
+    document.getElementById('edit-soldout').checked = p.soldOut || false;
+    document.getElementById('edit-images').value = (p.images || []).join('\n');
+    document.getElementById('edit-desc').value = (p.description || '').replace(/\\n/g, '\n');
+    document.getElementById('edit-status').style.display = 'none';
+    document.getElementById('edit-modal').style.display = 'block';
+}
+function closeModal() { document.getElementById('edit-modal').style.display = 'none'; }
+
+async function saveEdit() {
+    showStatus('edit-status', '⏳ שומר...', 'loading');
+    try {
+        const originalId = parseInt(document.getElementById('edit-original-id').value);
+        const name = document.getElementById('edit-name').value.trim();
+        const brand = document.getElementById('edit-brand').value.trim();
+        const price = document.getElementById('edit-price').value.trim();
+        const salePrice = document.getElementById('edit-saleprice').value.trim();
+        const size = document.getElementById('edit-size').value.trim() || '100ml';
+        const newId = document.getElementById('edit-id').value.trim();
+        const season = document.getElementById('edit-season').value;
+        const gender = document.getElementById('edit-gender').value;
+        const soldOut = document.getElementById('edit-soldout').checked;
+        const images = document.getElementById('edit-images').value.trim().split('\n').filter(Boolean);
+        const desc = document.getElementById('edit-desc').value.trim();
+        const html = await getFile();
+        const imagesStr = images.map(url => '                    "' + url.trim() + '"').join(',\n');
+        const soldOutStr = soldOut ? '\n                soldOut: true,' : '';
+        const salePriceStr = salePrice ? '\n                salePrice: ' + salePrice + ',' : '';
+        const descEscaped = desc.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\n');
+        const newBlock = '\n            {\n                id: ' + newId + ',\n                name: "' + name + '",\n                brand: "' + brand + '",\n                price: ' + price + ',\n                season: "' + season + '",\n                gender: "' + gender + '",' + soldOutStr + salePriceStr + '\n                images: [\n' + imagesStr + '\n                ],\n                description: "' + descEscaped + '",\n                size: "' + size + '"\n            },';
+        // Step 1: Delete old perfume
+        const deletePattern = new RegExp('\\s*\\{[^{}]*id:\\s*' + originalId + ',(?:[^{}]|\\n)*?size:\\s*"[^"]*"\\s*\\},?', 'g');
+        let cleaned = html.replace(deletePattern, '');
+        if (cleaned === html) { showStatus('edit-status', '❌ לא נמצא הבושם', 'error'); return; }
+        // Step 2: Add updated perfume at the top
+        const insertPos = cleaned.indexOf('const perfumes = [') + 'const perfumes = ['.length;
+        const newContent = cleaned.slice(0, insertPos) + newBlock + cleaned.slice(insertPos);
+        await pushFile(newContent, 'Edit: ' + name);
+        // Sync product.html with same delete-then-add
+        try {
+            const prod = await getFileByPath('product.html');
+            let pc = prod.content;
+            pc = pc.replace(deletePattern, '');
+            const pInsertPos = pc.indexOf('const perfumes = [') + 'const perfumes = ['.length;
+            if (pInsertPos > 18) pc = pc.slice(0, pInsertPos) + newBlock + pc.slice(pInsertPos);
+            await pushFileByPath('product.html', pc, prod.sha, 'Edit in product.html: ' + name);
+        } catch(e) { console.error('Sync failed:', e); }
+        showStatus('edit-status', '✅ נשמר!', 'success');
+        allPerfumes = parsePerfumes(newContent); currentFileContent = newContent; renderList();
+    } catch(e) { showStatus('edit-status', '❌ ' + e.message, 'error'); }
+}
+
+function openDelete(id, name) { deleteTargetId = id; document.getElementById('delete-name-display').textContent = name; document.getElementById('delete-status').style.display = 'none'; document.getElementById('delete-modal').style.display = 'block'; }
+function closeDeleteModal() { document.getElementById('delete-modal').style.display = 'none'; deleteTargetId = null; }
+
+async function confirmDelete() {
+    showStatus('delete-status', '⏳ מוחק...', 'loading');
+    try {
+        const html = await getFile();
+        const deletePattern = new RegExp('\\s*\\{[^{}]*id:\\s*' + deleteTargetId + ',(?:[^{}]|\\n)*?size:\\s*"[^"]*"\\s*\\},?', 'g');
+        const newContent = html.replace(deletePattern, '');
+        if (newContent === html) { showStatus('delete-status', '❌ לא נמצא', 'error'); return; }
+        await pushFile(newContent, 'Delete ID: ' + deleteTargetId);
+        // Sync delete to product.html
+        try {
+            const prod = await getFileByPath('product.html');
+            let pc = prod.content.replace(deletePattern, '');
+            await pushFileByPath('product.html', pc, prod.sha, 'Delete from product.html ID: ' + deleteTargetId);
+        } catch(e) { console.error('Sync delete failed:', e); }
+        showStatus('delete-status', '✅ נמחק!', 'success');
+        allPerfumes = allPerfumes.filter(p => p.id !== deleteTargetId); currentFileContent = newContent; renderList();
+        setTimeout(closeDeleteModal, 1500);
+    } catch(e) { showStatus('delete-status', '❌ ' + e.message, 'error'); }
+}
+
+async function addPerfume() {
+    const name = document.getElementById('add-name').value.trim();
+    const brand = document.getElementById('add-brand').value.trim();
+    const price = document.getElementById('add-price').value.trim();
+    const size = document.getElementById('add-size').value.trim() || '100ml';
+    const season = document.getElementById('add-season').value;
+    const gender = document.getElementById('add-gender').value;
+    const soldOut = document.getElementById('add-soldout').checked;
+    const salePrice = document.getElementById('add-saleprice').value.trim();
+    const desc = document.getElementById('add-desc').value.trim();
+    if (!name || !brand || !price) { showStatus('add-status', '❌ נא למלא שם, מותג ומחיר', 'error'); return; }
+    if (allPerfumes.length === 0) { try { const h = await getFile(); allPerfumes = parsePerfumes(h); } catch(e) {} }
+    // Duplicate check (existing site + pending queue)
+    const dup = allPerfumes.find(p => p.name.trim().toLowerCase() === name.toLowerCase()) ||
+                queue.perfumes.find(p => p.name.trim().toLowerCase() === name.toLowerCase());
+    if (dup) {
+        if (!confirm('⚠️ בושם בשם "' + name + '" כבר קיים (באתר או ברשימת ההמתנה).\nלהוסיף בכל זאת?')) {
+            showStatus('add-status', 'ההוספה בוטלה — הבושם כבר קיים', 'error');
+            return;
+        }
+    }
+    showStatus('add-status', '📸 מעלה תמונות...', 'loading');
+    let imageUrls = [];
+    for (const img of (uploadedImages.add || [])) {
+        try { imageUrls.push(await uploadToCloudinary(img.data)); }
+        catch(e) { showStatus('add-status', '❌ שגיאה בהעלאת תמונה', 'error'); return; }
+    }
+    document.querySelectorAll('#add-img-urls input').forEach(i => { if (i.value.trim()) imageUrls.push(i.value.trim()); });
+    if (imageUrls.length === 0) { showStatus('add-status', '❌ נא להוסיף לפחות תמונה אחת', 'error'); return; }
+    // Add to queue — NO commit yet (saves Netlify builds)
+    queue.perfumes.push({ name, brand, price, size, season, gender, soldOut, salePrice, desc, imageUrls });
+    saveQueue();
+    updateQueueUI();
+    showStatus('add-status', '🕐 "' + name + '" נוסף לרשימת ההמתנה (' + queue.perfumes.length + ' בשמים). לחצו \'🚀 פרסם הכל\' כשתסיימו.', 'success');
+    document.getElementById('add-name').value = '';
+    document.getElementById('add-price').value = '';
+    document.getElementById('add-saleprice').value = '';
+    document.getElementById('add-desc').value = '';
+    document.getElementById('add-soldout').checked = false;
+    document.getElementById('add-img-previews').innerHTML = '';
+    document.getElementById('add-img-urls').innerHTML = '';
+    uploadedImages.add = [];
+}
+
+// Init: load brands for dropdowns + restore pending queue
+updateQueueUI();
+(async () => {
+    try {
+        const html = await getFile();
+        const brands = parseBrands(html);
+        populateBrandDropdowns(brands.concat(queue.brands.map(b => b.name)));
+        allPerfumes = parsePerfumes(html);
+    } catch(e) { console.error('Init error:', e); }
+})();
+</script>
+</body>
+</html>
