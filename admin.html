@@ -443,18 +443,11 @@ function bsMove(id, dir) {
     renderBestSellersAdmin();
 }
 
-async function saveBestSellers() {
-    showStatus('bs-status', '⏳ שומר...', 'loading');
-    try {
-        const html = await getFile(); // fresh content + sha
-        if (!/const bestSellerIds = \[[^\]]*\];/.test(html)) throw new Error('שורת bestSellerIds לא נמצאה ב-index.html');
-        const updated = html.replace(/const bestSellerIds = \[[^\]]*\];/, 'const bestSellerIds = [' + bestSellerSelection.join(', ') + '];');
-        const res = await pushFile(updated, 'Update best sellers');
-        if (res.content) showStatus('bs-status', '✅ נשמר! הנמכרים ביותר עודכנו באתר (העדכון באתר החי עשוי לקחת כדקה)', 'success');
-        else throw new Error(res.message || 'Push failed');
-    } catch (e) {
-        showStatus('bs-status', '❌ ' + e.message, 'error');
-    }
+function saveBestSellers() {
+    queue.bestSellers = [...bestSellerSelection];
+    saveQueue();
+    updateQueueUI();
+    showStatus('bs-status', '🕐 השינוי נשמר לרשימת ההמתנה. לחצו \'🚀 פרסם הכל\' למטה כדי להעלות הכל יחד.', 'success');
 }
 
 // ===== Product Sections (חדש באתר / חזרו למלאי / המומלצים שלנו) =====
@@ -562,45 +555,49 @@ function secMove(id, dir) {
     renderSectionAdmin();
 }
 
-async function secSave() {
-    showStatus('sec-status', '⏳ שומר...', 'loading');
-    try {
-        let html = await getFile();
-        let changed = 0, missing = [];
-        Object.keys(SECTION_DEFS).forEach(key => {
-            const cn = SECTION_DEFS[key].constName;
-            const re = new RegExp('const ' + cn + '\\s*=\\s*\\[[^\\]]*\\];');
-            if (!re.test(html)) { missing.push(cn); return; }
-            html = html.replace(re, 'const ' + cn + ' = [' + secData[key].join(', ') + '];');
-            changed++;
-        });
-        if (!changed) throw new Error('מדורי המוצרים לא נמצאו ב-index.html');
-        const res = await pushFile(html, 'Update product sections');
-        if (res.content) showStatus('sec-status', '✅ נשמר! המדורים עודכנו באתר (העדכון באתר החי עשוי לקחת כדקה)' + (missing.length ? ' — לא עודכנו: ' + missing.join(', ') : ''), 'success');
-        else throw new Error(res.message || 'Push failed');
-    } catch (e) {
-        showStatus('sec-status', '❌ ' + e.message, 'error');
-    }
+function secSave() {
+    queue.sections = JSON.parse(JSON.stringify(secData));
+    saveQueue();
+    updateQueueUI();
+    showStatus('sec-status', '🕐 השינוי נשמר לרשימת ההמתנה. לחצו \'🚀 פרסם הכל\' למטה כדי להעלות הכל יחד.', 'success');
 }
 
 // ===== BATCH QUEUE (one commit for everything) =====
-let queue = { perfumes: [], brands: [] };
+function emptyQueue() {
+    return { perfumes: [], brands: [], edits: [], deletes: [], brandDeletes: [], bestSellers: null, sections: null };
+}
+let queue = emptyQueue();
 try {
     const saved = JSON.parse(localStorage.getItem('lionAdminQueue'));
-    if (saved && Array.isArray(saved.perfumes) && Array.isArray(saved.brands)) queue = saved;
+    if (saved && typeof saved === 'object') {
+        queue = Object.assign(emptyQueue(), saved);
+        // ensure arrays exist even if an older saved shape lacked them
+        ['perfumes', 'brands', 'edits', 'deletes', 'brandDeletes'].forEach(k => { if (!Array.isArray(queue[k])) queue[k] = []; });
+    }
 } catch (e) {}
+
+function queueCount() {
+    return queue.perfumes.length + queue.brands.length + queue.edits.length +
+           queue.deletes.length + queue.brandDeletes.length +
+           (queue.bestSellers ? 1 : 0) + (queue.sections ? 1 : 0);
+}
 
 function saveQueue() { localStorage.setItem('lionAdminQueue', JSON.stringify(queue)); }
 
 function updateQueueUI() {
     const bar = document.getElementById('publish-bar');
-    const total = queue.perfumes.length + queue.brands.length;
+    const total = queueCount();
     if (total === 0) { bar.style.display = 'none'; document.body.style.paddingBottom = ''; return; }
     bar.style.display = 'flex';
     document.body.style.paddingBottom = '90px';
     const parts = [];
-    if (queue.perfumes.length) parts.push(queue.perfumes.length + ' בשמים');
+    if (queue.perfumes.length) parts.push(queue.perfumes.length + ' בשמים חדשים');
+    if (queue.edits.length) parts.push(queue.edits.length + ' עריכות');
+    if (queue.deletes.length) parts.push(queue.deletes.length + ' מחיקות');
     if (queue.brands.length) parts.push(queue.brands.length + ' מותגים');
+    if (queue.brandDeletes.length) parts.push(queue.brandDeletes.length + ' מחיקת מותג');
+    if (queue.bestSellers) parts.push('נמכרים ביותר');
+    if (queue.sections) parts.push('מדורים');
     document.getElementById('queue-summary').textContent = '🕐 ממתינים לפרסום: ' + parts.join(' + ');
 }
 
@@ -609,21 +606,44 @@ function openQueueModal() {
     document.getElementById('queue-modal').style.display = 'block';
 }
 
+function queueRow(icon, title, sub, type, i, color) {
+    return '<div class="perfume-card"><div style="width:32px;height:32px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:18px;">' + icon + '</div>' +
+        '<div style="flex:1;min-width:0;"><div style="font-weight:700;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:' + (color || '#fff') + ';">' + title + '</div>' +
+        '<div style="color:#888;font-size:11px;">' + sub + '</div></div>' +
+        (type ? '<button class="btn-delete" onclick="removeQueued(\'' + type + '\',' + i + ')">✕</button>' : '') + '</div>';
+}
+
 function renderQueueList() {
     const el = document.getElementById('queue-list');
     let h = '';
+    queue.perfumes.forEach((p, i) => {
+        h += '<div class="perfume-card"><img src="' + (p.imageUrls[0] || '') + '" onerror="this.style.display=\'none\'"><div style="flex:1;min-width:0;"><div style="font-weight:700;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">➕ ' + p.name + '</div><div style="color:#D4AF37;font-size:12px;">' + p.brand + ' · ₪' + p.price + '</div></div><button class="btn-delete" onclick="removeQueued(\'perfume\',' + i + ')">✕</button></div>';
+    });
+    queue.edits.forEach((e, i) => {
+        h += queueRow('✏️', e.item.name, 'עריכת בושם', 'edit', i, '#4ade80');
+    });
+    queue.deletes.forEach((d, i) => {
+        h += queueRow('🗑️', d.name, 'מחיקת בושם', 'delete', i, '#f87171');
+    });
     queue.brands.forEach((b, i) => {
         h += '<div class="brand-card"><img src="' + (b.logoUrl || '') + '" onerror="this.style.display=\'none\'"><div style="flex:1;min-width:0;"><div style="font-weight:700;font-size:14px;">🏷️ ' + b.name + '</div><div style="color:#888;font-size:11px;">מותג חדש</div></div><button class="btn-delete" onclick="removeQueued(\'brand\',' + i + ')">✕</button></div>';
     });
-    queue.perfumes.forEach((p, i) => {
-        h += '<div class="perfume-card"><img src="' + (p.imageUrls[0] || '') + '" onerror="this.style.display=\'none\'"><div style="flex:1;min-width:0;"><div style="font-weight:700;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + p.name + '</div><div style="color:#D4AF37;font-size:12px;">' + p.brand + ' · ₪' + p.price + '</div></div><button class="btn-delete" onclick="removeQueued(\'perfume\',' + i + ')">✕</button></div>';
+    queue.brandDeletes.forEach((name, i) => {
+        h += queueRow('🗑️', name, 'מחיקת מותג', 'brandDelete', i, '#f87171');
     });
+    if (queue.bestSellers) h += queueRow('👑', 'הנמכרים ביותר עודכנו', queue.bestSellers.length + ' מוצרים', 'bestSellers', 0, '#D4AF37');
+    if (queue.sections) h += queueRow('🗂️', 'מדורים עודכנו', 'חדש/חזרו למלאי/מומלצים', 'sections', 0, '#D4AF37');
     el.innerHTML = h || '<div class="text-center text-gray-500 py-6">הרשימה ריקה</div>';
 }
 
 function removeQueued(type, i) {
     if (type === 'brand') queue.brands.splice(i, 1);
-    else queue.perfumes.splice(i, 1);
+    else if (type === 'perfume') queue.perfumes.splice(i, 1);
+    else if (type === 'edit') queue.edits.splice(i, 1);
+    else if (type === 'delete') queue.deletes.splice(i, 1);
+    else if (type === 'brandDelete') queue.brandDeletes.splice(i, 1);
+    else if (type === 'bestSellers') queue.bestSellers = null;
+    else if (type === 'sections') queue.sections = null;
     saveQueue();
     updateQueueUI();
     renderQueueList();
@@ -644,9 +664,34 @@ function buildPerfumeBlock(p, id) {
     return '\n            {\n                id: ' + id + ',\n                name: "' + p.name + '",\n                brand: "' + p.brand + '",\n                price: ' + p.price + ',\n                season: "' + p.season + '",\n                gender: "' + p.gender + '",' + soldOutStr + salePriceStr + '\n                images: [\n' + imagesStr + '\n                ],\n                description: "' + descEscaped + '",\n                size: "' + p.size + '"\n            },';
 }
 
+function perfumeDelPattern(id) {
+    return new RegExp('\\s*\\{[^{}]*id:\\s*' + id + ',(?:[^{}]|\\n)*?size:\\s*"[^"]*"\\s*\\},?', 'g');
+}
+
+// Applies EVERY pending change to a file's content. Safe on both index.html and
+// product.html — index-only edits (brands / best sellers / sections) simply no-op
+// when their markers aren't present in the file.
 function applyQueueToHtml(html, ids) {
     let c = html;
-    // brands (reversed so the first queued ends up first)
+
+    // 1) Product deletes (remove the whole perfume block by id)
+    queue.deletes.forEach(d => { c = c.replace(perfumeDelPattern(d.id), ''); });
+
+    // 2) Product edits (remove old block, insert updated block at top of the array)
+    queue.edits.forEach(e => {
+        c = c.replace(perfumeDelPattern(e.targetId), '');
+        const at = c.indexOf('const perfumes = [');
+        if (at > -1) { const pos = at + 'const perfumes = ['.length; c = c.slice(0, pos) + e.block + c.slice(pos); }
+    });
+
+    // 3) Brand deletes (index.html only)
+    queue.brandDeletes.forEach(name => {
+        c = c.replace(', "' + name + '"', '').replace(',"' + name + '"', '');
+        const imgPattern = new RegExp('\\s*"' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '":\\s*"[^"]*",?', 'g');
+        c = c.replace(imgPattern, '');
+    });
+
+    // 4) Brand adds (reversed so the first queued ends up first)
     [...queue.brands].reverse().forEach(b => {
         const bi = c.indexOf('const brands = ["הכל"');
         if (bi > -1) {
@@ -659,11 +704,27 @@ function applyQueueToHtml(html, ids) {
             c = c.slice(0, pos) + '\n            "' + b.name + '": "' + b.logoUrl + '",' + c.slice(pos);
         }
     });
-    // perfumes (reversed so queue order is kept top-first)
+
+    // 5) Perfume adds (reversed so queue order is kept top-first)
     for (let i = queue.perfumes.length - 1; i >= 0; i--) {
         const pos = c.indexOf('const perfumes = [') + 'const perfumes = ['.length;
         c = c.slice(0, pos) + buildPerfumeBlock(queue.perfumes[i], ids[i]) + c.slice(pos);
     }
+
+    // 6) Best sellers (index.html only)
+    if (queue.bestSellers && /const bestSellerIds = \[[^\]]*\];/.test(c)) {
+        c = c.replace(/const bestSellerIds = \[[^\]]*\];/, 'const bestSellerIds = [' + queue.bestSellers.join(', ') + '];');
+    }
+
+    // 7) Product sections (index.html only)
+    if (queue.sections) {
+        Object.keys(SECTION_DEFS).forEach(key => {
+            const cn = SECTION_DEFS[key].constName;
+            const re = new RegExp('const ' + cn + '\\s*=\\s*\\[[^\\]]*\\];');
+            if (re.test(c) && queue.sections[key]) c = c.replace(re, 'const ' + cn + ' = [' + queue.sections[key].join(', ') + '];');
+        });
+    }
+
     return c;
 }
 
@@ -700,9 +761,9 @@ async function commitBothFiles(indexContent, productContent, message) {
 }
 
 async function publishAll() {
-    const total = queue.perfumes.length + queue.brands.length;
+    const total = queueCount();
     if (!total) return;
-    if (!confirm('לפרסם ' + queue.perfumes.length + ' בשמים ו-' + queue.brands.length + ' מותגים בקומיט אחד?')) return;
+    if (!confirm('לפרסם ' + total + ' שינויים בקומיט אחד לאתר?')) return;
     const btn = document.getElementById('publish-btn');
     btn.disabled = true;
     btn.textContent = '⏳ מפרסם...';
@@ -715,7 +776,15 @@ async function publishAll() {
         const ids = queue.perfumes.map(() => nextId++);
         const newIndex = applyQueueToHtml(idx.content, ids);
         const newProd = applyQueueToHtml(prod.content, ids);
-        const msg = 'Batch update: ' + queue.perfumes.length + ' perfumes, ' + queue.brands.length + ' brands';
+        const bits = [];
+        if (queue.perfumes.length) bits.push(queue.perfumes.length + ' add');
+        if (queue.edits.length) bits.push(queue.edits.length + ' edit');
+        if (queue.deletes.length) bits.push(queue.deletes.length + ' delete');
+        if (queue.brands.length) bits.push(queue.brands.length + ' brand');
+        if (queue.brandDeletes.length) bits.push(queue.brandDeletes.length + ' brand-del');
+        if (queue.bestSellers) bits.push('bestsellers');
+        if (queue.sections) bits.push('sections');
+        const msg = 'Batch update: ' + bits.join(', ');
         try {
             await commitBothFiles(newIndex, newProd, msg);
         } catch (e) {
@@ -726,7 +795,7 @@ async function publishAll() {
         }
         currentFileContent = newIndex;
         allPerfumes = parsePerfumes(newIndex);
-        queue = { perfumes: [], brands: [] };
+        queue = emptyQueue();
         saveQueue();
         refreshBrandDropdowns();
         alert('✅ פורסם בהצלחה בקומיט אחד! האתר יתעדכן תוך כדקה.');
@@ -772,7 +841,7 @@ async function loadBrands() {
     list.innerHTML = '<div class="text-center text-gray-500 py-8">טוען...</div>';
     try {
         const html = await getFile();
-        const brands = parseBrands(html);
+        const brands = parseBrands(html).filter(b => !queue.brandDeletes.includes(b));
         const images = parseBrandImages(html);
         populateBrandDropdowns(brands.concat(queue.brands.map(b => b.name)));
         if (brands.length === 0 && queue.brands.length === 0) { list.innerHTML = '<div class="text-center text-gray-500 py-8">אין מותגים</div>'; return; }
@@ -832,18 +901,13 @@ async function addBrand() {
     loadBrands();
 }
 
-async function deleteBrand(name) {
-    if (!confirm('למחוק את המותג "' + name + '"?')) return;
-    try {
-        const html = await getFile();
-        let newHtml = html.replace(', "' + name + '"', '').replace(',"' + name + '"', '');
-        const imgPattern = new RegExp('\\s*"' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '":\\s*"[^"]*",?', 'g');
-        newHtml = newHtml.replace(imgPattern, '');
-        await pushFile(newHtml, 'Delete brand: ' + name);
-        currentFileContent = newHtml;
-        showStatus('brand-status', '✅ המותג ' + name + ' נמחק!', 'success');
-        loadBrands();
-    } catch(e) { showStatus('brand-status', '❌ שגיאה: ' + e.message, 'error'); }
+function deleteBrand(name) {
+    if (!confirm('למחוק את המותג "' + name + '"? (יתווסף לרשימת ההמתנה)')) return;
+    if (!queue.brandDeletes.includes(name)) queue.brandDeletes.push(name);
+    saveQueue();
+    updateQueueUI();
+    showStatus('brand-status', '🕐 מחיקת המותג "' + name + '" נשמרה לרשימת ההמתנה. לחצו \'🚀 פרסם הכל\' למטה.', 'success');
+    loadBrands();
 }
 
 // ===== PERFUME FUNCTIONS =====
@@ -871,35 +935,67 @@ function parsePerfumes(html) {
     return arr;
 }
 
+// Apply pending deletes + edits (real ids) to a parsed perfume list
+function applyPendingToList(list) {
+    let out = list.filter(p => !queue.deletes.some(d => d.id === p.id));
+    queue.edits.forEach(e => {
+        const i = out.findIndex(p => p.id === e.targetId);
+        if (i > -1) out[i] = e.item; else out.unshift(e.item);
+    });
+    return out;
+}
+
 async function loadPerfumes() {
     document.getElementById('perfumes-list').innerHTML = '<div class="text-center text-gray-500 py-8">טוען...</div>';
     try {
         const html = await getFile();
-        allPerfumes = parsePerfumes(html);
-        populateBrandDropdowns(parseBrands(html));
+        allPerfumes = applyPendingToList(parsePerfumes(html));
+        populateBrandDropdowns(parseBrands(html).filter(b => !queue.brandDeletes.includes(b)));
         renderList();
     } catch(e) { document.getElementById('perfumes-list').innerHTML = '<div class="text-center text-red-400 py-8">שגיאה: ' + e.message + '</div>'; }
 }
 
 function renderList() {
     const search = (document.getElementById('search-box').value || '').toLowerCase();
-    const filtered = allPerfumes.filter(p => p.name.toLowerCase().includes(search) || (p.brand || '').toLowerCase().includes(search));
     const container = document.getElementById('perfumes-list');
-    if (filtered.length === 0) { container.innerHTML = '<div class="text-center text-gray-500 py-8">לא נמצאו בשמים</div>'; return; }
-    container.innerHTML = filtered.map(p => `
-        <div class="perfume-card">
+    const pendingBadge = ' <span style="background:#D4AF37;color:#000;font-size:10px;padding:2px 6px;border-radius:4px;">🕐 ממתין</span>';
+
+    // Pending NEW perfumes (not yet published) shown at the very top
+    const pendAdds = queue.perfumes
+        .map((p, i) => ({ p, i }))
+        .filter(({ p }) => p.name.toLowerCase().includes(search) || (p.brand || '').toLowerCase().includes(search));
+    const pendingHtml = pendAdds.map(({ p, i }) => `
+        <div class="perfume-card" style="border-color:#D4AF37;">
+            <img src="${p.imageUrls && p.imageUrls[0] ? p.imageUrls[0] : ''}" onerror="this.style.display='none'">
+            <div style="flex:1;min-width:0;">
+                <div style="font-weight:700;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">➕ ${p.name}${pendingBadge}</div>
+                <div style="color:#D4AF37;font-size:12px;">${p.brand || ''} · ₪${p.price}</div>
+                <div style="color:#888;font-size:11px;">בושם חדש — יפורסם ב'פרסם הכל'</div>
+            </div>
+            <button class="btn-delete" onclick="removeQueued('perfume',${i});loadPerfumes()">✕</button>
+        </div>
+    `).join('');
+
+    const filtered = allPerfumes.filter(p => p.name.toLowerCase().includes(search) || (p.brand || '').toLowerCase().includes(search));
+    const listHtml = filtered.map(p => {
+        const isEdited = queue.edits.some(e => e.targetId === p.id);
+        return `
+        <div class="perfume-card"${isEdited ? ' style="border-color:#4ade80;"' : ''}>
             <img src="${p.images && p.images[0] ? p.images[0] : ''}" onerror="this.style.display='none'">
             <div style="flex:1;min-width:0;">
-                <div style="font-weight:700;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${p.soldOut ? '<span class="soldout-badge">אזל</span>' : ''}${p.name}</div>
+                <div style="font-weight:700;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${p.soldOut ? '<span class="soldout-badge">אזל</span>' : ''}${p.name}${isEdited ? pendingBadge : ''}</div>
                 <div style="color:#D4AF37;font-size:12px;">${p.brand || ''}</div>
                 <div style="color:#888;font-size:12px;">${p.salePrice ? '₪' + p.salePrice + ' <span style="text-decoration:line-through;color:#f87171;">₪' + p.price + '</span>' : '₪' + p.price} · ${p.size || '100ml'}</div>
             </div>
             <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0;">
                 <button class="btn-edit" onclick="openEdit(${p.id})">✏️ ערוך</button>
-                <button class="btn-delete" onclick="openDelete(${p.id},'${p.name.replace(/'/g, "\\'")}')">🗑️ מחק</button>
+                <button class="btn-delete" onclick="openDelete(${p.id},'${(p.name || '').replace(/'/g, "\\'")}')">🗑️ מחק</button>
             </div>
-        </div>
-    `).join('');
+        </div>`;
+    }).join('');
+
+    if (!pendingHtml && !listHtml) { container.innerHTML = '<div class="text-center text-gray-500 py-8">לא נמצאו בשמים</div>'; return; }
+    container.innerHTML = pendingHtml + listHtml;
 }
 
 function openEdit(id) {
@@ -937,54 +1033,44 @@ async function saveEdit() {
         const soldOut = document.getElementById('edit-soldout').checked;
         const images = document.getElementById('edit-images').value.trim().split('\n').filter(Boolean);
         const desc = document.getElementById('edit-desc').value.trim();
-        const html = await getFile();
         const imagesStr = images.map(url => '                    "' + url.trim() + '"').join(',\n');
         const soldOutStr = soldOut ? '\n                soldOut: true,' : '';
         const salePriceStr = salePrice ? '\n                salePrice: ' + salePrice + ',' : '';
         const descEscaped = desc.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\n');
         const newBlock = '\n            {\n                id: ' + newId + ',\n                name: "' + name + '",\n                brand: "' + brand + '",\n                price: ' + price + ',\n                season: "' + season + '",\n                gender: "' + gender + '",' + soldOutStr + salePriceStr + '\n                images: [\n' + imagesStr + '\n                ],\n                description: "' + descEscaped + '",\n                size: "' + size + '"\n            },';
-        // Step 1: Delete old perfume
-        const deletePattern = new RegExp('\\s*\\{[^{}]*id:\\s*' + originalId + ',(?:[^{}]|\\n)*?size:\\s*"[^"]*"\\s*\\},?', 'g');
-        let cleaned = html.replace(deletePattern, '');
-        if (cleaned === html) { showStatus('edit-status', '❌ לא נמצא הבושם', 'error'); return; }
-        // Step 2: Add updated perfume at the top
-        const insertPos = cleaned.indexOf('const perfumes = [') + 'const perfumes = ['.length;
-        const newContent = cleaned.slice(0, insertPos) + newBlock + cleaned.slice(insertPos);
-        await pushFile(newContent, 'Edit: ' + name);
-        // Sync product.html with same delete-then-add
-        try {
-            const prod = await getFileByPath('product.html');
-            let pc = prod.content;
-            pc = pc.replace(deletePattern, '');
-            const pInsertPos = pc.indexOf('const perfumes = [') + 'const perfumes = ['.length;
-            if (pInsertPos > 18) pc = pc.slice(0, pInsertPos) + newBlock + pc.slice(pInsertPos);
-            await pushFileByPath('product.html', pc, prod.sha, 'Edit in product.html: ' + name);
-        } catch(e) { console.error('Sync failed:', e); }
-        showStatus('edit-status', '✅ נשמר!', 'success');
-        allPerfumes = parsePerfumes(newContent); currentFileContent = newContent; renderList();
+        // Stage the edit — no commit yet (published together via 'פרסם הכל')
+        const item = { id: parseInt(newId) || originalId, name, brand, price: parseInt(price) || 0, season, gender, size, soldOut, salePrice: parseInt(salePrice) || 0, description: desc, images };
+        queue.edits = queue.edits.filter(e => e.targetId !== originalId);
+        queue.deletes = queue.deletes.filter(d => d.id !== originalId);
+        queue.edits.push({ targetId: originalId, block: newBlock, item });
+        saveQueue();
+        updateQueueUI();
+        // reflect in the local list immediately
+        const li = allPerfumes.findIndex(p => p.id === originalId);
+        if (li > -1) allPerfumes[li] = item; else allPerfumes.unshift(item);
+        renderList();
+        showStatus('edit-status', '🕐 העריכה נשמרה לרשימת ההמתנה. לחצו \'🚀 פרסם הכל\' למטה כדי להעלות הכל יחד.', 'success');
+        setTimeout(closeModal, 1200);
     } catch(e) { showStatus('edit-status', '❌ ' + e.message, 'error'); }
 }
 
 function openDelete(id, name) { deleteTargetId = id; document.getElementById('delete-name-display').textContent = name; document.getElementById('delete-status').style.display = 'none'; document.getElementById('delete-modal').style.display = 'block'; }
 function closeDeleteModal() { document.getElementById('delete-modal').style.display = 'none'; deleteTargetId = null; }
 
-async function confirmDelete() {
-    showStatus('delete-status', '⏳ מוחק...', 'loading');
+function confirmDelete() {
     try {
-        const html = await getFile();
-        const deletePattern = new RegExp('\\s*\\{[^{}]*id:\\s*' + deleteTargetId + ',(?:[^{}]|\\n)*?size:\\s*"[^"]*"\\s*\\},?', 'g');
-        const newContent = html.replace(deletePattern, '');
-        if (newContent === html) { showStatus('delete-status', '❌ לא נמצא', 'error'); return; }
-        await pushFile(newContent, 'Delete ID: ' + deleteTargetId);
-        // Sync delete to product.html
-        try {
-            const prod = await getFileByPath('product.html');
-            let pc = prod.content.replace(deletePattern, '');
-            await pushFileByPath('product.html', pc, prod.sha, 'Delete from product.html ID: ' + deleteTargetId);
-        } catch(e) { console.error('Sync delete failed:', e); }
-        showStatus('delete-status', '✅ נמחק!', 'success');
-        allPerfumes = allPerfumes.filter(p => p.id !== deleteTargetId); currentFileContent = newContent; renderList();
-        setTimeout(closeDeleteModal, 1500);
+        const id = deleteTargetId;
+        const name = (document.getElementById('delete-name-display').textContent || '').trim() ||
+                     ((allPerfumes.find(p => p.id === id) || {}).name || ('ID ' + id));
+        // Stage the delete — no commit yet
+        queue.edits = queue.edits.filter(e => e.targetId !== id);       // a delete overrides a pending edit
+        if (!queue.deletes.some(d => d.id === id)) queue.deletes.push({ id, name });
+        saveQueue();
+        updateQueueUI();
+        allPerfumes = allPerfumes.filter(p => p.id !== id);
+        renderList();
+        showStatus('delete-status', '🕐 המחיקה נשמרה לרשימת ההמתנה. לחצו \'🚀 פרסם הכל\' למטה כדי להעלות הכל יחד.', 'success');
+        setTimeout(closeDeleteModal, 1200);
     } catch(e) { showStatus('delete-status', '❌ ' + e.message, 'error'); }
 }
 

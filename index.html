@@ -497,30 +497,108 @@
     <div id="lion-intro" aria-hidden="true">
         <div class="lion-intro__glow"></div>
         <div class="lion-intro__inner">
-            <svg class="lion-svg" viewBox="0 0 400 400" role="img" aria-label="Lion Perfumes">
-                <g class="lion-mane" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke">
-                    <path class="draw draw-mane" pathLength="1" d="M 200.0,30.0 L 225.0,74.5 L 265.1,42.9 L 271.1,93.6 L 320.2,79.8 L 306.4,128.9 L 357.1,134.9 L 325.5,175.0 L 370.0,200.0 L 325.5,225.0 L 357.1,265.1 L 306.4,271.1 L 320.2,320.2 L 271.1,306.4 L 265.1,357.1 L 225.0,325.5 L 200.0,370.0 L 175.0,325.5 L 134.9,357.1 L 128.9,306.4 L 79.8,320.2 L 93.6,271.1 L 42.9,265.1 L 74.5,225.0 L 30.0,200.0 L 74.5,175.0 L 42.9,134.9 L 93.6,128.9 L 79.8,79.8 L 128.9,93.6 L 134.9,42.9 L 175.0,74.5 Z"/>
-                    <path class="draw draw-mane2" pathLength="1" d="M 224.6,76.4 L 238.3,107.6 L 270.0,95.2 L 270.7,129.3 L 304.8,130.0 L 292.4,161.7 L 323.6,175.4 L 300.0,200.0 L 323.6,224.6 L 292.4,238.3 L 304.8,270.0 L 270.7,270.7 L 270.0,304.8 L 238.3,292.4 L 224.6,323.6 L 200.0,300.0 L 175.4,323.6 L 161.7,292.4 L 130.0,304.8 L 129.3,270.7 L 95.2,270.0 L 107.6,238.3 L 76.4,224.6 L 100.0,200.0 L 76.4,175.4 L 107.6,161.7 L 95.2,130.0 L 129.3,129.3 L 130.0,95.2 L 161.7,107.6 L 175.4,76.4 L 200.0,100.0 Z"/>
-                </g>
-                <g class="lion-face" fill="none" stroke="#F4E5C2" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke">
-                    <path class="draw draw-face" pathLength="1" d="M200,148 C163,148 148,180 151,214 C153,251 176,281 200,289 C224,281 247,251 249,214 C252,180 237,148 200,148 Z"/>
-                    <path class="draw draw-feat" pathLength="1" d="M160,196 C169,185 187,185 194,197 C186,205 169,205 160,196 Z"/>
-                    <path class="draw draw-feat" pathLength="1" d="M206,197 C213,185 231,185 240,196 C231,205 214,205 206,197 Z"/>
-                    <path class="draw draw-feat" pathLength="1" d="M185,216 C191,211 209,211 215,216 C215,229 207,239 200,241 C193,239 185,229 185,216 Z"/>
-                    <path class="draw draw-feat2" pathLength="1" d="M200,241 L200,254"/>
-                    <path class="draw draw-feat2" pathLength="1" d="M200,254 C191,266 176,265 168,258"/>
-                    <path class="draw draw-feat2" pathLength="1" d="M200,254 C209,266 224,265 232,258"/>
-                    <path class="draw draw-feat2" pathLength="1" d="M151,214 C133,210 120,214 110,222"/>
-                    <path class="draw draw-feat2" pathLength="1" d="M249,214 C267,210 280,214 290,222"/>
-                </g>
-                <g class="lion-fills" fill="#F4E5C2" opacity="0">
-                    <circle cx="177" cy="196" r="3.4"/>
-                    <circle cx="223" cy="196" r="3.4"/>
-                </g>
-                <g class="lion-fills nose-fill" fill="#D4AF37" opacity="0">
-                    <path d="M185,216 C191,211 209,211 215,216 C215,229 207,239 200,241 C193,239 185,229 185,216 Z"/>
-                </g>
-            </svg>
+            <div class="lion-art">
+                <svg class="lion-svg" viewBox="0 0 400 400" role="img" aria-label="Lion Perfumes">
+  <defs>
+    <radialGradient id="gOuter" cx="50%" cy="45%" r="65%"><stop offset="0%" stop-color="#9a7519"/><stop offset="60%" stop-color="#6b5010"/><stop offset="100%" stop-color="#3f2f08"/></radialGradient>
+    <radialGradient id="gMid" cx="50%" cy="45%" r="65%"><stop offset="0%" stop-color="#e6c353"/><stop offset="55%" stop-color="#c19a24"/><stop offset="100%" stop-color="#7d5f14"/></radialGradient>
+    <radialGradient id="gInner" cx="50%" cy="45%" r="65%"><stop offset="0%" stop-color="#f7ecc6"/><stop offset="50%" stop-color="#e2ca78"/><stop offset="100%" stop-color="#c39c34"/></radialGradient>
+    <radialGradient id="gFace" cx="50%" cy="40%" r="62%"><stop offset="0%" stop-color="#fff3d2"/><stop offset="55%" stop-color="#ecce80"/><stop offset="100%" stop-color="#bd8f2a"/></radialGradient>
+    <radialGradient id="gMuzzle" cx="50%" cy="38%" r="60%"><stop offset="0%" stop-color="#fff7e6"/><stop offset="100%" stop-color="#e4c884"/></radialGradient>
+    <linearGradient id="gEar" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#e2c262"/><stop offset="100%" stop-color="#8a6a18"/></linearGradient>
+  </defs>
+  <g class="l-mane">
+      <path d="M 213.0,109.0 Q 225.5,62.7 226.4,17.8 Q 190.4,62.7 187.0,109.0 Z" fill="url(#gOuter)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 235.6,114.9 Q 244.6,78.6 226.8,36.1 Q 210.5,70.2 210.4,108.7 Z" fill="url(#gOuter)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 256.1,126.0 Q 288.7,90.9 310.3,51.5 Q 257.6,74.6 233.1,114.0 Z" fill="url(#gOuter)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 273.4,141.8 Q 298.3,113.8 302.3,67.9 Q 272.0,90.5 253.9,124.5 Z" fill="url(#gOuter)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 286.4,161.2 Q 331.6,145.2 369.0,120.4 Q 311.7,116.3 271.6,139.8 Z" fill="url(#gOuter)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 294.4,183.1 Q 329.4,169.9 354.2,131.2 Q 316.9,137.1 285.2,158.8 Z" fill="url(#gOuter)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 296.9,206.3 Q 344.3,213.2 389.0,208.6 Q 340.1,178.3 293.7,180.5 Z" fill="url(#gOuter)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 293.7,229.5 Q 330.9,234.1 370.9,211.3 Q 335.1,199.2 296.9,203.7 Z" fill="url(#gOuter)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 285.2,251.2 Q 324.0,279.3 365.6,296.0 Q 336.4,246.5 294.4,226.9 Z" fill="url(#gOuter)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 271.6,270.2 Q 302.4,291.5 348.4,290.0 Q 322.3,262.7 286.4,248.8 Z" fill="url(#gOuter)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 253.9,285.5 Q 275.2,328.4 304.4,362.6 Q 301.5,305.1 273.4,268.2 Z" fill="url(#gOuter)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 233.1,296.0 Q 250.4,329.2 291.9,349.2 Q 281.5,312.9 256.1,284.0 Z" fill="url(#gOuter)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 210.4,301.3 Q 209.3,349.3 219.2,393.0 Q 243.3,340.9 235.6,295.1 Z" fill="url(#gOuter)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 187.0,301.0 Q 186.9,338.4 214.3,375.4 Q 222.0,338.4 213.0,301.0 Z" fill="url(#gOuter)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 164.4,295.1 Q 141.2,337.0 129.6,380.4 Q 175.2,345.4 189.6,301.3 Z" fill="url(#gOuter)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 143.9,284.0 Q 126.4,317.1 133.5,362.5 Q 157.5,333.4 166.9,296.0 Z" fill="url(#gOuter)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 126.6,268.2 Q 86.5,294.6 56.2,327.6 Q 112.8,317.8 146.1,285.5 Z" fill="url(#gOuter)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 113.6,248.8 Q 82.8,270.0 67.9,313.6 Q 102.7,298.9 128.4,270.2 Z" fill="url(#gOuter)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 105.6,226.9 Q 57.9,231.6 15.7,246.7 Q 70.4,264.4 114.8,251.2 Z" fill="url(#gOuter)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 103.1,203.7 Q 66.0,208.1 32.6,239.8 Q 70.2,243.0 106.3,229.5 Z" fill="url(#gOuter)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 106.3,180.5 Q 61.8,162.5 17.4,156.3 Q 57.6,197.4 103.1,206.3 Z" fill="url(#gOuter)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 114.8,158.8 Q 79.9,145.5 35.6,158.0 Q 67.4,178.3 105.6,183.1 Z" fill="url(#gOuter)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 128.4,139.8 Q 97.4,103.2 61.0,77.0 Q 77.5,132.1 113.6,161.2 Z" fill="url(#gOuter)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 146.1,124.5 Q 121.3,96.5 76.3,87.0 Q 95.0,119.7 126.6,141.8 Z" fill="url(#gOuter)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 166.9,114.0 Q 156.5,67.2 136.4,27.0 Q 125.4,83.5 143.9,126.0 Z" fill="url(#gOuter)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 189.6,108.7 Q 180.8,72.3 145.3,43.0 Q 146.7,80.7 164.4,114.9 Z" fill="url(#gOuter)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 224.7,119.6 Q 242.1,87.0 248.2,54.5 Q 208.7,82.3 199.9,116.1 Z" fill="url(#gMid)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 247.7,130.0 Q 259.3,103.5 246.4,66.6 Q 228.5,89.6 224.9,119.7 Z" fill="url(#gMid)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 266.9,146.5 Q 299.2,128.5 321.9,104.5 Q 273.6,106.5 248.0,130.2 Z" fill="url(#gMid)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 280.7,167.7 Q 304.7,151.7 313.9,113.7 Q 286.4,123.3 267.1,146.7 Z" fill="url(#gMid)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 287.9,192.0 Q 324.8,194.3 356.9,186.3 Q 315.2,161.9 280.8,168.0 Z" fill="url(#gMid)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 288.0,217.3 Q 316.9,216.8 345.2,189.7 Q 316.8,183.0 288.0,192.3 Z" fill="url(#gMid)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 281.0,241.6 Q 310.8,263.5 342.1,274.1 Q 320.2,231.1 288.0,217.6 Z" fill="url(#gMid)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 267.4,262.9 Q 292.0,278.1 330.4,270.7 Q 310.2,249.7 280.9,241.8 Z" fill="url(#gMid)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 248.4,279.6 Q 261.6,314.1 282.2,340.0 Q 287.0,291.9 267.2,263.1 Z" fill="url(#gMid)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 225.4,290.2 Q 237.9,316.3 274.2,330.7 Q 268.5,302.2 248.1,279.7 Z" fill="url(#gMid)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 200.4,293.9 Q 192.8,330.1 196.1,363.0 Q 226.2,325.2 225.1,290.3 Z" fill="url(#gMid)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 175.3,290.4 Q 171.7,319.1 194.5,350.9 Q 205.1,323.8 200.1,293.9 Z" fill="url(#gMid)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 152.3,280.0 Q 126.4,306.4 111.4,335.8 Q 157.1,320.3 175.1,290.3 Z" fill="url(#gMid)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 133.1,263.5 Q 114.5,285.7 116.5,324.7 Q 140.1,307.7 152.0,279.8 Z" fill="url(#gMid)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 119.3,242.3 Q 83.2,250.4 54.7,267.1 Q 101.6,278.8 132.9,263.3 Z" fill="url(#gMid)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 112.1,218.0 Q 84.5,226.6 65.0,260.6 Q 94.1,259.0 119.2,242.0 Z" fill="url(#gMid)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 112.0,192.7 Q 77.2,180.1 44.2,178.7 Q 77.3,213.9 112.0,217.7 Z" fill="url(#gMid)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 119.0,168.4 Q 91.1,160.8 56.4,178.7 Q 81.7,193.2 112.0,192.4 Z" fill="url(#gMid)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 132.6,147.1 Q 110.2,117.7 83.2,98.6 Q 92.0,146.1 119.1,168.2 Z" fill="url(#gMid)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 151.6,130.4 Q 132.3,108.9 93.4,105.3 Q 106.9,131.1 132.8,146.9 Z" fill="url(#gMid)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 174.6,119.8 Q 171.6,83.0 159.2,52.4 Q 141.0,97.1 151.9,130.3 Z" fill="url(#gMid)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 199.6,116.1 Q 195.0,87.6 164.2,63.5 Q 161.6,92.5 174.9,119.7 Z" fill="url(#gMid)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 216.6,126.0 Q 227.1,102.3 224.4,78.3 Q 197.5,100.2 194.6,124.4 Z" fill="url(#gInner)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 242.6,136.4 Q 251.4,119.0 240.5,93.1 Q 224.3,106.9 222.5,127.4 Z" fill="url(#gInner)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 263.5,155.1 Q 286.8,143.7 300.1,123.6 Q 265.4,123.1 247.7,139.8 Z" fill="url(#gInner)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 276.7,179.8 Q 294.7,172.2 302.9,145.3 Q 281.6,145.5 267.1,160.1 Z" fill="url(#gInner)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 280.7,207.6 Q 305.9,213.9 329.0,207.0 Q 302.8,184.3 278.4,185.7 Z" fill="url(#gInner)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 275.0,235.0 Q 293.6,240.7 317.2,225.4 Q 300.8,211.9 280.3,213.7 Z" fill="url(#gInner)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 260.2,258.9 Q 275.4,279.9 297.5,289.4 Q 292.0,255.2 272.5,240.6 Z" fill="url(#gInner)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 238.1,276.2 Q 248.7,292.5 276.7,296.0 Q 272.8,275.1 255.9,263.3 Z" fill="url(#gInner)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 211.5,284.9 Q 209.7,310.8 220.4,332.4 Q 238.2,302.6 232.6,278.9 Z" fill="url(#gInner)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 183.4,284.0 Q 181.1,303.4 200.2,324.0 Q 210.7,305.5 205.4,285.6 Z" fill="url(#gInner)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 157.4,273.6 Q 139.4,292.3 133.8,315.7 Q 166.5,304.3 177.5,282.6 Z" fill="url(#gInner)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 136.5,254.9 Q 122.3,268.2 123.7,296.3 Q 143.6,288.8 152.3,270.2 Z" fill="url(#gInner)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 123.3,230.2 Q 97.5,232.9 78.1,247.2 Q 110.5,259.6 132.9,249.9 Z" fill="url(#gInner)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 119.3,202.4 Q 99.8,203.5 82.8,225.9 Q 102.9,233.0 121.6,224.3 Z" fill="url(#gInner)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 125.0,175.0 Q 103.5,160.5 79.5,159.0 Q 96.3,189.3 119.7,196.3 Z" fill="url(#gInner)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 139.8,151.1 Q 124.3,139.4 96.8,145.7 Q 107.6,164.1 127.5,169.4 Z" fill="url(#gInner)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 161.9,133.8 Q 154.7,108.9 137.2,92.3 Q 130.7,126.3 144.1,146.7 Z" fill="url(#gInner)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+      <path d="M 188.5,125.1 Q 184.1,106.1 159.1,93.3 Q 155.6,114.3 167.4,131.1 Z" fill="url(#gInner)" stroke="#2c2008" stroke-width="0.5" stroke-opacity="0.4"/>
+  </g>
+  <g class="l-head">
+    <path d="M148,150 C138,120 160,112 172,132 C176,142 172,150 166,156 C160,150 152,150 148,150 Z" fill="url(#gEar)" stroke="#6b5010" stroke-width="1"/>
+    <path d="M252,150 C262,120 240,112 228,132 C224,142 228,150 234,156 C240,150 248,150 252,150 Z" fill="url(#gEar)" stroke="#6b5010" stroke-width="1"/>
+    <path d="M152,146 C146,130 158,126 166,138 C169,145 165,150 161,153 Z" fill="#c99a3a" opacity="0.7"/>
+    <path d="M248,146 C254,130 242,126 234,138 C231,145 235,150 239,153 Z" fill="#c99a3a" opacity="0.7"/>
+    <path d="M200,150 C168,150 150,172 149,200 C148,224 158,246 176,262 C186,271 194,278 200,280 C206,278 214,271 224,262 C242,246 252,224 251,200 C250,172 232,150 200,150 Z" fill="url(#gFace)" stroke="#a9811c" stroke-width="1.2"/>
+    <path d="M162,196 C176,184 190,184 198,192 C190,190 176,191 166,200 Z" fill="#a9811c" opacity="0.5"/>
+    <path d="M238,196 C224,184 210,184 202,192 C210,190 224,191 234,200 Z" fill="#a9811c" opacity="0.5"/>
+    <path d="M200,236 C186,236 172,242 168,252 C164,262 172,270 184,270 C192,270 197,266 200,262 C203,266 208,270 216,270 C228,270 236,262 232,252 C228,242 214,236 200,236 Z" fill="url(#gMuzzle)" stroke="#c69a34" stroke-width="0.8"/>
+    <path d="M168,204 C176,196 190,196 196,204 C190,212 176,212 168,204 Z" fill="#2a1e08"/>
+    <path d="M204,204 C210,196 224,196 232,204 C224,212 210,212 204,204 Z" fill="#2a1e08"/>
+    <circle cx="183" cy="204" r="4.6" fill="#b5842a"/><circle cx="217" cy="204" r="4.6" fill="#b5842a"/>
+    <circle cx="183" cy="204" r="2.3" fill="#140d02"/><circle cx="217" cy="204" r="2.3" fill="#140d02"/>
+    <circle cx="184.6" cy="202.3" r="1.1" fill="#fff" opacity="0.9"/><circle cx="218.6" cy="202.3" r="1.1" fill="#fff" opacity="0.9"/>
+    <path d="M188,224 C193,220 207,220 212,224 C213,233 206,241 200,243 C194,241 187,233 188,224 Z" fill="#3a2408"/>
+    <path d="M192,226 C196,223 204,223 208,226 C206,231 202,234 200,235 C198,234 194,231 192,226 Z" fill="#5a3a12" opacity="0.7"/>
+    <path d="M200,243 L200,254" stroke="#4a2f0e" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+    <path d="M200,254 C192,264 182,263 176,258" stroke="#4a2f0e" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+    <path d="M200,254 C208,264 218,263 224,258" stroke="#4a2f0e" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+    <g fill="#8a5f1e" opacity="0.55"><circle cx="180" cy="250" r="0.9"/><circle cx="186" cy="253" r="0.9"/><circle cx="182" cy="256" r="0.9"/><circle cx="220" cy="250" r="0.9"/><circle cx="214" cy="253" r="0.9"/><circle cx="218" cy="256" r="0.9"/></g>
+  </g>
+</svg>
+                <span class="lion-shimmer"></span>
+            </div>
             <div class="lion-wordmark">
                 <p class="lion-eyebrow">THE HOUSE OF FRAGRANCE</p>
                 <h1 class="lion-title">LION PERFUMES</h1>
@@ -532,93 +610,71 @@
 
     <style>
         html.lion-lock, body.lion-lock { overflow: hidden !important; }
-
         #lion-intro {
             position: fixed; inset: 0; z-index: 9999;
             background: radial-gradient(circle at 50% 45%, #141414 0%, #0a0a0a 60%, #060606 100%);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            direction: ltr;
-            opacity: 1;
+            direction: ltr; opacity: 1;
             transition: opacity 0.9s ease, visibility 0.9s ease;
         }
         #lion-intro.lion-done { opacity: 0; visibility: hidden; pointer-events: none; }
-
         .lion-intro__glow {
-            position: absolute; width: 620px; height: 620px; max-width: 92vw; max-height: 92vw;
+            position: absolute; width: 640px; height: 640px; max-width: 94vw; max-height: 94vw;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(212,175,55,0.16) 0%, rgba(212,175,55,0.05) 40%, transparent 70%);
-            filter: blur(6px);
-            opacity: 0; animation: lionGlow 2.6s ease 0.4s forwards;
-            pointer-events: none;
+            background: radial-gradient(circle, rgba(212,175,55,0.20) 0%, rgba(212,175,55,0.06) 42%, transparent 70%);
+            filter: blur(8px); opacity: 0; animation: lionGlow 2.4s ease 0.3s forwards; pointer-events: none;
         }
         @keyframes lionGlow { to { opacity: 1; } }
-
         .lion-intro__inner {
             position: relative; display: flex; flex-direction: column; align-items: center;
-            animation: lionOutro 1s ease 3.5s forwards;
+            animation: lionOutro 1s ease 3.7s forwards;
         }
-        @keyframes lionOutro { to { transform: scale(1.06); opacity: 0.0; } }
-
-        .lion-svg {
-            width: 300px; height: 300px; max-width: 74vw; max-height: 44vh;
-            filter: drop-shadow(0 0 14px rgba(212,175,55,0.28));
+        @keyframes lionOutro { to { transform: scale(1.06); opacity: 0; } }
+        .lion-art {
+            position: relative; width: 320px; max-width: 76vw;
+            opacity: 0; transform: scale(0.82); overflow: hidden; border-radius: 20px;
+            animation: lionIn 1.3s cubic-bezier(.2,.7,.3,1) 0.25s forwards, lionBreathe 5s ease-in-out 1.6s infinite;
         }
-
-        .draw {
-            stroke-dasharray: 1; stroke-dashoffset: 1;
-            animation-fill-mode: forwards; animation-timing-function: ease-in-out;
+        @keyframes lionIn { to { opacity: 1; transform: scale(1); } }
+        @keyframes lionBreathe { 0%,100% { filter: drop-shadow(0 0 16px rgba(212,175,55,.30)); } 50% { filter: drop-shadow(0 0 34px rgba(212,175,55,.55)); } }
+        .lion-svg { width: 100%; height: auto; display: block; }
+        .lion-art .lion-shimmer {
+            position: absolute; inset: 0; pointer-events: none;
+            background: linear-gradient(115deg, transparent 42%, rgba(255,245,210,.38) 50%, transparent 58%);
+            transform: translateX(-120%); opacity: 0; animation: lionSweep 1.5s ease 1.15s 1 forwards;
         }
-        .draw-mane  { animation: lionDraw 1.5s 0.15s forwards; }
-        .draw-mane2 { animation: lionDraw 1.5s 0.45s forwards; }
-        .draw-face  { animation: lionDraw 1.2s 0.9s forwards; }
-        .draw-feat  { animation: lionDraw 0.9s 1.5s forwards; }
-        .draw-feat2 { animation: lionDraw 0.8s 1.8s forwards; }
-        @keyframes lionDraw { to { stroke-dashoffset: 0; } }
-
-        .lion-fills { animation: lionFill 0.7s ease 2.2s forwards; }
-        @keyframes lionFill { to { opacity: 1; } }
-
-        .lion-wordmark { margin-top: 26px; text-align: center; }
+        @keyframes lionSweep { 0% { transform: translateX(-120%); opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { transform: translateX(120%); opacity: 0; } }
+        .lion-wordmark { margin-top: 24px; text-align: center; }
         .lion-eyebrow {
             font-family: 'Heebo', sans-serif; color: rgba(212,175,55,0.85);
             letter-spacing: 0.35em; font-size: 11px; margin: 0 0 10px;
-            opacity: 0; transform: translateY(8px);
-            animation: lionUp 0.8s ease 2.35s forwards;
+            opacity: 0; transform: translateY(8px); animation: lionUp 0.8s ease 2.15s forwards;
         }
         .lion-title {
-            font-family: 'Playfair Display', serif; font-weight: 900; font-size: 40px;
-            margin: 0; letter-spacing: 0.04em;
+            font-family: 'Playfair Display', serif; font-weight: 900; font-size: 40px; margin: 0; letter-spacing: 0.04em;
             background: linear-gradient(135deg, #D4AF37 0%, #F4E5C2 50%, #D4AF37 100%);
             -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-            opacity: 0; transform: translateY(10px);
-            animation: lionUp 0.9s ease 2.55s forwards;
+            opacity: 0; transform: translateY(10px); animation: lionUp 0.9s ease 2.35s forwards;
         }
         .lion-rule {
             display: block; width: 0; height: 2px; margin: 16px auto 0;
             background: linear-gradient(90deg, transparent, #D4AF37, transparent);
-            animation: lionRule 1s ease 2.8s forwards;
+            animation: lionRule 1s ease 2.6s forwards;
         }
         @keyframes lionUp { to { opacity: 1; transform: translateY(0); } }
         @keyframes lionRule { to { width: 220px; } }
-
         .lion-skip {
-            position: absolute; bottom: 34px; right: 34px;
-            background: transparent; border: 1px solid rgba(212,175,55,0.35);
-            color: rgba(212,175,55,0.9); font-family: 'Heebo', sans-serif; font-size: 13px;
-            letter-spacing: 0.15em; padding: 8px 18px; border-radius: 999px; cursor: pointer;
-            opacity: 0; animation: lionUp 0.6s ease 1.2s forwards; transition: background 0.25s, color 0.25s;
+            position: absolute; bottom: 34px; right: 34px; background: transparent;
+            border: 1px solid rgba(212,175,55,0.35); color: rgba(212,175,55,0.9);
+            font-family: 'Heebo', sans-serif; font-size: 13px; letter-spacing: 0.15em;
+            padding: 8px 18px; border-radius: 999px; cursor: pointer; opacity: 0;
+            animation: lionUp 0.6s ease 1.2s forwards; transition: background 0.25s, color 0.25s;
         }
         .lion-skip:hover { background: rgba(212,175,55,0.12); color: #F4E5C2; }
-
-        @media (max-width: 640px) {
-            .lion-title { font-size: 30px; }
-            .lion-skip { bottom: 24px; right: 24px; }
-        }
+        @media (max-width: 640px) { .lion-title { font-size: 30px; } .lion-skip { bottom: 24px; right: 24px; } }
         @media (prefers-reduced-motion: reduce) {
-            .draw { stroke-dashoffset: 0; animation: none; }
-            .lion-fills, .lion-eyebrow, .lion-title { opacity: 1; transform: none; animation: none; }
-            .lion-rule { width: 220px; animation: none; }
-            .lion-intro__inner, .lion-intro__glow { animation: none; opacity: 1; }
+            .lion-art, .lion-eyebrow, .lion-title, .lion-intro__inner, .lion-intro__glow { opacity: 1 !important; transform: none !important; animation: none !important; }
+            .lion-rule { width: 220px; animation: none; } .lion-shimmer { display: none; }
         }
     </style>
 
@@ -627,7 +683,6 @@
             var intro = document.getElementById('lion-intro');
             if (!intro) return;
             var root = document.documentElement;
-            // Shows once per browser session. To show on EVERY visit, delete the next 4 lines.
             try {
                 if (sessionStorage.getItem('lionIntroSeen')) { intro.remove(); return; }
                 sessionStorage.setItem('lionIntroSeen', '1');
@@ -635,6 +690,41 @@
 
             root.classList.add('lion-lock');
             document.body.classList.add('lion-lock');
+
+            // --- subtle synthesized roar (no external file) ---
+            var roared = false;
+            function playRoar() {
+                if (roared) return; roared = true;
+                try {
+                    var AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+                    var ctx = new AC();
+                    if (ctx.state === 'suspended' && ctx.resume) ctx.resume();
+                    var now = ctx.currentTime, dur = 1.7;
+                    var buf = ctx.createBuffer(1, Math.floor(ctx.sampleRate*dur), ctx.sampleRate);
+                    var d = buf.getChannelData(0);
+                    for (var i=0;i<d.length;i++){ d[i] = (Math.random()*2-1) * (1 - i/d.length*0.4); }
+                    var noise = ctx.createBufferSource(); noise.buffer = buf;
+                    var bp = ctx.createBiquadFilter(); bp.type='bandpass'; bp.Q.value=0.9;
+                    bp.frequency.setValueAtTime(200, now); bp.frequency.exponentialRampToValueAtTime(520, now+0.35); bp.frequency.exponentialRampToValueAtTime(150, now+dur);
+                    var lp = ctx.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=1100;
+                    var osc = ctx.createOscillator(); osc.type='sawtooth';
+                    osc.frequency.setValueAtTime(95, now); osc.frequency.exponentialRampToValueAtTime(58, now+dur);
+                    var og = ctx.createGain(); og.gain.setValueAtTime(0.0001, now);
+                    og.gain.exponentialRampToValueAtTime(0.42, now+0.18); og.gain.exponentialRampToValueAtTime(0.0001, now+dur);
+                    var ng = ctx.createGain(); ng.gain.setValueAtTime(0.0001, now);
+                    ng.gain.exponentialRampToValueAtTime(0.5, now+0.22); ng.gain.setValueAtTime(0.42, now+0.55); ng.gain.exponentialRampToValueAtTime(0.0001, now+dur);
+                    var master = ctx.createGain(); master.gain.value = 0.55;
+                    noise.connect(bp); bp.connect(lp); lp.connect(ng); ng.connect(master);
+                    osc.connect(og); og.connect(master); master.connect(ctx.destination);
+                    osc.start(now); noise.start(now); osc.stop(now+dur); noise.stop(now+dur);
+                } catch (e) {}
+            }
+            // try at intro start; browsers may block until a gesture
+            setTimeout(playRoar, 700);
+            // fallback: first interaction anywhere plays it (once)
+            ['pointerdown','keydown','touchstart'].forEach(function(ev){
+                window.addEventListener(ev, playRoar, { once: true, passive: true });
+            });
 
             var finished = false;
             function endIntro() {
@@ -645,8 +735,8 @@
                 setTimeout(function () { if (intro && intro.parentNode) intro.parentNode.removeChild(intro); }, 1000);
             }
             var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            var timer = setTimeout(endIntro, reduce ? 1400 : 4600);
-            intro.addEventListener('click', function () { clearTimeout(timer); endIntro(); });
+            var timer = setTimeout(endIntro, reduce ? 1400 : 4800);
+            intro.addEventListener('click', function () { playRoar(); clearTimeout(timer); endIntro(); });
         })();
     </script>
     <!-- ===== end Entrance Animation ===== -->
