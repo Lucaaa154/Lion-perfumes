@@ -1,0 +1,2518 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lion Perfumes - בישום יוקרתי</title>
+    <!-- Favicon for Google Search Results - MUST be square (1:1), min 48x48px -->
+    <link rel="icon" type="image/png" sizes="48x48" href="https://res.cloudinary.com/dtsxyswbl/image/upload/v1778230843/image_xseo0a.png?v=2">
+    <link rel="icon" type="image/png" sizes="192x192" href="https://res.cloudinary.com/dtsxyswbl/image/upload/v1778230843/image_xseo0a.png?v=2">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://res.cloudinary.com/dtsxyswbl/image/upload/v1778230843/image_xseo0a.png?v=2">
+    
+    
+    
+    <!-- SEO Meta Description -->
+    <meta name="description" content="Lion Perfumes - חנות בושם יוקרתי מהמזרח התיכון. מגוון רחב של בשמים אותנטיים, איכותיים וניחוחות בלתי נשכחים במחירים אטרקטיביים.">
+    <meta property="og:image" content="https://res.cloudinary.com/dtsxyswbl/image/upload/v1774352234/PHOTO-2026-03-23-22-55-42_qlqdgn.jpg">
+    <meta property="og:title" content="Lion Perfumes - בישום יוקרתי">
+    <meta property="og:description" content="בשמים אותנטיים מהמזרח התיכון - יוקרה, איכות וניחוחות בלתי נשכחים">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Heebo:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            400: '#D4AF37',
+                            500: '#C5A028',
+                            600: '#B8960C',
+                        },
+                        dark: {
+                            900: '#0a0a0a',
+                            800: '#1a1a1a',
+                            700: '#2a2a2a',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Heebo', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #ffffff;
+            font-family: 'Heebo', sans-serif;
+        }
+
+        .gold-gradient {
+            background: linear-gradient(135deg, #D4AF37 0%, #F4E5C2 50%, #D4AF37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gold-border {
+            border: 2px solid #D4AF37;
+        }
+
+        .gold-bg {
+            background: linear-gradient(135deg, #D4AF37 0%, #B8960C 100%);
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .cart-sidebar {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .cart-sidebar.open {
+            transform: translateX(0);
+        }
+
+        .shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200% 0;
+            }
+
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        .product-image {
+            aspect-ratio: 3/4;
+            object-fit: contain;
+            object-position: center;
+            padding: 0;
+            width: 100%;
+            height: auto;
+            max-height: 300px;
+        }
+
+        @media (max-width: 640px) {
+            .product-image {
+                aspect-ratio: 3/4;
+                height: auto;
+                max-height: none;
+                min-height: 160px;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 4px;
+        }
+
+        .brand-filter-item.active-brand div {
+            border-color: #D4AF37 !important;
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
+        }
+
+        .brand-filter-item.active-brand span {
+            color: #D4AF37 !important;
+            font-weight: bold;
+        }
+
+        .price-range {
+            -webkit-appearance: none;
+            appearance: none;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .price-range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #D4AF37;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .price-range::-webkit-slider-runnable-track {
+            background: #2a2a2a;
+            height: 6px;
+            border-radius: 3px;
+        }
+
+        .pay-more-input::-webkit-inner-spin-button,
+        .pay-more-input::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .pay-more-input {
+            -moz-appearance: textfield;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen overflow-x-hidden">
+
+    <!-- Header -->
+    <header class="fixed top-0 w-full bg-dark-900/95 backdrop-blur-md border-b border-gold-400/20 z-40">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="/" class="flex items-center gap-3">
+                
+                <h1 class="font-serif text-2xl font-bold gold-gradient">LION PERFUMES</h1>
+            </a>
+
+            <button onclick="toggleCart()" class="relative px-4 py-2 hover:bg-dark-800 rounded-full transition-colors text-gold-400 font-bold text-sm border border-gold-400/30 flex items-center gap-2">
+                <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                <span>עגלה</span>
+                <span id="cart-count" class="absolute -top-1 -right-1 bg-gold-400 text-dark-900 text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center hidden">0</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="pt-24 px-4 relative overflow-hidden min-h-[95vh] flex items-end">
+        <div class="absolute inset-0">
+            <img src="https://res.cloudinary.com/dtsxyswbl/image/upload/v1774352234/PHOTO-2026-03-23-22-55-42_qlqdgn.jpg" alt="Lion Perfumes Store" class="w-full h-full object-cover object-[center_35%] opacity-80">
+            <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/30 to-transparent"></div>
+        </div>
+
+        <div class="container mx-auto text-center relative z-10 pb-8">
+            <h2 class="font-serif text-5xl md:text-7xl font-bold mb-4 gold-gradient">LION PERFUMES</h2>
+            <p class="text-gray-300 text-xl mb-8 max-w-2xl mx-auto">בשמים אותנטיים מהמזרח התיכון - יוקרה, איכות וניחוחות
+                בלתי נשכחים</p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="https://wa.me/972543102706?text=היי!%20ראיתי%20את%20האתר%20ומעוניין%20לקבל%20מידע%20על%20בשמים"
+                    target="_blank"
+                    class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-full font-bold transition-all transform hover:scale-105 shadow-lg shadow-green-600/30">
+                    <i data-lucide="message-circle" class="w-6 h-6"></i>
+                    דברו איתנו בוואטסאפ
+                </a>
+
+                <a href="https://www.instagram.com/the_lion_of_perfumes?igsh=enJyZThsbTk3Y3R6" target="_blank"
+                    class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 hover:from-purple-700 hover:via-pink-700 hover:to-orange-600 text-white px-8 py-4 rounded-full font-bold transition-all transform hover:scale-105 shadow-lg shadow-purple-600/30">
+                    <i data-lucide="instagram" class="w-6 h-6"></i>
+                    עקבו אחרינו באינסטגרם
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filters Section -->
+    <section class="py-8 px-4 bg-dark-800 border-y border-gold-400/10">
+        <div class="container mx-auto">
+            <div class="flex flex-col md:flex-row gap-6 items-center justify-between mb-6">
+                <h3 onclick="toggleBrandFilters()"
+                    class="font-serif text-2xl text-gold-400 flex items-center gap-2 cursor-pointer hover:text-gold-300 transition-colors select-none">
+                    <span id="filter-title">סנן ומיין מוצרים</span>
+                    <i data-lucide="chevron-down" id="filter-chevron" class="w-5 h-5 transition-transform duration-300"></i>
+                </h3>
+                <div class="flex gap-3">
+                    <select id="sort-select" onchange="sortProducts()" class="bg-dark-900 border border-gold-400/30 text-white px-4 py-2 rounded-lg text-sm focus:outline-none focus:border-gold-400">
+                        <option value="default">מיון לפי...</option>
+                        <option value="price-low">מחיר: נמוך לגבוה</option>
+                        <option value="price-high">מחיר: גבוה לנמוך</option>
+                        <option value="name-asc">שם: א-ב</option>
+                        <option value="season-summer">עונה: קיץ</option>
+                        <option value="season-winter">עונה: חורף</option>
+                    </select>
+                    <button onclick="resetFilters()" class="text-sm text-gray-400 hover:text-gold-400 transition-colors flex items-center gap-1 px-3 py-2 border border-gold-400/30 rounded-lg">
+                        <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                        איפוס
+                    </button>
+                </div>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="mb-6">
+                <div class="relative max-w-2xl mx-auto">
+                    <i data-lucide="search" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5"></i>
+                    <input type="text" id="search-input" placeholder="חפש לפי שם, מותג או תיאור..." 
+                           class="w-full bg-dark-900 border border-gold-400/30 text-white pr-10 pl-10 py-3 rounded-lg focus:outline-none focus:border-gold-400 transition-colors text-sm"
+                           oninput="handleSearch(this.value)">
+                    <button id="search-clear" onclick="clearSearch()" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gold-400 transition-colors hidden">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+            
+            </div>
+
+            <!-- Brand Filters -->
+            <div id="brands-wrapper" class="mb-6 overflow-x-auto hidden transition-all duration-500">
+                <div class="flex gap-4 pb-4 min-w-max items-start px-2" id="brand-filters">
+                    <!-- Brands will be inserted here as images -->
+                </div>
+            </div>
+
+            <!-- Season Filter -->
+            <div
+                class="flex flex-col md:flex-row items-center gap-4 bg-dark-900 p-4 rounded-lg border border-gold-400/20 mb-4">
+                <span class="text-gold-400 font-bold whitespace-nowrap">עונות:</span>
+                <div class="flex flex-wrap gap-2 w-full md:w-auto">
+                    <button onclick="filterBySeason('all')" id="season-all" class="flex-1 md:flex-none px-3 sm:px-4 md:px-6 py-2 rounded-lg border border-gold-400 bg-gold-400 text-dark-900 font-bold transition-all text-sm md:text-base">
+                        הכל
+                    </button>
+                    <button onclick="filterBySeason('summer')" id="season-summer" class="flex-1 md:flex-none px-3 sm:px-4 md:px-6 py-2 rounded-lg border border-gold-400/30 text-gold-400 hover:bg-gold-400/10 transition-all flex items-center justify-center gap-2 text-sm md:text-base">
+                        <i data-lucide="sun" class="w-4 h-4"></i>
+                        קיץ
+                    </button>
+                    <button onclick="filterBySeason('winter')" id="season-winter" class="flex-1 md:flex-none px-3 sm:px-4 md:px-6 py-2 rounded-lg border border-gold-400/30 text-gold-400 hover:bg-gold-400/10 transition-all flex items-center justify-center gap-2 text-sm md:text-base">
+                        <i data-lucide="snowflake" class="w-4 h-4"></i>
+                        חורף
+                    </button>
+                    <button onclick="filterBySeason('joker')" id="season-joker" class="flex-1 md:flex-none px-3 sm:px-4 md:px-6 py-2 rounded-lg border border-gold-400/30 text-gold-400 hover:bg-gold-400/10 transition-all flex items-center justify-center gap-2 text-sm md:text-base">
+                        <i data-lucide="sparkles" class="w-4 h-4"></i>
+                        ג'וקר
+                    </button>
+                </div>
+            </div>
+
+            <!-- Gender Filter -->
+            <div
+                class="flex flex-col md:flex-row items-center gap-4 bg-dark-900 p-4 rounded-lg border border-gold-400/20 mb-4">
+                <span class="text-gold-400 font-bold whitespace-nowrap">מגדר:</span>
+                <div class="flex flex-wrap gap-2 w-full md:w-auto">
+                    <button onclick="filterByGender('all')" id="gender-all" class="flex-1 md:flex-none px-3 sm:px-4 md:px-6 py-2 rounded-lg border border-gold-400 bg-gold-400 text-dark-900 font-bold transition-all flex items-center justify-center gap-2 text-sm md:text-base">
+                        <i data-lucide="users" class="w-4 h-4"></i>
+                        הכל
+                    </button>
+                    <button onclick="filterByGender('male')" id="gender-male" class="flex-1 md:flex-none px-3 sm:px-4 md:px-6 py-2 rounded-lg border border-gold-400/30 text-gold-400 hover:bg-gold-400/10 transition-all flex items-center justify-center gap-2 text-sm md:text-base">
+                        <i data-lucide="user" class="w-4 h-4"></i>
+                        גברים
+                    </button>
+                    <button onclick="filterByGender('female')" id="gender-female" class="flex-1 md:flex-none px-3 sm:px-4 md:px-6 py-2 rounded-lg border border-gold-400/30 text-gold-400 hover:bg-gold-400/10 transition-all flex items-center justify-center gap-2 text-sm md:text-base">
+                        <i data-lucide="user" class="w-4 h-4"></i>
+                        נשים
+                    </button>
+                    <button onclick="filterByGender('unisex')" id="gender-unisex" class="flex-1 md:flex-none px-3 sm:px-4 md:px-6 py-2 rounded-lg border border-gold-400/30 text-gold-400 hover:bg-gold-400/10 transition-all flex items-center justify-center gap-2 text-sm md:text-base">
+                        <i data-lucide="user-check" class="w-4 h-4"></i>
+                        יוניסקס
+                    </button>
+                </div>
+            </div>
+
+            <!-- Price Filter -->
+            <div
+                class="flex flex-col md:flex-row items-center gap-4 bg-dark-900 p-4 rounded-lg border border-gold-400/20">
+                <span class="text-gold-400 font-bold whitespace-nowrap">טווח מחירים:</span>
+                <input type="range" id="price-range" min="50" max="500" value="500" class="price-range w-full md:w-64" oninput="updatePriceDisplay()">
+                <div class="flex gap-2 text-sm">
+                    <span class="text-gray-400">50 ש"ח</span>
+                    <span class="text-gold-400 font-bold" id="price-value">עד 500 ש"ח</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Grid -->
+    <section class="py-12 px-4">
+        <div class="container mx-auto">
+            <div id="products-grid"
+                class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
+                <!-- Products will be inserted here as clickable cards -->
+            </div>
+
+            <div id="no-products" class="hidden text-center py-16">
+                <i data-lucide="package" class="w-16 h-16 text-gray-600 mx-auto mb-4"></i>
+                <p class="text-gray-400 text-xl mb-2">אין מוצרים להצגה</p>
+                <p class="text-gray-500 text-sm">נסה לשנות את מסנני החיפוש</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Sidebar -->
+    <div id="cart-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden" onclick="closeCart()"></div>
+    <div id="cart-sidebar"
+        class="cart-sidebar fixed top-0 left-0 h-full w-full md:w-96 bg-dark-800 border-r border-gold-400/20 z-50 overflow-y-auto">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-6 border-b border-gold-400/20 pb-4">
+                <h3 class="font-serif text-2xl text-gold-400">עגלת הקניות</h3>
+                <button onclick="closeCart()" class="p-2 hover:bg-dark-700 rounded-full transition-colors">
+                    <i data-lucide="x" class="w-6 h-6 text-gray-400"></i>
+                </button>
+            </div>
+
+            <div id="cart-items" class="space-y-4 mb-6">
+                <p class="text-gray-400 text-center py-8">העגלה שלך ריקה</p>
+            </div>
+
+            <div id="cart-footer" class="border-t border-gold-400/20 pt-4 hidden">
+                <!-- Subtotal -->
+                <div class="flex justify-between items-center mb-2 text-sm text-gray-400">
+                    <span>סכום מוצרים:</span>
+                    <span id="cart-subtotal">0 ש"ח</span>
+                </div>
+
+                <!-- Tip Section -->
+                <div class="bg-dark-900/50 border border-gold-400/20 rounded-lg p-3 mb-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="text-gold-400 text-sm font-bold flex items-center gap-2">
+                            <i data-lucide="heart-handshake" class="w-4 h-4"></i>
+                            טיפ
+                        </label>
+                        <span class="text-xs text-gray-500">אופציונלי</span>
+                    </div>
+                    <div class="relative">
+                        <span class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gold-400 font-bold">₪</span>
+                        <input type="number" id="pay-more-input" min="0" placeholder="0"
+                               class="pay-more-input w-full bg-dark-800 border border-gold-400/30 rounded-lg pr-8 pl-4 py-2 text-white text-sm focus:outline-none focus:border-gold-400 transition-colors"
+                               oninput="updatePayMore()">
+                    </div>
+                </div>
+
+                <!-- Total with Pay More -->
+                <div
+                    class="flex justify-between items-center mb-4 text-lg font-bold bg-gold-400/10 p-3 rounded-lg border border-gold-400/30">
+                    <span class="text-gold-400">סכום כולל לתשלום:</span>
+                    <span id="cart-total" class="text-white text-xl">0 ש"ח</span>
+                </div>
+
+                <button onclick="sendWhatsAppOrder()" class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-bold transition-colors flex items-center justify-center gap-2 mb-3 shadow-lg shadow-green-600/20">
+                    <i data-lucide="message-circle" class="w-5 h-5"></i>
+                    שלח הזמנה בוואטסאפ
+                </button>
+
+                <button onclick="clearCart()" class="w-full border border-red-500 text-red-500 hover:bg-red-500/10 py-2 rounded-lg text-sm transition-colors">
+                    רוקן עגלה
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast"
+        class="fixed bottom-4 right-4 bg-dark-800 border border-gold-400 text-white px-6 py-4 rounded-lg shadow-2xl transform translate-y-20 opacity-0 transition-all duration-300 z-50 flex items-center gap-3">
+        <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
+        <span id="toast-message">נוסף לעגלה בהצלחה!</span>
+    </div>
+
+    <script>
+        // Save state before navigating to product page
+        function savePageState() {
+            sessionStorage.setItem('lionPerfumesScrollPos', window.scrollY);
+            sessionStorage.setItem('lionPerfumesFilter', currentFilter);
+            sessionStorage.setItem('lionPerfumesSeason', currentSeason);
+            sessionStorage.setItem('lionPerfumesGender', currentGender);
+            sessionStorage.setItem('lionPerfumesMaxPrice', maxPrice);
+            sessionStorage.setItem('lionPerfumesSort', currentSort);
+            sessionStorage.setItem('lionPerfumesBrandsExpanded', brandsExpanded);
+        }
+
+        // Restore state when returning to page
+        function restorePageState() {
+            const savedScroll = sessionStorage.getItem('lionPerfumesScrollPos');
+            const savedFilter = sessionStorage.getItem('lionPerfumesFilter');
+            const savedSeason = sessionStorage.getItem('lionPerfumesSeason');
+            const savedGender = sessionStorage.getItem('lionPerfumesGender');
+            const savedMaxPrice = sessionStorage.getItem('lionPerfumesMaxPrice');
+            const savedSort = sessionStorage.getItem('lionPerfumesSort');
+            const savedBrandsExpanded = sessionStorage.getItem('lionPerfumesBrandsExpanded');
+
+            if (savedFilter !== null) {
+                currentFilter = savedFilter;
+                maxPrice = parseInt(savedMaxPrice) || 500;
+                currentSeason = savedSeason || 'all';
+                currentGender = savedGender || 'all';
+                currentSort = savedSort || 'default';
+                brandsExpanded = savedBrandsExpanded === 'true';
+
+                // Restore UI controls
+                document.getElementById('price-range').value = maxPrice;
+                document.getElementById('sort-select').value = currentSort;
+                document.getElementById('price-value').textContent = `עד ${maxPrice} ש"ח`;
+                
+                // Restore season buttons
+                filterBySeason(currentSeason);
+                
+                // Restore gender buttons (must happen before scroll restore)
+                filterByGender(currentGender);
+                
+                // Restore brand filters visibility
+                if (brandsExpanded) {
+                    const wrapper = document.getElementById('brands-wrapper');
+                    const title = document.getElementById('filter-title');
+                    const chevron = document.getElementById('filter-chevron');
+                    wrapper.classList.remove('hidden');
+                    title.textContent = 'סנן לפי מותג';
+                    chevron.style.transform = 'rotate(180deg)';
+                }
+                
+                // Restore scroll position after everything is loaded
+                if (savedScroll) {
+                    // Use window load event to ensure all images/resources are loaded
+                    window.addEventListener('load', () => {
+                        window.scrollTo({ top: parseInt(savedScroll), behavior: 'auto' });
+                    }, { once: true });
+                    
+                    // Fallback: scroll after a delay if load event already fired
+                    if (document.readyState === 'complete') {
+                        setTimeout(() => {
+                            window.scrollTo({ top: parseInt(savedScroll), behavior: 'auto' });
+                        }, 300);
+                    }
+                }
+                
+                // Clear saved state immediately so it doesn't persist
+                sessionStorage.removeItem('lionPerfumesScrollPos');
+                sessionStorage.removeItem('lionPerfumesFilter');
+                sessionStorage.removeItem('lionPerfumesSeason');
+                sessionStorage.removeItem('lionPerfumesGender');
+                sessionStorage.removeItem('lionPerfumesMaxPrice');
+                sessionStorage.removeItem('lionPerfumesSort');
+                sessionStorage.removeItem('lionPerfumesBrandsExpanded');
+                
+                return true;
+            }
+            return false;
+        }
+
+        // Data - Ready for new perfumes with multiple images support
+        const perfumes = [
+            {
+                id: 1,
+                name: "Turathi Blue",
+                brand: "Afnan",
+                price: 147,
+                season: "summer",
+                gender: "male",
+                images: ["https://res.cloudinary.com/dtsxyswbl/image/upload/v1774379068/EE80B5F1-04DE-404F-90A9-AEC0DCE1C9FA_2_zau83c.png"],
+                description: "בהשראת הבושם היוקרתי\nTygar Bvlgar\n\nניחוח פרשי, נקי ועוצמתי שמתאים במיוחד לקיץ, עם רעננות ממכרת ונוכחות אלגנטית שמורגשת מהרגע הראשון .\n\nבחירה מושלמת למי שמחפש ריח נקי, יוקרתי ומודרני שתמיד עובד",
+                size: "100ml"
+            },
+            {
+                id: 2,
+                name: "Muharib",
+                brand: "Maison Asrar",
+                price: 219,
+                season: "winter",
+                gender: "male",
+                soldOut: true,
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774380063/IMG_0991_2_kufjf6.jpg",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774380062/IMG_0990_2_ra7h4p.jpg"
+                ],
+                description: "בהשראת הבושם\nXJ 1861 Naxos Xerjoff\n\nניחוח חורפי, חם ועוצמתי עם נוכחות עשירה וממכרת שמורגשת מהרגע הראשון. בושם עמוק, מתוק-אלגנטי שמביא איתו וייב יוקרתי ובטוח.\n\nמתאים במיוחד ליציאות ערב, דייטים ואירועים – כזה שמשאיר רושם חזק ושובל שלא נשכח.\n\nבושם שמרגיש כבד, יוקרתי ומלא אופי – מושלם למי שרוצה לבלוט ולהרגיש ברמה אחרת.\n\nבחירה אידיאלית ללילות קרים ולרגעים שאתה רוצה להיות בלתי נשכח",
+                size: "100ml"
+            },
+            {
+                id: 3,
+                name: "Faris Al Arab",
+                brand: "Maison Asrar",
+                price: 219,
+                season: "winter",
+                gender: "unisex",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774380537/IMG_1249_2_jcocbt.jpg",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774380535/IMG_0988_3_gqypou.jpg"
+                ],
+                description: "בהשראת הבושם\nBlonde Amber Clive Christian\n\nניחוח עוצמתי במיוחד עם נוכחות עשירה ובלתי מתפשרת – בושם חזק שמחזיק לאורך כל היום ומשאיר שובל מרשים בכל מקום.\n\nבושם שמתאים לאירועים מיוחדים, לערבים יוקרתיים ולרגעים שבהם אתה רוצה לבלוט באמת.\n\nריח ייחודי, עמוק ושונה מכל מה שאתה מכיר – לא לכל אחד, אלא למי שמבין איכות וסטייל.\n\nבחירה מושלמת למי שמחפש בושם יוצא דופן עם נוכחות שלא ניתן להתעלם ממנה",
+                size: "100ml"
+            },
+            {
+                id: 4,
+                name: "Legacy",
+                brand: "Maison Asrar",
+                price: 159,
+                season: "summer",
+                gender: "unisex",
+                soldOut: true,
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774381397/IMG_0980_4_xgczeh.jpg",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774381395/IMG_0979_3_ibhmxz.jpg"
+                ],
+                description: "בהשראת הבושם היוקרתי\nEx Nihilo Blue Talisman\n\nLEGACY הוא בושם נקי, יוקרתי ומודרני עם נגיעות מתוקות עדינות — ריח שמרגיש יקר מהרגע הראשון ומשאיר רושם.\n\nלמי זה מתאים?\nלגברים שאוהבים ריח נקי עם נוכחות שקטה ובטוחה.\n\nעונות ושימוש:\n✔ מושלם לקיץ ולאביב\n✔ מתאים ליום-יום, דייטים ואירועים\n✔ עובד מצוין גם בערב בלי להיות כבד\n\nמה מיוחד בו?\n• ריח פרשי ומושך מחמאות\n• איזון מושלם בין רעננות למתיקות\n• עמידות גבוהה ושובל מורגש",
+                size: "100ml"
+            },
+            {
+                id: 5,
+                name: "Rey",
+                brand: "Maison Asrar",
+                price: 149,
+                season: "summer",
+                gender: "male",
+                soldOut: true,
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774381715/IMG_0978_2_qgn9rt.jpg",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774381717/IMG_0992_2_zxudc9.jpg"
+                ],
+                description: "בהשראת הבשמים\nYves Saint Laurent MYSLF Le Parfum\nYves Saint Laurent MYSLF Eau de Parfum\nבתוספת נגיעות וניל עדינות\n\nREY הוא בושם מודרני, נקי וגברי עם טוויסט של וניל\n\nלמי זה מתאים?\nלגברים שאוהבים ריח נקי עם עומק מתוק ונוכחות מורגשת.\n\nעונות ושימוש:\n✔ מתאים לכל עונות השנה\n✔ מושלם ליום-יום, דייטים ויציאות\n✔ עובד גם ביום וגם בלילה",
+                size: "100ml"
+            },
+            {
+                id: 6,
+                name: "Hunter",
+                brand: "Maison Asrar",
+                price: 149,
+                season: "joker",
+                gender: "male",
+                soldOut: true,
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774382124/IMG_1034_2_bij5kx.jpg",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774382122/IMG_1033_2_etqrq6.jpg"
+                ],
+                description: "בהשראת הבושם\nJean Paul Gaultier Ultra Male\n\nHUNTER הוא בושם מתוק, חזק וממכר עם נוכחות בולטת — ריח גברי שלא מפספסים, כזה שנשאר באוויר ומביא מחמאות.\n\nלמי זה מתאים?\nלגברים שאוהבים ריח מתוק, בולט ודומיננטי עם ביטחון.\n\nעונות ושימוש:\n✔ מתאים בעיקר לחורף ולערבים קרירים\n✔ מושלם ליציאות, דייטים ולילה\n✔ פחות מתאים לחום כבד",
+                size: "100ml"
+            },
+            {
+                id: 7,
+                name: "Majesty",
+                brand: "Maison Asrar",
+                price: 159,
+                season: "joker",
+                gender: "male",
+                soldOut: true,
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774382441/IMG_0982_fxojha.jpg",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774382443/IMG_0981_uvrjef.jpg"
+                ],
+                description: "בהשראת הבושם\nBvlgari Tygar\n\nMAJESTY הוא בושם פרשי, נקי ועוצמתי עם וייב יוקרתי ובולט — ריח שמרגיש חד, מודרני ומלא נוכחות מהרגע הראשון.\n\nלמי זה מתאים?\nלגברים שאוהבים ריח נקי, חזק ויוקרתי שמושך תשומת לב.\n\nעונות ושימוש:\n✔ מושלם לקיץ ולאביב\n✔ מתאים ליום-יום, עבודה ויציאות\n✔ עובד מעולה גם בחום כב",
+                size: "100ml"
+            },
+            {
+                id: 8,
+                name: "Turathi Electric",
+                brand: "Afnan",
+                price: 147,
+                season: "summer",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774382698/5FB3BE89-F5E2-485F-BFF4-7C6C04E42053_pnad5x.png"
+                ],
+                description: "בהשראת הבושם\nEx Nihilo Blue Talisman\n\nTURATHI ELECTRIC הוא בושם פרשי, נקי ומודרני עם טאץ' מעט מתוק — ריח קליל אך מורגש, שנותן וייב יוקרתי ומושך.\n\nלמי זה מתאים?\nלגברים שאוהבים ריח נקי, נעים ולא כבד.\n\nעונות ושימוש:\n✔ מושלם לקיץ ולאביב\n✔ מתאים ליום-יום, עבודה ודייטים\n✔ עובד מעולה גם בחום\n\nמה מיוחד בו?\n• ריח פרשי ונקי מאוד\n• קליל אך עם נוכחות\n• מושך מחמאות בקלות",
+                size: "100ml"
+            },
+            {
+                id: 9,
+                name: "Glacier Ultra",
+                brand: "Maison Alhambra",
+                price: 119,
+                season: "winter",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774383308/274AD81B-DE57-416B-8EEA-961368AE1CDD_z9szqf.png"
+                ],
+                description: "בהשראת הבושם\nJean Paul Gaultier Ultra Male\n\nGLACIER ULTRA הוא בושם מתוק, חזק וממכר במיוחד — גרסה נגישה יותר עם ביצועים גבוהים וריח שלא מתעלמים ממנו.\n\nלמי זה מתאים?\nלגברים שאוהבים ריח מתוק, בולט ודומיננטי.\n\nעונות ושימוש:\n✔ מתאים לחורף ולערבים קרירים\n✔ מושלם ליציאות, דייטים ולילה\n✔ פחות מתאים לחום כבד",
+                size: "100ml"
+            },
+            {
+                id: 10,
+                name: "Glacier Le Noir",
+                brand: "Maison Alhambra",
+                price: 119,
+                season: "winter",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774383311/20C8D6C1-74F1-4A5E-84E4-70F2806DD6A7_k3vxuv.png"
+                ],
+                description: "בהשראת הבושם\nJean Paul Gaultier Le Male Le Parfum\n\nGLACIER LE NOIR הוא בושם עמוק, חם וגברי עם טאץ׳ מתוק ומתובל — ריח יוקרתי ובשל שמרגיש אלגנטי ובולט.\n\nלמי זה מתאים?\nלגברים שאוהבים ריח חם, גברי ומתוחכם עם נוכחות.\n\nעונות ושימוש:\n✔ מתאים לחורף ולעונות מעבר\n✔ מושלם לערב, דייטים ואירועים\n✔ פחות מתאים לחום כבד",
+                size: "100ml"
+            },
+            {
+                id: 11,
+                name: "Glacier Bold",
+                brand: "Maison Alhambra",
+                price: 119,
+                season: "summer",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774383567/FB88D7DC-0C0E-4499-A297-79E86120B954_aisyux.png"
+                ],
+                description: "בהשראת הבושם\nJean Paul Gaultier Le Male Elixir\n\nGLACIER GOLD הוא בושם מתוק, עשיר ועוצמתי עם עומק ממכר — ריח חם ויוקרתי שלא מפספסים, מלא נוכחות וסטייל.\n\nלמי זה מתאים?\nלגברים שאוהבים ריח מתוק, חזק ודומיננטי עם וייב יוקרתי.\n\nעונות ושימוש:\n✔ מתאים לחורף ולעונות מעבר\n✔ מושלם לערב, דייטים ויציאות\n✔ פחות מתאים לחום כבד",
+                size: "100ml"
+            },
+            {
+                id: 12,
+                name: "Glacier Gold",
+                brand: "Maison Alhambra",
+                price: 119,
+                season: "winter",
+                gender: "unisex",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774383257/FE33F03B-0F8F-4385-8CA5-16BC5E09B83A_umnupm.png"
+                ],
+                description: "בהשראת הבושם\nJean Paul Gaultier Le Male Elixir\n\nGLACIER GOLD הוא בושם מתוק, עשיר ועוצמתי עם עומק ממכר — ריח חם ויוקרתי שלא מפספסים, מלא נוכחות וסטייל.\n\nלמי זה מתאים?\nלגברים שאוהבים ריח מתוק, חזק ודומיננטי עם וייב יוקרתי.\n\nעונות ושימוש:\n✔ מתאים לחורף ולעונות מעבר\n✔ מושלם לערב, דייטים ויציאות\n✔ פחות מתאים לחום כבד",
+                size: "100ml"
+            },
+            {
+                id: 13,
+                name: "Vanille Voyage",
+                brand: "Maison Asrar",
+                price: 150,
+                season: "winter",
+                gender: "unisex",
+                soldOut: true,
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774475016/PHOTO-2026-03-25-15-12-05_bd7cd9.jpg",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774475015/PHOTO-2026-03-25-15-12-05_2_zkko5m.jpg"
+                ],
+                description: "בהשראת הבושם\nGiardini di Toscana Bianco Latte\n\nVANILLE VOYAGE הוא בושם מתוק, קרמי ומפנק עם דגש על וניל — ריח רך, ממכר ונעים שמרגיש יוקרתי ומלטף.\n\nלמי זה מתאים?\nלמי שאוהב ריחות מתוקים, חמימים ונעימים עם וייב מרגיע ומושך.\n\nעונות ושימוש:\n✔ מתאים לחורף ולעונות מעבר\n✔ מושלם לדייטים, ערב ושימוש יומיומי\n✔ פחות מתאים לחום כבד\n\nמה מיוחד בו?\n• ריח ונילי קרמי וממכר\n• תחושה חמימה ונעימה על העור\n• מושך מחמאות בלי להיות כבד מדי",
+                size: "100ml"
+            },
+            {
+                id: 14,
+                name: "Supremacy Collectors Edition",
+                brand: "Afnan",
+                price: 179,
+                season: "joker",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774475313/PHOTO-2026-03-23-21-08-29_sewuxy.jpg"
+                ],
+                description: "בהשראת הבושם\nCreed Absolu Aventus 2023\n\nSUPREMACY COLLECTORS EDITION הוא בושם עוצמתי, יוקרתי וגברי עם נוכחות שלא מתעלמים ממנה — שילוב של רעננות עם עומק חזק שמרגיש ברמה גבוהה מאוד.\nהבושם שדורג בין הטובים בעולם ומביא איתו וייב של הצלחה וביטחון.\n\nלמי זה מתאים?\nלגברים שאוהבים ריח יוקרתי, חזק ומרשים עם נוכחות בולטת.\n\nעונות ושימוש:\n✔ מתאים לכל עונות השנה\n✔ מושלם לעבודה, אירועים ודייטים\n✔ עובד גם ביום וגם בלילה\n\nמה מיוחד בו?\n• ריח יוקרתי ברמה גבוהה מאוד\n• שילוב מושלם בין רעננות לעומק\n• עמידות גבוהה ושובל חזק\n• מושך מחמאות בצורה מטורפת",
+                size: "100ml"
+            },
+            {
+                id: 15,
+                name: "9PM Rebel",
+                brand: "Afnan",
+                price: 149,
+                season: "joker",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774475611/2B743E13-4A62-4FD8-B6C9-EDFECA9E096D_2_dknd9u.png"
+                ],
+                description: "9PM REBEL הוא בושם נועז, מתוק ועוצמתי עם וייב צעיר ובולט — ריח שמביא אנרגיה, ביטחון ונוכחות שאי אפשר להתעלם ממנה.\n\nלמי זה מתאים?\nלגברים שאוהבים ריח מתוק, חזק ועם אופי שונה ובולט.\n\nעונות ושימוש:\n✔ מתאים לחורף ולעונות מעבר\n✔ מושלם ליציאות, מסיבות ודייטים\n✔ פחות מתאים לחום כבד\n\nמה מיוחד בו?\n• ריח מתוק וממכר עם אופי נועז\n• נוכחות חזקה ושובל מורגש\n• עמידות גבוהה לאורך שעות",
+                size: "100ml"
+            },
+            {
+                id: 16,
+                name: "9PM Elixer",
+                brand: "Afnan",
+                price: 165,
+                season: "winter",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774475614/834485F5-A9C9-4E93-AC4E-E8C3FE1C943B_2_c1y3lt.png"
+                ],
+                description: "9PM ELIXIR הוא בושם עוצמתי, מתוק וכבד עם נוכחות חזקה מאוד — ריח ממכר שממלא את החלל ולא משאיר מקום לפספס אותך.\n\nלמי זה מתאים?\nלגברים שאוהבים ריח חזק, מתוק ודומיננטי עם ביטחון גבוה.\n\nעונות ושימוש:\n✔ מתאים לחורף ולערבים קרירים\n✔ מושלם ליציאות, מסיבות ודייטים\n✔ פחות מתאים לשימוש יומי בחום",
+                size: "100ml"
+            },
+            {
+                id: 17,
+                name: "Rare Reef",
+                brand: "Afnan",
+                price: 135,
+                season: "summer",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774475619/A7C233D8-D418-4F0B-AC56-959EBC702017_2_divdhd.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774590090/80f5d199-5b15-4449-a833-4bb1c868440e.png"
+                ],
+                description: "בהשראת הבשמים\nXerjoff Torino21\nLouis Vuitton Pacific Chill\n\nRARE REEF הוא בושם פרשי, נקי וקייצי עם שילוב מושלם בין רעננות ירוקה לאווירה רגועה ויוקרתית — ריח שמרגיש טבעי, חי ומיוחד.\n\nלמי זה מתאים?\nלגברים שאוהבים ריח פרשי, ירוק ונקי עם וייב ייחודי.\n\nעונות ושימוש:\n✔ מושלם לקיץ ולאביב\n✔ מתאים ליום-יום, חופשות ודייטים\n✔ עובד מעולה גם בחום כבד\n\nמה מיוחד בו?\n• ריח פרשי, ירוק ומרענן מאוד\n• שילוב ייחודי שלא דומה לאחרים\n• קליל אך עם נוכחות מורגשת\n• מושך מחמאות בקלות",
+                size: "100ml"
+            },
+            {
+                id: 18,
+                name: "DXB",
+                brand: "Maison Asrar",
+                price: 199,
+                season: "summer",
+                gender: "unisex",
+                soldOut: true,
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774475176/PHOTO-2026-03-25-15-07-07_2_awzco4.jpg",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774475178/PHOTO-2026-03-25-15-07-07_ndyqcy.jpg"
+                ],
+                description: "בהשראת הבושם\nLouis Vuitton Afternoon Swim\n\nDXB הוא בושם פרשי, נקי וקייצי מאוד עם וייב של ים וחופש — ריח קליל אך מורגש, עם ביצועים חזקים יותר מהמקורי.\n\nלמי זה מתאים?\nלגברים שאוהבים ריח רענן, נקי ולא כבד.\n\nעונות ושימוש:\n✔ מושלם לקיץ ולאביב\n✔ מתאים ליום-יום, חופשות ודייטים\n✔ עובד מעולה בחום כבד\n\nמה מיוחד בו?\n• ריח פרשי ונקי מאוד\n• עמידות גבוהה יותר מהמקורי\n• קליל אך עם נוכחות מורגשת\n• מושך מחמאות בקלות",
+                size: "100ml"
+            },
+            {
+                id: 19,
+                name: "French tobacco",
+                brand: "Ibraq",
+                price: 238,
+                season: "summer",
+                gender: "unisex",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774590372/5063b04e-b9fa-425a-b8b6-04cdc84eff19.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774590426/f2504bfe-d973-477c-8836-c034558d56ca.png"
+                ],
+                description: "בהשראת הבושם\nLouis Vuitton Imagination\n\nFRENCH TOBACCO הוא בושם נקי, יוקרתי ומודרני עם עומק מיוחד — ריח פרשי עם טאץ' חמים שנותן וייב שונה וממכר.\n\nלמי זה מתאים?\nלגברים שאוהבים ריח נקי עם עומק ייחודי ונוכחות אלגנטית.\n\nעונות ושימוש:\n✔ מתאים לכל עונות השנה\n✔ מושלם ליום-יום, עבודה ודייטים\n✔ עובד גם ביום וגם בלילה\n\nמה מיוחד בו?\n• ריח ייחודי שלא מריחים על כולם\n• שילוב מושלם בין רעננות לעומק\n• עמידות גבוהה ושובל מורגש\n• בושם בלעדי – רק אצלנו בישראל",
+                size: "100ml"
+            },
+            {
+                id: 36,
+                name: "Mexican Tobacco",
+                brand: "Ibraq",
+                price: 238,
+                season: "winter",
+                gender: "unisex",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774593429/957d693e-4b73-463b-9e46-c1af16c67527.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774593429/9714d1a9-fc61-423f-b3c1-829372421ff5.png"
+                ],
+                description: "בהשראת הבושם\nJeroboam Gozo\n\nMEXICAN TOBACCO הוא בושם חם, מתוק וסקסי עם נוכחות חזקה מאוד — ריח עמוק וממכר שלא מפספסים.\n\nלמי זה מתאים?\nלגברים שאוהבים ריח חזק, מושך ודומיננטי עם אופי ייחודי.\n\nעונות ושימוש:\n✔ מתאים לחורף ולעונות מעבר\n✔ מושלם לדייטים, ערב ויציאות\n✔ פחות מתאים לחום כבד\n\nמה מיוחד בו?\n• ריח סקסי וממכר מאוד\n• נוכחות חזקה ושובל מורגש\n• עמידות גבוהה לאורך שעות\n• מושך מחמאות בצורה מטורפת",
+                size: "100ml"
+            },
+            {
+                id: 38,
+                name: "Nude Coral Diamond",
+                brand: "Ibraq",
+                price: 242,
+                season: "winter",
+                gender: "unisex",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774593502/aca4a5c9-7e97-4837-805f-3aff45b1d030.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774593509/dc8b89b1-3cc2-4d86-ad03-3328a33e1884.png"
+                ],
+                description: "בהשראת הבושם\nParfums de Marly Althaïr\n\nNUDE CORAL DIAMOND הוא בושם מתוק, עשיר וממכר עם וייב יוקרתי — ריח חמים ונעים שמרגיש איכותי ובולט מהשפריץ הראשון.\n\nלמי זה מתאים?\nלגברים שאוהבים ריח מתוק, חזק ומושך עם נוכחות.\n\nעונות ושימוש:\n✔ מתאים לחורף ולעונות מעבר\n✔ מושלם לדייטים, ערב ויציאות\n✔ פחות מתאים לחום כבד\n\nמה מיוחד בו?\n• ריח מתוק ועשיר מאוד\n• עמידות גבוהה במיוחד\n• שובל חזק שמושך מחמאות\n• בושם בלעדי – רק אצלנו",
+                size: "150ml"
+            },
+            {
+                id: 39,
+                name: "Emerald Soul Diamond",
+                brand: "Ibraq",
+                price: 242,
+                season: "summer",
+                gender: "unisex",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774593520/53659dbb-d0e0-4769-9d29-22190091e6f5.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774593527/076f6c2b-28a1-4624-ad4e-7be87ea21f71.png"
+                ],
+                description: "בהשראת הבשמים\nXerjoff Erba Gold\nXerjoff Erba Pura\n\nEMERALD SOUL DIAMOND הוא בושם פירותי, מתוק וממכר עם וייב יוקרתי ונקי — ריח עשיר ושמח שמרגיש בולט ומיוחד.\n\nלמי זה מתאים?\nלגברים שאוהבים ריח מתוק, פירותי ובולט עם נוכחות.\n\nעונות ושימוש:\n✔ מתאים לכל עונות השנה\n✔ מושלם ליום-יום, דייטים ואירועים\n✔ עובד גם ביום וגם בלילה\n\nמה מיוחד בו?\n• ריח פירותי מתוק וממכר\n• נוכחות חזקה ושובל מורגש\n• עמידות גבוהה לאורך שעות\n• מושך מחמאות בקלות",
+                size: "150ml"
+            },
+            {
+                id: 40,
+                name: "White Regent Diamond",
+                brand: "Ibraq",
+                price: 242,
+                season: "summer",
+                gender: "unisex",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774593542/81743a57-c586-4029-90e8-e2907d2d7489.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774593551/fae0defd-4000-40c8-85d0-ddb6ea6282f8.png"
+                ],
+                description: "בהשראת הבושם\nBDK Parfums Gris Charnel Extrait\n\nWHITE REGENT DIAMOND הוא בושם עמוק, חמים ואלגנטי עם וייב מסתורי וממכר — ריח יוקרתי ובשל שמרגיש שונה ומיוחד.\n\nלמי זה מתאים?\nלגברים שאוהבים ריח מתוחכם, חם ועם נוכחות שקטה אך מורגשת.\n\nעונות ושימוש:\n✔ מתאים לחורף ולעונות מעבר\n✔ מושלם לערב, דייטים ואירועים\n✔ פחות מתאים לחום כבד\n\nמה מיוחד בו?\n• ריח חמים, עמוק וממכר\n• אלגנטיות יוקרתית ובולטת\n• עמידות גבוהה ושובל מורגש\n• ריח ייחודי שלא דומה לאחר",
+                size: "150ml"
+            },
+            {
+                id: 41,
+                name: "Purple Heart Diamond",
+                brand: "Ibraq",
+                price: 242,
+                season: "joker",
+                gender: "female",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774593558/b8211eea-6525-40dc-9c9d-e7511a0a3ad1.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774593564/4f2aab61-4815-4644-908d-6946938a6321.png"
+                ],
+                description: "בהשראת הבשמים\nYves Saint Laurent Black Opium\nNishane Hundred Silent Ways\n\nPURPLE HEART DIAMOND הוא בושם מתוק, עמוק וסקסי עם וייב יוקרתי וממכר — שילוב של רכות מתוקה עם עוצמה נשית-גברית מושכת.\n\nלמי זה מתאים?\nלמי שאוהב ריח מתוק, חם ובולט עם נוכחות סקסית.\n\nעונות ושימוש:\n✔ מתאים לחורף ולעונות מעבר\n✔ מושלם לדייטים, ערב ויציאות\n✔ פחות מתאים לחום כבד\n\nמה מיוחד בו?\n• ריח מתוק, עמוק וממכר\n• נוכחות סקסית ובולטת\n• עמידות גבוהה ושובל חזק\n• מושך מחמאות בצורה מטורפת",
+                size: "150ml"
+            },
+            {
+                id: 42,
+                name: "Black Diamond Incense",
+                brand: "Ibraq",
+                price: 242,
+                season: "winter",
+                gender: "unisex",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774593573/bb95d7d5-314e-41aa-8150-3df89932860e.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774593579/5a54c654-6778-48e2-9e44-ea9f6e58ec06.png"
+                ],
+                description: "בהשראת הבושם\nParfums de Marly Layton\n\nBLACK DIAMOND INCENSE הוא בושם חם, מתוק ומתובל עם נוכחות יוקרתית — ריח עמוק וממכר שמרגיש אלגנטי ובולט.\n\nלמי זה מתאים?\nלגברים שאוהבים ריח חם, מתוק ומתוחכם עם נוכחות.\n\nעונות ושימוש:\n✔ מתאים לחורף ולעונות מעבר\n✔ מושלם לערב, דייטים ואירועים\n✔ פחות מתאים לחום כבד\n\nמה מיוחד בו?\n• ריח מתוק ומתובל עם עומק\n• נוכחות אלגנטית ומרשימה\n• עמידות גבוהה ושובל מורגש\n• מושך מחמאות בקלות",
+                size: "150ml"
+            },
+            {
+                id: 43,
+                name: "Arabian Tobacco",
+                brand: "Ibraq",
+                price: 238,
+                season: "winter",
+                gender: "unisex",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774593484/ca037781-8b8d-4c2e-889c-55ac37e29503.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774593469/c1f8248f-ca41-4055-aaf4-55a194021800.png"
+                ],
+                description: "בהשראת הבושם\nUnique'e Luxury Crush On Me\n\nARABIAN TOBACCO הוא בושם חורפי, מתוק ועוצמתי במיוחד — ריח כבד, עמוק וסופר ממכר שלא מתאים לכל אחד.\n\nלמי זה מתאים?\nלגברים שאוהבים ריח חזק מאוד, מתוק ודומיננטי עם נוכחות קיצונית.\n\nעונות ושימוש:\n✔ מתאים לחורף בלבד\n✔ מושלם לערב, דייטים ואירועים\n✔ לא מתאים לחום בכלל\n\nמה מיוחד בו?\n• ריח מתוק, כבד וממכר מאוד\n• נוכחות חזקה במיוחד ושובל עוצמתי\n• עמידות גבוהה לאורך שעות רבות\n• בושם ייחודי – לא לכל אחד",
+                size: "100ml"
+            },
+            {
+                id: 44,
+                name: "Oscar",
+                brand: "Zimaya",
+                price: 145,
+                season: "joker",
+                gender: "unisex",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774600038/33d02b20-27f8-4f12-9a13-f3cf3f6dc2ed.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774600047/f459d97c-8d17-4b46-914a-e0851c838289.png"
+                ],
+                description: "בהשראת הבושם\nJean Paul Gaultier Scandal Pour Homme\n\nOSCAR הוא בושם מתוק, חזק וסופר ממכר עם וייב גברי ובולט — ריח שמביא נוכחות, ביטחון והמון מחמאות.\n\nלמי זה מתאים?\nלגברים שאוהבים ריח מתוק, דומיננטי ובולט עם אופי.\n\nעונות ושימוש:\n✔ מתאים ליום-יום ולכל מצב כמעט\n✔ מושלם במיוחד לערב, דייטים ויציאות\n✔ פחות מתאים לחום כבד\n\nמה מיוחד בו?\n• ריח מתוק וממכר מאוד\n• נוכחות חזקה ושובל מורגש\n• עמידות גבוהה לאורך שעות\n• מושך מחמאות בקלות",
+                size: "100ml"
+            },
+            {
+                id: 45,
+                name: "sharaf",
+                brand: "Zimaya",
+                price: 139,
+                season: "winter",
+                gender: "unisex",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774600274/35e2c30c-01de-4ae0-a3a4-ee98579ccda9.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774600279/ef80d01a-1e8d-4077-b0df-ad041daf4c19.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nAngels' Share\n\nSHARAF הוא בושם חם, עמוק ומתוק עם אופי יוקרתי וממכר.\n\nלמי זה מתאים?\nמתאים במיוחד לעונות הקרות, לערב, דייטים, אירועים ויציאות מיוחדות — בושם עם נוכחות שמרגישים מיד.\n\nעונות ושימוש:\n✔ חורף וסתיו\n✔ מושלם לערב, דייטים ואירועים\n✔ נותן וייב אלגנטי, בוגר ועשיר\n\nמה מיוחד בו?\n• תווים: קוניאק, קינמון, טונקה, וניל, אלון, פרלין, אלגום\n• ניחוח שלא מריחים על כל אחד\n• עמידות גבוהה ונוכחות מורגשת",
+                size: "100ml"
+            },
+            {
+                id: 46,
+                name: "sharaf divine",
+                brand: "Zimaya",
+                price: 139,
+                season: "winter",
+                gender: "unisex",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774600595/214ae52d-1d48-4812-9fa5-6e062015a5a2.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774600623/26b0ca5d-c94c-40c2-ade6-abb73d3ec01f.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nAngels' Share Paradis By Kilian\n\nSHARAF DIVINE הוא ניחוח יוקרתי, עמוק ועשיר עם פתיחה מתובלת-פירותית שמיד נותנת תחושת יוקרה ונוכחות.\n\nהתפתחות הריח:\nנפתח בפטל, ברגמוט וקינמון | מתפתח ללב מתוק וגורמנדי של תפוח, קרמל וורד | מתיישב על בסיס חם ואלכוהולי של קוניאק, וניל, ענבר, טונקה ומוש\n\nלמי זה מתאים?\nמתאים במיוחד לערב, דייטים, אירועים, יציאות ולכל מי שרוצה בושם עם נוכחות יוקרתית ומיוחדת.\n\nעונות ושימוש:\n✔ סתיו, חורף וערבים קרירים\n✔ יכול לעבוד גם בלילות מיוחדים בכל עונה\n\nביצועים:\n• ריכוז Extrait De Parfum\n• עמידות גבוהה מאוד ושובל חזק לאורך שעות רבות\n• בושם עם נוכחות שמעטים נשארים אדישים אליה",
+                size: "100ml"
+            },
+            {
+                id: 47,
+                name: "sharaf the club",
+                brand: "Zimaya",
+                price: 139,
+                season: "joker",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/ar_3:4,c_auto/513602e2-dad3-4e78-a5c8-cc0e64501aa6.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nAbsolu Aventus\n\nSHARAF THE CLUB הוא ניחוח עוצמתי, יוקרתי ומודרני המשלב פתיחה פירותית-רעננה עם עומק עצי ומעושן ברקע.\n\nהתפתחות הריח:\nנפתח באשכולית, ברגמוט ודומדמניות שחורות | מתפתח ללב ארומטי וגברי של ג'ינג'ר, קינמון, הל ואתרוג | מתיישב על בסיס עמוק של פצ'ולי, וטיבר, פלפל ורוד ועצים מעושנים\n\nלמי זה מתאים?\nמתאים במיוחד ליום-יום יוקרתי, יציאות, פגישות, דייטים ואירועים — בושם ורסטילי מאוד עם אופי גברי ונוכח.\n\nעונות ושימוש:\n✔ מתאים לכל עונות השנה\n✔ יתרון בולט באביב, סתיו וערבים נעימים\n\nביצועים:\n• עמידות גבוהה מאוד\n• שובל מורגש ונוכחות חזקה לאורך שעות רבות\n• וייב נקי, יוקרתי ובטוח — מושך מחמאות בלי להתאמץ",
+                size: "100ml"
+            },
+            {
+                id: 48,
+                name: "9pm night out",
+                brand: "Afnan",
+                price: 187,
+                season: "joker",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774604123/1a507a10-1599-4af1-b082-716af9f01e6b.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774604232/574c52f0-c880-42ee-8250-325f8c5cd3d1.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774604241/21956e54-76a4-47e8-bfa6-2c27b9a8383f.png"
+                ],
+                description: "9PM NIGHT OUT הוא בושם פירותי עוצמתי, ייחודי וממכר שלא מריח כמו כל דבר אחר בשוק.\n\nהתפתחות הריח:\nנפתח בפיטאיה/דרגון פרוט, תפוח, ברגמוט, לבנדר וקוניאק | מתפתח ללב מתובל וחמים של טופי, הל, זמש וארז | מסתיים בבסיס עצי-ענברי עוצמתי של טונקה, פצ'ולי, אמברופיקס ואקיגלווד\n\nלמי זה מתאים?\nמתאים ליום-יום, יציאות, דייטים, אירועים, מסיבות ולכל מי שרוצה להריח שונה מהרגיל. ורסטילי מאוד — עובד גם ביום וגם בלילה.\n\nעונות ושימוש:\n✔ מתאים לכל עונות השנה\n✔ במיוחד לערבים\n✔ עובד מצוין גם בקיץ בזכות הפתיחה הפירותית-רעננה\n\nביצועים:\n• בושם חזק מאוד עם נוכחות גבוהה\n• שובל מורגש ועמידות מרשימה לאורך שעות רבות\n• אחד הבשמים היותר בולטים וייחודיים בקטגוריית הפירותיים-עוצמתיים",
+                size: "100ml"
+            },
+            {
+                id: 49,
+                name: "Master Piece",
+                brand: "Maison Asrar",
+                price: 149,
+                season: "joker",
+                gender: "unisex",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774607950/51905cfc-808e-4c3a-ae8f-5a475ab85c79.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774607990/5b2cbb3d-2844-44c3-9143-647af54b8d14.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nAlthaïr\n\nניחוח ונילי-ענברי יוקרתי, חלק וממכר עם שילוב מושלם בין מתיקות אלגנטית לעומק גברי.\n\nהבושם נפתח בתבלינים חמים ורעננות עדינה, מתפתח ללב ונילי-קרמי עשיר, ומתיישב על בסיס עמוק, עצי ומושק שנותן תחושת יוקרה מודרנית.\n\nפירמידת תווים:\nתווי פתיחה: (קינמון, הל, תפוז, ברגמוט)\nתווי לב: (וניל בורבון, אלמי)\nתווי בסיס: (פרלין, מושק, אמברוקסן, עץ גואיאק, טונקה)\n\nלמה הוא מתאים?\nמתאים במיוחד לדייטים, יציאות, אירועים, ערב ולכל מי שאוהב ניחוח מתוק-יוקרתי עם אופי אלגנטי ומרשים.\n\nעונה מומלצת:\nסתיו, חורף וערבים קרירים — אך יכול לעבוד נהדר גם בלילות אביב.\n\nביצועים:\nעמידות גבוהה מאוד עם שובל עשיר, עוטף ומרשים לאורך שעות רבות.\n\nבושם שמרגיש יוקרתי, נקי וממכר — כזה שקשה להפסיק להריח אותו.",
+                size: "100ml"
+            },
+            {
+                id: 50,
+                name: "Mango Ice",
+                brand: "Gulf Orchid",
+                price: 145,
+                season: "summer",
+                gender: "unisex",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774608025/9284b5e2-77b6-45b3-963e-d6806cb3e89e.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774608029/14072ac8-818d-4fb0-9d9a-b8bc1ed25308.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774608042/a98f332e-fed3-48fd-b89a-52f6d683f315.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nGod of Fire\n\nניחוח טרופי, פירותי וייחודי שמביא וייב קיצי יוקרתי עם טוויסט מתוק-חם ברקע.\n\nהבושם נפתח במנגו עסיסי ורענן עם הדרים ותבלינים, מתפתח ללב מעט פרחוני-ענברי, ומתיישב על בסיס קרמי ומתוק שנותן לו עומק ממכר ולא שגרתי.\n\nפירמידת תווים:\nתווי פתיחה: (מנגו, לימון, ג׳ינג׳ר, ריבס)\nתווי לב: (פרחים לבנים, ענבר, ליקריץ)\nתווי בסיס: (מושק, וניל, קרמל, ערמון)\n\nלמה הוא מתאים?\nמתאים במיוחד לקיץ, חופשות, יציאות, דייטים, בילויים ויום-יום למי שרוצה להריח מיוחד ולא כמו כולם. בושם שמביא וייב טרופי, יוקרתי ומושך מאוד.\n\nעונה מומלצת:\nקיץ, אביב וימים חמים — אך יכול לעבוד נהדר גם בערבים לאורך השנה למי שאוהב ניחוחות פירותיים-מתוקים.\n\nביצועים:\nעמידות גבוהה עם שובל מורגש מאוד ונוכחות בולטת. בושם שמושך תשומת לב בזכות הריח הטרופי-ייחודי שלו ולא דומה לרוב הבשמים בשוק.",
+                size: "100ml"
+            },
+            {
+                id: 51,
+                name: "Yacht Club",
+                brand: "Gulf Orchid",
+                price: 145,
+                season: "summer",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774608121/8ad85a17-8468-437c-b7fb-7d8bda670d44.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774608345/074dd72b-3af1-4f20-8e70-1111501dcca2.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774608358/3b247967-275d-4e26-ae3d-01dade9bcfa8.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\n40 Knots\n\nניחוח יוקרתי, ימי ומיוחד שמרגיש כמו רוח ים על יאכטה יוקרתית.\n\nהבושם משלב רעננות מלוחה עם עומק עצי-אלגנטי, ויוצר ריח נקי, יוקרתי ולא שגרתי בכלל — כזה שלא מריח כמו עוד “בושם כחול” רגיל.\n\nפירמידת תווים:\nתווי פתיחה: (מי ים, תווים ירוקים, מלח ים)\nתווי לב: (ארז לבן, תווים עציים, אקורדים ימיים)\nתווי בסיס: (ענבר, עצים יבשים, מושק מלוח)\n\nלמה הוא מתאים?\nמתאים ליום-יום, עבודה, יציאות, חופשות, דייטים ואירועים — בושם ורסטילי מאוד עם וייב יוקרתי ונקי.\n\nעונה מומלצת:\nאביב, קיץ וסתיו — אך בזכות העומק שלו עובד נהדר גם בערבים כל השנה.\n\nביצועים:\nעמידות גבוהה מאוד עם שובל מורגש ונוכחות אלגנטית לאורך שעות רבות.\n\nזה לא סתם בושם ימי — הוא הרבה יותר עמוק, יוקרתי ומיוחד מרוב הבשמים בקטגוריה שלו.",
+                size: "100ml"
+            },
+            {
+                id: 52,
+                name: "mazaaj",
+                brand: "Zimaya",
+                price: 149,
+                season: "joker",
+                gender: "unisex",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774608439/74e7e945-5551-4e9d-8469-c70c5d9eec48.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774608441/bdc2c94d-b388-4070-b9d3-72d852fac1f0.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nSymphony\n\nניחוח הדרי-יוקרתי, נקי ומבריק עם וייב אלגנטי ויוצא דופן.\n\nהבושם נפתח בפיצוץ הדרים רענן ונוצץ, מתפתח ללב ארומטי-נקי ומתיישב על בסיס חלק, יוקרתי ומעודן שנותן לו תחושת ניקיון יוקרתית במיוחד.\n\nפירמידת תווים:\nתווי פתיחה: (אשכולית, ברגמוט, תפוז)\nתווי לב: (ג׳ינג׳ר, נגיעות ארומטיות ירוקות)\nתווי בסיס: (מושק, אמברוקסן, עצים בהירים)\n\nלמה הוא מתאים?\nמתאים ליום-יום, קיץ, עבודה, יציאות, חופשות ודייטים — בושם סופר ורסטילי למי שאוהב ריח נקי, יוקרתי ורענן.\n\nעונה מומלצת:\nאביב, קיץ וימים חמים — אך מתאים כמעט לכל השנה בזכות הניקיון והאלגנטיות שלו.\n\nביצועים:\nריח נקי ובולט עם שובל מורגש ועמידות גבוהה מאוד ביחס לקטגוריית ההדרים.\n\nבושם שנותן תחושת “יוקרה נקייה” ומריח ברמה אחרת מרוב הבשמים הרעננים.",
+                size: "100ml"
+            },
+            {
+                id: 53,
+                name: "Arabian nights",
+                brand: "Gulf Orchid",
+                price: 129,
+                season: "winter",
+                gender: "unisex",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774608523/4a47bfc4-9bde-433c-b7b8-82d2ff99cec9.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774608527/b9131413-95d1-4c23-85e7-e15c106413eb.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nArabians Tonka\n\nניחוח ערבי-יוקרתי, מתוק ועוצמתי במיוחד עם אופי עמוק, כהה וממכר.\n\nהבושם נפתח בתבלינים חמים וזעפרן יוקרתי, מתפתח ללב ורדי-עצי עשיר, ומתיישב על בסיס כבד, מתוק ומעושן עם נוכחות שאי אפשר להתעלם ממנה.\n\nפירמידת תווים:\nתווי פתיחה: (זעפרן, ברגמוט)\nתווי לב: (ורד בולגרי, עץ אוד)\nתווי בסיס: (טונקה, ענבר, סוכר חום, מושק לבן, אלון)\n\nלמה הוא מתאים?\nמתאים במיוחד לערב, חורף, דייטים, אירועים, יציאות ולכל מי שאוהב בשמים כבדים עם נוכחות חזקה מאוד. זה בושם לאנשים שאוהבים למשוך תשומת לב ולהריח ייחודי.\n\nעונה מומלצת:\nחורף, סתיו וערבים קרים — פחות מתאים לימים חמים בגלל העוצמה והמתיקות שלו.\n\nביצועים:\nבושם עוצמתי מאוד עם שובל חזק במיוחד ועמידות קיצונית לאורך שעות רבות.\n\nנשאר על בגדים גם למחרת — אחד מהבשמים הכי חזקים בקטגוריה שלו.",
+                size: "100ml"
+            },
+            {
+                id: 54,
+                name: "perfection",
+                brand: "Gulf Orchid",
+                price: 149,
+                season: "joker",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774608609/8c5c0f46-e20c-4619-b4ee-f6e51940491b.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774608603/6c315a09-5fb6-471d-9c44-c3e3d5981d71.png"
+                ],
+                description: "בהשראת הבושם היוקרתי Amouage -Reflection Man\n\nניחוח נקי, אלגנטי ויוקרתי במיוחד עם אופי סופר-מלוטש ומעודן.\n\nהבושם נפתח ברעננות ארומטית-פרחונית יוקרתית, מתפתח ללב חלק ואלגנטי, ומתיישב על בסיס עצי-קרמי שנותן תחושת ניקיון ויוקרה ברמה גבוהה.\n\nפירמידת תווים:\nתווי פתיחה: (רוזמרין, פלפל ורוד, עלי תפוז)\nתווי לב: (יסמין, נרולי, ילנג-ילנג, שורש איריס)\nתווי בסיס: (אלגום, ארז, וטיבר, פצ’ולי)\n\nלמה הוא מתאים?\nמתאים ליום-יום, עבודה, אירועים, פגישות, דייטים ולכל מי שאוהב להריח יוקרתי, נקי ומסודר. בושם שמשדר קלאס ואלגנטיות בלי להיות כבד או מוגזם.\n\nעונה מומלצת:\nאביב, קיץ, סתיו וימים נעימים — ורסטילי מאוד ומתאים כמעט לכל מצב.\n\nביצועים:\nעמידות גבוהה מאוד עם שובל אלגנטי ומורגש.\n\nבושם עם נוכחות נקייה ויוקרתית שמרגיש ברמה גבוהה מהרגע הראשון.",
+                size: "100ml"
+            },
+            {
+                id: 55,
+                name: "afnan 9pm",
+                brand: "Afnan",
+                price: 127,
+                season: "joker",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774608679/8f36b57c-a963-47b2-984f-0facd5dae730.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774608695/b54d0f89-0c7e-4c35-9fc1-ddc2273a489e.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nUltra Male\n\nניחוח מתוק, שובב וממכר עם אופי צעיר, עוצמתי ומלא מחמאות.\n\nהבושם נפתח בפירותיות רעננה ומתוקה, מתפתח ללב ארומטי-חמים, ומתיישב על בסיס ונילי-ענברי עשיר שיוצר חתימה ממכרת ומוכרת במיוחד.\n\nפירמידת תווים:\nתווי פתיחה: (אגס, תפוח, לבנדר, ברגמוט)\nתווי לב: (קינמון, פריחת תפוז, שושנת העמקים)\nתווי בסיס: (וניל, טונקה, ענבר, פצ’ולי)\n\nלמה הוא מתאים?\nמתאים במיוחד ליציאות, דייטים, מסיבות, ערב ולכל מי שאוהב בשמים מתוקים עם הרבה נוכחות ומחמאות.\n\nעונה מומלצת:\nסתיו, חורף וערבים קרירים — אך יכול לעבוד גם בלילות אביב וקיץ אם לא מגזימים בהתזה.\n\nביצועים:\nבושם חזק מאוד עם שובל מורגש ועמידות גבוהה לאורך שעות רבות.\n\nאחד הבשמים הכי מוכרים בקטגוריית ה”מחמאה מובטחת” בזכות המתיקות והעוצמה שלו.",
+                size: "100ml"
+            },
+            {
+                id: 56,
+                name: "liquid burn",
+                brand: "French Avenue",
+                price: 147,
+                season: "joker",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774608779/1a45065e-4610-4d9f-95e4-285754697fb1.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774608766/ba715b81-4b29-402c-bc8f-3534915aae20.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nAlthaïr\n\nניחוח ונילי-ענברי עשיר, חם וממכר עם אופי יוקרתי ובולט במיוחד.\n\nהבושם נפתח בתבלינים חמים ורעננות עדינה, מתפתח ללב ונילי-קרמי חלק, ומתיישב על בסיס עצי-ענברי עמוק שיוצר תחושת יוקרה עוטפת.\n\nפירמידת תווים:\nתווי פתיחה: (קינמון, הל, תפוז, ברגמוט)\nתווי לב: (וניל בורבון, אלמי)\nתווי בסיס: (פרלין, מושק, אמברוקסן, עץ גואיאק, טונקה)\n\nלמה הוא מתאים?\nמתאים במיוחד לדייטים, יציאות, ערב, אירועים ולכל מי שאוהב בשמים מתוקים-יוקרתיים עם נוכחות מרשימה.\n\nעונה מומלצת:\nסתיו, חורף וערבים קרירים — אידיאלי למזג אוויר קר וללילות מיוחדים.\n\nביצועים:\nעמידות גבוהה מאוד עם שובל עשיר, עוטף ומורגש לאורך שעות רבות.\n\nבושם שמרגיש יוקרתי, ממכר ומלא נוכחות מהרגע הראשון.",
+                size: "100ml"
+            },
+            {
+                id: 57,
+                name: "Vulcan feu",
+                brand: "French Avenue",
+                price: 149,
+                season: "summer",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774608851/7faea724-4f42-4ebe-a400-f3ff602cae50.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774608861/ce7f334d-769c-4a59-a3c5-01db610832a1.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nGod of Fire\n\nניחוח טרופי-יוקרתי, פירותי ועוצמתי עם אופי אקזוטי שלא דומה לרוב הבשמים בשוק.\n\nהבושם נפתח בפיצוץ מנגו עסיסי והדרים חדים, מתפתח ללב חם ומעט פרחוני, ומתיישב על בסיס מתוק-קרמי שנותן לו עומק ממכר וייחודיות יוצאת דופן.\n\nפירמידת תווים:\nתווי פתיחה: (מנגו, לימון, ג׳ינג׳ר, ריבס)\nתווי לב: (פרחים לבנים, ענבר, ליקריץ)\nתווי בסיס: (מושק, וניל, קרמל, ערמון)\n\nלמה הוא מתאים:\nמתאים במיוחד לקיץ, חופשות, דייטים, יציאות, מסיבות ולכל מי שרוצה להריח מיוחד, יוקרתי ובולט.\n\nעונה מומלצת:\nאביב, קיץ וימים חמים — אך עובד נהדר גם בערבים לאורך השנה למי שאוהב ניחוחות פירותיים-מתוקים.\n\nביצועים:\nעמידות גבוהה מאוד עם שובל חזק ונוכחות מורגשת לאורך שעות רבות.\n\nבושם עם DNA ייחודי מאוד שמושך מחמאות ומבליט אותך מה⸻",
+                size: "100ml"
+            },
+            {
+                id: 58,
+                name: "Atlantis",
+                brand: "French Avenue",
+                price: 145,
+                season: "summer",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774608931/33623f6e-b85c-4c95-b4e7-6b3052295c97.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774608937/0f5aa571-6976-4bce-b9ee-d916eef1b422.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nWavechild\n\nניחוח קיצי, ימי ופירותי עם וייב צעיר, רענן וממכר.\n\nהבושם נפתח בפירותיות עסיסית ורעננה, מתפתח ללב ימי-מלוח מיוחד, ומתיישב על בסיס רך ומעט מתוק שנותן לו אופי ממכר ושונה מאוד מבשמים ימיים רגילים.\n\nפירמידת תווים:\nתווי פתיחה: (קלמנטינה, תפוז, אבטיח)\nתווי לב: (מי ים, קוקוס, ענבר)\nתווי בסיס: (קקאו, אמברווד, מושק)\n\nלמה הוא מתאים:\nמתאים במיוחד לקיץ, חופשות, חוף, יציאות, יום-יום ולכל מי שאוהב בשמים רעננים עם טוויסט מיוחד ולא שגרתי.\n\nעונה מומלצת:\nאביב, קיץ וימים חמים — אידיאלי למזג אוויר חם בזכות האופי הימי-פירותי שלו.\n\nביצועים:\nעמידות גבוהה עם שובל מורגש ונעים לאורך שעות רבות.\n\nבושם ייחודי מאוד שנותן וייב קיצי, צעיר ויוקרתי שלא מריחים על כל אחד",
+                size: "100ml"
+            },
+            {
+                id: 59,
+                name: "Aether Exrait",
+                brand: "French Avenue",
+                price: 145,
+                season: "joker",
+                gender: "unisex",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774608992/d055199f-b636-4bbe-a2e8-9e979fd31386.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774609003/9fe49c5d-fbe1-4d48-a4cb-400f0d4a1d0f.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nGreenley\n\nניחוח ירוק-רענן, נקי ואנרגטי עם וייב יוקרתי ומודרני.\n\nהבושם נפתח בפיצוץ תפוח ירוק והדרים רעננים, מתפתח ללב ירוק-עצי נקי, ומתיישב על בסיס חלק, מושקי-עצי שנותן תחושת ניקיון יוקרתית לאורך זמן.\n\nפירמידת תווים:\nתווי פתיחה: (תפוח ירוק, ברגמוט, מנדרינה)\nתווי לב: (פטיטגרן, ארז, קשמיר)\nתווי בסיס: (מושק, אמברווד, אלון)\n\nלמה הוא מתאים:\nמתאים ליום-יום, עבודה, ספורט, יציאות, דייטים ולכל מי שאוהב ריח נקי, רענן ומושך מחמאות.\n\nעונה מומלצת:\nאביב, קיץ וימים חמים — אידיאלי למזג אוויר חם בזכות הרעננות והקלילות שלו.\n\nביצועים:\nעמידות גבוהה מאוד ביחס לבשמים רעננים, עם שובל נקי ומורגש לאורך שעות רבות.\n\nבושם שמרגיש יוקרתי, טרי ומלא אנרגיה מהרגע הראשון",
+                size: "100ml"
+            },
+            {
+                id: 60,
+                name: "Vulcan baie",
+                brand: "French Avenue",
+                price: 145,
+                season: "joker",
+                gender: "unisex",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774609225/02372b31-c497-4340-a1c8-84d0368ed54d.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774609231/4963c55d-b3c3-4627-a7d8-201cc17a7a72.png"
+                ],
+                description: "Vulcan baie מבית French Avenue - ניחוח מפתה ואינטנסיבי המשלב חום וולקני עם אלמנטים מסתוריים ומושכים. בושם אוניברסלי בעל נוכחות בלתי נשכחת המתאים לכל עונה ולכל אירוע, עם הרמוניה מושלמת של תווים חמים ומפתים.",
+                size: "100ml"
+            },
+            {
+                id: 61,
+                name: "cherry buzz",
+                brand: "Fragrance World",
+                price: 95,
+                season: "joker",
+                gender: "unisex",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774609320/74f8c049-1466-44b8-8b86-828c175d8bd3.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774609329/a1d4dbe1-b5f6-4a59-8111-76e63c1d23d5.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nElectric Cherry\n\nניחוח פירותי-חושני, מתוק ומבריק עם אופי שובב ויוקרתי.\n\nהבושם נפתח בדובדבן עסיסי ובוהק עם טוויסט רענן, מתפתח ללב פרחוני-חמים, ומתיישב על בסיס מושקי-ענברי רך שיוצר ריח ממכר ומודרני.\n\nפירמידת תווים:\nתווי פתיחה: (דובדבן חמצמץ, ג׳ינג׳ר)\nתווי לב: (יסמין סמבק)\nתווי בסיס: (מושק ורוד, פלפל ורוד, ענבר)\n\nלמה הוא מתאים:\nמתאים לדייטים, יציאות, ערב, אירועים ולכל מי שאוהב ניחוחות פירותיים-חושניים עם טוויסט יוקרתי ומיוחד.\n\nעונה מומלצת:\nאביב, קיץ, סתיו וערבים נעימים — ורסטילי מאוד למי שאוהב פרופיל מתוק-פירותי.\n\nביצועים:\nעמידות גבוהה עם שובל מורגש ונוכחות ממכרת לאורך שעות.\n\nבושם ייחודי מאוד שנותן וייב יוקרתי, מפתה ולא שגרתי",
+                size: "100ml"
+            },
+            {
+                id: 62,
+                name: "Shalina",
+                brand: "Fragrance World",
+                price: 89,
+                season: "joker",
+                gender: "female",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774609410/08656fd7-ffdd-4255-b910-d6295ecde6fb.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774609402/9a0f5c7a-c816-4144-bc32-1bad0bbf4ebc.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nDelina\n\nניחוח נשי, אלגנטי ויוקרתי עם שילוב מושלם בין פירותיות רעננה לורדים קטיפתיים ומתיקות רכה.\n\nהבושם נפתח בפירותיות נוצצת ורעננה, מתפתח ללב ורדי-פרחוני מפואר, ומתיישב על בסיס רך, מושקי ומתוק שמעניק לו חתימה נשית ממכרת.\n\nפירמידת תווים:\nתווי פתיחה: (ליצ’י, ריבס, ברגמוט, אגוז מוסקט)\nתווי לב: (ורד טורקי, אדמונית, מושקאטו, וניל)\nתווי בסיס: (קשמיר, מושק לבן, וטיבר, קטורת)\n\nלמה הוא מתאים:\nמתאים לדייטים, אירועים, יום-יום יוקרתי, יציאות ולכל מי שאוהבת ניחוח נשי, אלגנטי ומושך מחמאות.\n\nעונה מומלצת:\nאביב, קיץ, סתיו וערבים נעימים — ורסטילי מאוד ומתאים כמעט לכל מצב.\n\nביצועים:\nעמידות גבוהה מאוד עם שובל נשי, מורגש ואלגנטי לאורך שעות רבות.\nבושם יוקרתי, נשי וממכר שמרגיש ייחודי ומרשים מהרגע הראשון",
+                size: "100ml"
+            },
+            {
+                id: 63,
+                name: "Liberty",
+                brand: "Fragrance World",
+                price: 89,
+                season: "joker",
+                gender: "female",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774613783/25b39d40-0014-46c5-80ae-f5bbe09c880f.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774613790/be3d0806-3fcd-4858-af18-1d107f40dd68.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nLibre Intense\n\nניחוח אלגנטי, חושני ועוצמתי עם שילוב מושלם בין רעננות ארומטית למתיקות ונילית עמוקה.\n\nהבושם נפתח ברעננות בהירה עם טאץ’ פירותי, מתפתח ללב פרחוני-חושני עשיר, ומתיישב על בסיס חם, מתוק ויוקרתי עם נוכחות מרשימה.\n\nפירמידת תווים:\nתווי פתיחה: (ברגמוט, מנדרינה, לבנדר)\nתווי לב: (פריחת תפוז, יסמין סמבק, סחלב)\nתווי בסיס: (וניל, טונקה, ענבר, וטיבר)\n\nלמה הוא מתאים:\nמתאים במיוחד לדייטים, אירועים, ערב, יציאות ולכל מי שאוהבת ניחוח נשי, יוקרתי ובולט.\n\nעונה מומלצת:\nסתיו, חורף, אביב וערבים נעימים — עובד נהדר גם באירועים לאורך השנה.\n\nביצועים:\nעמידות גבוהה מאוד עם שובל חזק ונוכחות מורגשת לאורך שעות רבות.\nבושם נשי, עוצמתי ומלא מחמאות עם תחושת יוקרה אמיתית",
+                size: "100ml"
+            },
+            {
+                id: 64,
+                name: "opio noir red dose",
+                brand: "Fragrance World",
+                price: 89,
+                season: "joker",
+                gender: "female",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774614018/fa84933a-3f4f-4063-b796-38b675ab5efb.png"
+                ],
+                description: "opio noir red dose מבית Fragrance World - ניחוח אפל ומרתק המשלב מסתורין אדום עם אלמנטים מפתים ויוקרתיים. בושם אינטנסיבי וייחודי המושלם לכל עונה, עם נוכחות בלתי נשכחת וסטייל אפל ומודרני.",
+                size: "100ml"
+            },
+            {
+                id: 65,
+                name: "proud of you intense",
+                brand: "Fragrance World",
+                price: 89,
+                season: "joker",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774614140/208b32c6-94ea-4119-b6c9-221208aefc54.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nStronger With You Intensely\n\nניחוח מתוק, חמים וממכר עם אופי גברי מודרני ועוצמתי.\n\nהבושם נפתח בתבלינים רעננים עם מתיקות עדינה, מתפתח ללב עשיר וגורמנדי, ומתיישב על בסיס חם, ונילי-ענברי עמוק שיוצר חתימה ממכרת במיוחד.\n\nפירמידת תווים:\nתווי פתיחה: (פלפל ורוד, ערער, סיגלית)\nתווי לב: (טופי, קינמון, לבנדר, מרווה)\nתווי בסיס: (וניל, טונקה, ענבר, זמש)\n\nלמה הוא מתאים:\nמתאים במיוחד לדייטים, ערב, יציאות, אירועים ולכל מי שאוהב בשמים מתוקים, גבריים ומלאי נוכחות.\n\nעונה מומלצת:\nסתיו, חורף וערבים קרירים — אידיאלי למזג אוויר קר וללילות מיוחדים.\n\nביצועים:\nעמידות גבוהה מאוד עם שובל חזק ונוכחות בולטת לאורך שעות רבות.\nבושם ממכר במיוחד שמושך מחמאות בלי סוף ומתאים למי שאוהב ריחות מתוקים-גבריים",
+                size: "100ml"
+            },
+            {
+                id: 66,
+                name: "bois de BOIS",
+                brand: "Fragrance World",
+                price: 99,
+                season: "joker",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774614328/c06193f4-9ae4-4e1f-b606-d812b971763a.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nBois Impérial\n\nניחוח עצי-ארומטי מודרני, חד ויוקרתי עם אופי נקי, ירוק וממכר.\n\nהבושם נפתח ברעננות ארומטית-מתובלת, מתפתח ללב עצי-מינרלי מיוחד, ומתיישב על בסיס נקי, מושקי ואלגנטי שיוצר תחושת יוקרה מודרנית ומלוטשת.\n\nפירמידת תווים:\nתווי פתיחה: (בזיליקום תאילנדי, פלפל טימור, אשכולית)\nתווי לב: (וטיבר האיטי, פטיטגרן, אקורדים ירוקים)\nתווי בסיס: (אקיגלווד, פצ’ולי, אמברווד)\n\nלמה הוא מתאים:\nמתאים ליום-יום, עבודה, פגישות, אירועים, יציאות ולכל מי שאוהב ריח יוקרתי, נקי ומיוחד שלא דומה לבשמים הרגילים בשוק.\n\nעונה מומלצת:\nאביב, קיץ, סתיו — ורסטילי מאוד ומתאים כמעט לכל השנה.\n\nביצועים:\nעמידות גבוהה מאוד עם שובל אלגנטי ומורגש לאורך שעות רבות.\nבושם עם DNA מודרני, ייחודי ומאוד ממכר למי שאוהב ניחוחות עציים-נקיים",
+                size: "100ml"
+            },
+            {
+                id: 67,
+                name: "proud of you absolute",
+                brand: "Fragrance World",
+                price: 89,
+                season: "joker",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774614337/c1869535-0381-4935-8178-8ab9910099b6.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nStronger With You Absolutely\n\nניחוח עמוק, מתוק ובוגר יותר עם אופי יוקרתי וחם במיוחד.\n\nהבושם נפתח בטוויסט אלכוהולי-מתובל יוקרתי, מתפתח ללב ארומטי ומתוק, ומתיישב על בסיס ונילי-ענברי עמוק עם תחושת יוקרה כבדה וממכרת.\n\nפירמידת תווים:\nתווי פתיחה: (רום, ברגמוט, אלמי)\nתווי לב: (לבנדר, דבנא, ערמונים)\nתווי בסיס: (וניל מדגסקר, ארז, פצ’ולי)\n\nלמה הוא מתאים:\nמתאים במיוחד לדייטים, ערב, אירועים, יציאות ולכל מי שאוהב בשמים מתוקים, בוגרים ויוקרתיים עם עומק מרשים.\n\nעונה מומלצת:\nסתיו, חורף וערבים קרים — אידיאלי ללילות ולמזג אוויר קר.\n\nביצועים:\nעמידות גבוהה מאוד עם שובל חזק ונוכחות עמוקה וממכרת לאורך שעות רבות.\nבושם עם וייב יוקרתי, בוגר ומרשים יותר מהגרסאות הקלאסיות של הסדרה",
+                size: "100ml"
+            },
+            {
+                id: 68,
+                name: "imaginary Jacques Yves",
+                brand: "Fragrance World",
+                price: 89,
+                season: "joker",
+                gender: "unisex",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774614345/36106ac8-6d18-4928-a9ef-c705626c3527.png"
+                ],
+                description: "בהשראת הבושם Louis Vuitton imagination\n\nניחוח רענן, יוקרתי ונקי במיוחד עם שילוב מושלם בין הדרים נוצצים, תה שחור ועומק עצי-ענברי אלגנטי.\n\nהבושם נפתח בפיצוץ הדרי מבריק ומלא אנרגיה, מתפתח ללב תהי-ארומטי ייחודי, ומתיישב על בסיס חלק, נקי ומודרני שמעניק תחושת יוקרה ממכרת.\n\nפירמידת תווים:\nתווי פתיחה: (ברגמוט, תפוז סיציליאני, אתרוג)\nתווי לב: (תה שחור, ג׳ינג׳ר, נרולי, קינמון)\nתווי בסיס: (אמברוקסן, עץ גואיאק, אוליבנום)\n\nלמה הוא מתאים:\nמתאים ליום-יום, עבודה, קיץ, חופשות, דייטים, פגישות ויציאות — בושם ורסטילי מאוד עם וייב נקי ויוקרתי.\n\nעונה מומלצת:\nאביב, קיץ וימים חמים — אך מתאים כמעט לכל השנה בזכות האיזון והאלגנטיות שלו.\n\nביצועים:\nעמידות גבוהה מאוד ביחס לבושם רענן, עם שובל נקי ומורגש לאורך שעות רבות.\nבושם שמרגיש כמו ניקיון יוקרתי ברמה גבוהה — מודרני, אלגנטי ומלא מחמאות",
+                size: "100ml"
+            },
+            {
+                id: 69,
+                name: "one self",
+                brand: "Fragrance World",
+                price: 89,
+                season: "joker",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774614562/e81b7112-4cfa-4abc-8f70-4bed8c291f34.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nMYSLF Eau de Parfum\n\nניחוח מודרני, נקי וגברי עם שילוב מושלם בין רעננות הדרית, פרחים לבנים ועומק עצי-חם.\nהבושם נפתח ברעננות בהירה ואלגנטית, מתפתח ללב פרחוני-נקי יוקרתי, ומתיישב על בסיס עצי-ענברי חלק שיוצר חתימה מודרנית וממכרת.\n\nפירמידת תווים:\nתווי פתיחה: (ברגמוט קלבריה, ברגמוט ירוק)\nתווי לב: (פריחת תפוז טוניסאית)\nתווי בסיס: (אמברווד, פצ’ולי אינדונזי)\n\nלמה הוא מתאים:\nמתאים ליום-יום, עבודה, דייטים, פגישות, יציאות ואירועים — בושם ורסטילי מאוד שמתאים כמעט לכל סיטואציה.\n\nעונה מומלצת:\nאביב, קיץ, סתיו וימים נעימים — מתאים כמעט לכל השנה.\n\nביצועים:\nעמידות גבוהה עם שובל נקי, יוקרתי ומורגש לאורך שעות רבות.\nבושם מודרני מאוד עם וייב נקי, מסודר ויוקרתי שמושך מחמאות בלי להיות כבד",
+                size: "100ml"
+            },
+            {
+                id: 70,
+                name: "Sedly",
+                brand: "Fragrance World",
+                price: 89,
+                season: "joker",
+                gender: "unisex",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774614570/2e39127a-f99e-4f94-8b86-c92bfa368a19.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nSedley Parfums de Marly\n\nניחוח רענן, קריספי ויוקרתי במיוחד עם שילוב מושלם בין הדרים, נענע ועומק עצי-ארומטי נקי.\nהבושם נפתח בתחושת רעננות קרה ומבריקה, מתפתח ללב ארומטי-מנטולי נקי, ומתיישב על בסיס עצי-מושקי אלגנטי שמעניק לו תחושת ניקיון יוקרתית ומתוחכמת.\n\nפירמידת תווים:\nתווי פתיחה: (ברגמוט, לימון, נענע, אשכולית)\nתווי לב: (לבנדר, רוזמרין, גרניום, אוליבנום)\nתווי בסיס: (אמברווד, ארז, קשמיר, וטיבר, פצ’ולי)\n\nלמה הוא מתאים:\nמתאים ליום-יום, עבודה, חדר כושר, קיץ, חופשות, יציאות ודייטים — בושם סופר ורסטילי למי שאוהב ריח נקי, יוקרתי ומרענן.\n\nעונה מומלצת:\nאביב, קיץ וימים חמים — אידיאלי למזג אוויר חם בזכות הרעננות הקרירה שלו.\n\nביצועים:\nעמידות גבוהה מאוד ביחס לבושם רענן, עם שובל נקי ומורגש לאורך שעות רבות.\nבושם שמרגיש כמו יוקרה, ניקיון ורעננות ברמה גבוהה מאוד",
+                size: "100ml"
+            },
+            {
+                id: 71,
+                name: "champion sugar",
+                brand: "Fragrance World",
+                price: 150,
+                season: "joker",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774614733/16a20f58-8804-41dd-8325-7ef6654defc2.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774614579/846f7eca-ff72-424f-bba5-8f18cb1c2eb1.png"
+                ],
+                description: "ניחוח מודרני, מתוק-ארומטי ועוצמתי עם שילוב מושלם בין פירותיות, תבלינים ורכות ענברית.\nהבושם נפתח בפירותיות מתובלת ומלאת אנרגיה, מתפתח ללב רענן-ארומטי עם טאץ’ מתקתק, ומתיישב על בסיס חם וממכר שנותן לו אופי גברי ובולט.\n\nפירמידת תווים:\nתווי פתיחה: (פלפל ורוד, הל, ברגמוט, תפוח)\nתווי לב: (פריחת תפוז, ורד, נענע, גרניום)\nתווי בסיס: (ענבר, טונקה, אמברגריס)\n\nלמה הוא מתאים:\nמתאים ליום-יום, יציאות, דייטים, עבודה ואירועים — בושם ורסטילי עם אופי מיוחד ולא גנרי.\n\nעונה מומלצת:\nמתאים כמעט לכל השנה — במיוחד אביב, סתיו וערבים נעימים, אך עובד נהדר גם בקיץ בזכות הרעננות שלו.\n\nביצועים:\nעמידות גבוהה עם שובל מורגש ונוכחות טובה לאורך שעות רבות.\nבושם שמרגיש צעיר, מודרני ומלא אנרגיה — שילוב בין מתיקות, רעננות וגבריות.",
+                size: "100ml"
+            },
+            {
+                id: 72,
+                name: "G.O.A.T",
+                brand: "Fragrance World",
+                price: 150,
+                season: "joker",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774614978/ea60db82-cb44-4768-8876-4b571f5f4c8f.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774614969/712bbc63-5414-4bdb-bb11-e84823d52750.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nMYSLF Eau de Parfum\n\nניחוח מודרני, נקי וגברי עם אופי יוקרתי ורענן במיוחד.\n\nהבושם נפתח ברעננות הדרית מבריקה, מתפתח ללב פרחוני-נקי אלגנטי, ומתיישב על בסיס עצי-ענברי חלק שמעניק לו תחושת ניקיון יוקרתית וממכרת.\n\nפירמידת תווים:\nתווי פתיחה: (ברגמוט קלבריה, ברגמוט ירוק)\nתווי לב: (פריחת תפוז טוניסאית)\nתווי בסיס: (אמברווד, פצ’ולי אינדונזי)\n\nלמה הוא מתאים:\nמתאים ליום-יום, עבודה, פגישות, דייטים, יציאות ואירועים — בושם ורסטילי מאוד שמתאים כמעט לכל סיטואציה.\n\nעונה מומלצת:\nאביב, קיץ, סתיו וימים נעימים — מתאים כמעט לכל השנה.\n\nביצועים:\nעמידות גבוהה עם שובל נקי, יוקרתי ומורגש לאורך שעות רבות.\n\nבושם מודרני מאוד עם וייב נקי, מסודר ויוקרתי שמושך מחמאות בלי להיות כבד",
+                size: "100ml"
+            },
+            {
+                id: 73,
+                name: "champion money",
+                brand: "Fragrance World",
+                price: 150,
+                season: "joker",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774614995/b9df883c-a1c6-4e71-b4a7-b99a6551dca9.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774614986/e270c79e-b948-493e-a4ed-f97acd0191ed.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nLe Male Elixir\n\nניחוח מתוק, עשיר ועוצמתי עם שילוב ממכר של וניל, דבש ותבלינים חמים.\n\nהבושם נפתח במתיקות ארומטית ותבלינית שמיד מורגשת, מתפתח ללב עשיר וגורמנדי, ומתיישב על בסיס עמוק, חם וממכר עם נוכחות חזקה במיוחד.\n\nפירמידת תווים:\nתווי פתיחה: (לבנדר, נענע)\nתווי לב: (וניל, בנזואין)\nתווי בסיס: (דבש, טונקה, טבק)\n\nלמה הוא מתאים:\nמתאים במיוחד לדייטים, ערב, יציאות, אירועים ולכל מי שאוהב בשמים מתוקים, חזקים ומלאי מחמאות.\n\nעונה מומלצת:\nסתיו, חורף וערבים קרירים — אידיאלי למזג אוויר קר בזכות העומק והמתיקות שלו.\n\nביצועים:\nבושם חזק מאוד עם שובל עוצמתי ועמידות גבוהה לאורך שעות רבות.\n\nניחוח ממכר ובולט במיוחד שמיועד למי שאוהב להרגיש נוכחות",
+                size: "100ml"
+            },
+            {
+                id: 74,
+                name: "ARMAF Classic",
+                brand: "ARMAF",
+                price: 159,
+                season: "joker",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774615205/a5548f41-95e5-4b31-9a81-408ffc93696a.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774615104/7c056528-c221-498f-82e1-8f99bc88b627.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nLe Male Elixir Jean Paul Gaultier\n\nניחוח מתוק, חם וממכר עם אופי גברי, עוצמתי ויוקרתי.\n\nהבושם נפתח ברעננות ארומטית עם טאץ’ מתוק, מתפתח ללב ונילי-חמים עשיר, ומתיישב על בסיס עמוק של דבש, טבק וטונקה שיוצר חתימה ממכרת במיוחד.\n\nפירמידת תווים:\nתווי פתיחה: (לבנדר, נענע)\nתווי לב: (וניל, בנזואין)\nתווי בסיס: (דבש, טונקה, טבק)\n\nלמה הוא מתאים:\nמתאים במיוחד לדייטים, יציאות, ערב, אירועים ולכל מי שאוהב בשמים מתוקים, חזקים ובולטים.\n\nעונה מומלצת:\nסתיו, חורף וערבים קרירים — אידיאלי למזג אוויר קר בזכות המתיקות והעומק שלו.\n\nביצועים:\nבושם חזק מאוד עם שובל עוצמתי ועמידות גבוהה לאורך שעות רבות.\n\nניחוח ממכר במיוחד שמביא המון מחמאות ונוכחות חזקה",
+                size: "100ml"
+            },
+            {
+                id: 75,
+                name: "Oddesy Mandarin Sky",
+                brand: "ARMAF",
+                price: 128,
+                season: "summer",
+                gender: "unisex",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774615832/954664e2-ee5e-42a1-b275-20d0c4688523.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nScandal Pour Homme\n\nניחוח מתוק, פירותי וחושני עם אופי צעיר, בולט ומלא אנרגיה.\n\nהבושם נפתח בפירותיות הדרית מבריקה ורעננה, מתפתח ללב מתוק-ארומטי ממכר, ומתיישב על בסיס חם ועמוק שיוצר חתימה גברית ומלאת נוכחות.\n\nפירמידת תווים:\nתווי פתיחה: (מנדרינה, תפוז, זעפרן, מרווה)\nתווי לב: (קרמל, טונקה, פריחת תפוז)\nתווי בסיס: (אמברווד, וטיבר, ארז)\n\nלמה הוא מתאים:\nמתאים במיוחד לדייטים, יציאות, מסיבות, ערב ואירועים — בושם בולט ומלא מחמאות.\n\nעונה מומלצת:\nסתיו, חורף, אביב וערבים נעימים — אך עובד נהדר גם בלילות קיץ.\n\nביצועים:\nעמידות גבוהה מאוד עם שובל חזק ונוכחות בולטת לאורך שעות רבות.\n\nבושם עם אופי צעיר, סקסי וממכר שמתאים למי שאוהב למשוך תשומת לב",
+                size: "100ml"
+            },
+            {
+                id: 76,
+                name: "odyssey MEGA",
+                brand: "ARMAF",
+                price: 128,
+                season: "joker",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774616079/bf45ae7d-2844-4a3b-ba0d-892c401a0c79.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nY Eau de Parfum\n\nניחוח רענן, גברי ומודרני עם שילוב מושלם בין מתיקות נקייה, פירותיות ועומק עצי-ארומטי.\n\nהבושם נפתח ברעננות פירותית ואנרגטית, מתפתח ללב ארומטי נקי וגברי, ומתיישב על בסיס עצי-ענברי עמוק שיוצר חתימה מודרנית ומלאת מחמאות.\n\nפירמידת תווים:\nתווי פתיחה: (תפוח, ברגמוט, ג׳ינג׳ר)\nתווי לב: (מרווה, גרגרי ערער, גרניום)\nתווי בסיס: (אמברווד, וטיבר, טונקה, ארז)\n\nלמה הוא מתאים:\nמתאים ליום-יום, עבודה, חדר כושר, דייטים, יציאות ואירועים — בושם ורסטילי מאוד שמתאים כמעט לכל מצב.\n\nעונה מומלצת:\nאביב, קיץ, סתיו וימים נעימים — עובד נהדר כמעט כל השנה.\n\nביצועים:\nעמידות גבוהה מאוד עם שובל נקי ומורגש לאורך שעות רבות.\n\nבושם מודרני, גברי ומלא מחמאות עם DNA אהוב במיוחד",
+                size: "100ml"
+            },
+            {
+                id: 77,
+                name: "Oddesy Limone Fresh",
+                brand: "ARMAF",
+                price: 128,
+                season: "summer",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774616250/aa486c9b-cd51-4ee4-9fef-cc01d144dc54.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nAfternoon Swim Louis Vuitton\n\nניחוח הדרי-רענן, נוצץ ואנרגטי עם וייב קיצי יוקרתי ונקי במיוחד.\n\nהבושם נפתח בפיצוץ הדרים עסיסי ומבריק, מתפתח לרעננות בהירה ונקייה, ומתיישב על בסיס קליל ומודרני ששומר על תחושת רעננות יוקרתית לאורך זמן.\n\nפירמידת תווים:\nתווי פתיחה: (תפוז סיציליאני, מנדרינה, ברגמוט)\nתווי לב: (ג׳ינג׳ר, הדרים בהירים)\nתווי בסיס: (אמברוקסן, מושק, עצים בהירים)\n\nלמה הוא מתאים:\nמתאים ליום-יום, קיץ, חופשות, חוף, עבודה, חדר כושר ולכל מי שאוהב ריח סופר רענן ונקי.\n\nעונה מומלצת:\nאביב, קיץ וימים חמים — אידיאלי למזג אוויר חם בזכות הרעננות ההדרית שלו.\n\nביצועים:\nעמידות גבוהה ביחס לבושם הדרי עם שובל רענן ומורגש לאורך שעות רבות.\nבושם שנותן תחושת ניקיון, רעננות ויוקרה קיצית מהרגע הראשון.",
+                size: "100ml"
+            },
+            {
+                id: 78,
+                name: "odyssey homme",
+                brand: "ARMAF",
+                price: 129,
+                season: "joker",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774616364/32c8773a-1848-4137-a51d-14858e4d3402.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nNoir Extreme Tom ford\n\nניחוח חם, מתוק ויוקרתי עם שילוב עשיר של תבלינים, ענבר ומתיקות גורמנדית.\n\nהבושם נפתח בתבלינים חמים והדרים רעננים, מתפתח ללב קרמי-מתוק עמוק, ומתיישב על בסיס ענברי-עצי עשיר שיוצר חתימה גברית יוקרתית וממכרת.\n\nפירמידת תווים:\nתווי פתיחה: (הל, אגוז מוסקט, זעפרן, מנדרינה)\nתווי לב: (קולפי, יסמין, ורד, פריחת תפוז)\nתווי בסיס: (וניל, ענבר, אלגום, פצ’ולי)\n\nלמה הוא מתאים:\nמתאים במיוחד לדייטים, ערב, אירועים, יציאות ולכל מי שאוהב בשמים חמים, מתוקים ואלגנטיים עם נוכחות.\n\nעונה מומלצת:\nסתיו, חורף וערבים קרירים — אידיאלי למזג אוויר קר וללילות מיוחדים.\n\nביצועים:\nעמידות גבוהה מאוד עם שובל עשיר ומורגש לאורך שעות רבות.\nבושם יוקרתי, עמוק וממכר עם אופי בוגר ומרשים במיוחד.",
+                size: "100ml"
+            },
+            {
+                id: 79,
+                name: "infinity",
+                brand: "ARMAF",
+                price: 149,
+                season: "joker",
+                gender: "unisex",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774616730/e3d06e21-fa4e-4a9a-868c-4b6855e7d1f7.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774616743/0808772c-3c65-4a3a-8f38-9fc7515ec894.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nL’Homme Ultime Yves saint laurent\n\nניחוח אלגנטי, נקי ומתוחכם עם שילוב מושלם בין רעננות הדרית, ורדים ועומק עצי-גברי.\n\nהבושם נפתח ברעננות בהירה ומבריקה, מתפתח ללב פרחוני-ארומטי יוקרתי, ומתיישב על בסיס עצי חלק שמעניק לו תחושת ניקיון ואלגנטיות מודרנית.\n\nפירמידת תווים:\nתווי פתיחה: (אשכולית, ג׳ינג׳ר, הל, ברגמוט)\nתווי לב: (ורד, גרניום, מרווה, תפוח)\nתווי בסיס: (ארז, וטיבר, קשמיר)\n\nלמה הוא מתאים:\nמתאים ליום-יום, עבודה, פגישות, אירועים, דייטים ולכל מי שאוהב ריח נקי, אלגנטי ומעט יותר בוגר מהרגיל.\n\nעונה מומלצת:\nאביב, קיץ, סתיו וימים נעימים — ורסטילי מאוד ומתאים לרוב השנה.\n\nביצועים:\nעמידות גבוהה עם שובל אלגנטי ומורגש לאורך שעות רבות.\nבושם עם וייב יוקרתי, נקי ומתוחכם שמתאים למי שאוהב אלגנטיות אמיתית.",
+                size: "100ml"
+            },
+            {
+                id: 80,
+                name: "CLUB DE NUIT PRECIOUS",
+                brand: "ARMAF",
+                price: 199,
+                season: "joker",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774616798/652accd4-b2ca-4e78-bcf5-e495e661cef7.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774616811/ecb1b08a-cb56-480b-b168-650988ba5203.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nAbsolu Aventus 2023 Creed\n\nניחוח יוקרתי, עוצמתי ומתוחכם עם שילוב מרשים בין פירותיות רעננה, תבלינים ועומק עצי-מעושן.\n\nהבושם נפתח בפירותיות חדה ומבריקה עם הדרים עסיסיים, מתפתח ללב מתובל וארומטי, ומתיישב על בסיס עצי-מעושן עמוק שיוצר חתימה גברית יוקרתית וממכרת.\n\nפירמידת תווים:\nתווי פתיחה: (אשכולית, ברגמוט, דומדמניות שחורות)\nתווי לב: (ג׳ינג׳ר, קינמון, הל, אתרוג)\nתווי בסיס: (פצ’ולי, וטיבר, פלפל ורוד, עצים מעושנים)\n\nלמה הוא מתאים:\nמתאים ליום-יום יוקרתי, עבודה, דייטים, פגישות, יציאות ואירועים — בושם ורסטילי עם נוכחות יוקרתית ברורה.\n\nעונה מומלצת:\nאביב, סתיו, חורף וערבים נעימים — עובד נהדר כמעט כל השנה.\n\nביצועים:\nעמידות גבוהה מאוד עם שובל חזק ומורגש לאורך שעות רבות.\nבושם עם וייב יוקרתי, גברי ומלא נוכחות שמתאים למי שאוהב להריח ברמה גבוהה",
+                size: "100ml"
+            },
+            {
+                id: 81,
+                name: "CANARI VANILLA CANDY",
+                brand: "SHAMS Perfumes",
+                price: 119,
+                season: "winter",
+                gender: "female",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774617002/995bec06-b5a3-4586-b845-572015a4268a.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nVanilla Candy Rock Sugar | 42\n\nניחוח מתוק, נשי וממכר עם שילוב מושלם בין סוכריות, וניל ופירות רכים.\n\nהבושם נפתח במתיקות שובבה ומבריקה, מתפתח ללב קרמי-ונילי עשיר, ומתיישב על בסיס רך, מושקי ומתוק שיוצר תחושה נשית וממכרת במיוחד.\n\nפירמידת תווים:\nתווי פתיחה: (אגס מסוכר, מסטיק, רום)\nתווי לב: (יסמין, קרם וניל, מרשמלו)\nתווי בסיס: (וניל, טונקה, פצ’ולי, קשמיר)\n\nלמה הוא מתאים:\nמתאים לדייטים, יציאות, ערב, יום-יום ולכל מי שאוהבת בשמים מתוקים, נשיים ובולטים.\n\nעונה מומלצת:\nסתיו, חורף, אביב וערבים נעימים — אך מתאים גם לכל מי שאוהבת בשמים מתוקים כל השנה.\n\nביצועים:\nעמידות גבוהה מאוד עם שובל מתוק ומורגש לאורך שעות רבות.\nבושם נשי, מתוק ומלא מחמאות עם וייב ממכר וכיפי במיוחד",
+                size: "100ml"
+            },
+            {
+                id: 82,
+                name: "CANARI MARSHMALLOW",
+                brand: "SHAMS Perfumes",
+                price: 119,
+                season: "joker",
+                gender: "female",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774617046/615690bb-99a2-4683-ac1c-4cc7282176c3.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nYum Boujee Marshmallow | 81\n\nניחוח מתוק, אוורירי וממכר עם שילוב חלומי של מרשמלו, וניל ופירות רכים.\n\nהבושם נפתח במתיקות פירותית-שובבה, מתפתח ללב קרמי ומרשמלו-ונילי עשיר, ומתיישב על בסיס רך, מושקי ומתוק שיוצר תחושה נשית ומפנקת במיוחד.\n\nפירמידת תווים:\nתווי פתיחה: (תות, פירות אדומים, הדרים מתוקים)\nתווי לב: (מרשמלו, קרם וניל, פרחים לבנים)\nתווי בסיס: (וניל, מושק, טונקה, אמבר)\n\nלמה הוא מתאים:\nמתאים לדייטים, יציאות, ערב, יום-יום ולכל מי שאוהבת בשמים מתוקים, נשיים וגורמנדיים במיוחד.\n\nעונה מומלצת:\nסתיו, חורף, אביב וערבים נעימים — אידיאלי למי שאוהבת ניחוחות מתוקים לאורך השנה.\n\nביצועים:\nעמידות גבוהה מאוד עם שובל מתוק, רך ומורגש לאורך שעות רבות.\nבושם נשי, מפנק ומלא מחמאות עם וייב ממכר וטעים במיוחד",
+                size: "100ml"
+            },
+            {
+                id: 83,
+                name: "CANARI LYCHEE",
+                brand: "SHAMS Perfumes",
+                price: 119,
+                season: "joker",
+                gender: "female",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774617059/e80b0a64-a593-4f88-8e77-fa7c00c73cf1.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nKAYALI Sparkling Lychee\n\nניחוח פירותי-נוצץ, רענן ונשי עם שילוב מושלם של ליצ’י עסיסי, פרחים עדינים ומתיקות אלגנטית.\n\nהבושם נפתח בפיצוץ פירותי מבריק ורענן, מתפתח ללב פרחוני-אלגנטי, ומתיישב על בסיס רך, מושקי ומתוק שנותן תחושה נקייה וממכרת.\n\nפירמידת תווים:\nתווי פתיחה: (ליצ’י, תפוז, דומדמניות שחורות)\nתווי לב: (ורד, יסמין, אדמונית)\nתווי בסיס: (מושק, וניל, ענבר, קשמיר)\n\nלמה הוא מתאים:\nמתאים ליום-יום, קיץ, עבודה, יציאות, דייטים ואירועים — בושם ורסטילי עם וייב נשי, רענן ויוקרתי.\n\nעונה מומלצת:\nאביב, קיץ וימים חמים — אידיאלי למזג אוויר חם בזכות הרעננות הפירותית שלו.\n\nביצועים:\nעמידות גבוהה עם שובל רענן ומורגש לאורך שעות רבות.\nבושם נשי, נוצץ ומלא חיים שמושך מחמאות ונותן תחושת יוקרה קלילה",
+                size: "100ml"
+            },
+            {
+                id: 84,
+                name: "CANARI VANILLA",
+                brand: "SHAMS Perfumes",
+                price: 119,
+                season: "winter",
+                gender: "female",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774617237/8f3b6582-4096-4e1f-aafb-66e6d9bee847.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nKAYALI Vanilla | 28\n\nניחוח ונילי מתוק, חם וממכר עם שילוב מושלם של סוכר חום, וניל ותבלינים רכים.\n\nהבושם נפתח במתיקות עדינה ומבריקה, מתפתח ללב קרמי-ונילי עשיר, ומתיישב על בסיס עמוק, חם ומעט עצי שיוצר חתימה נשית וממכרת במיוחד.\n\nפירמידת תווים:\nתווי פתיחה: (סחלב וניל, יסמין)\nתווי לב: (סוכר חום, טונקה)\nתווי בסיס: (וניל, ענבר, מושק, פצ’ולי)\n\nלמה הוא מתאים:\nמתאים לדייטים, ערב, יציאות, יום-יום ולכל מי שאוהבת בשמים מתוקים, נשיים ומלטפים.\n\nעונה מומלצת:\nסתיו, חורף, אביב וערבים נעימים — מושלם למי שאוהבת וניל לאורך כל השנה.\n\nביצועים:\nעמידות גבוהה מאוד עם שובל מתוק, רך ומורגש לאורך שעות רבות.\nבושם נשי, קלאסי וממכר עם וייב יוקרתי ונעים שמביא המון מחמאות",
+                size: "100ml"
+            },
+            {
+                id: 85,
+                name: "KARDENIZE",
+                brand: "SHAMS Perfumes",
+                price: 149,
+                season: "summer",
+                gender: "unisex",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774617318/7c4a1929-d690-408b-9cfa-578ca4eb9708.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774617304/340074fa-f9b7-4921-acaa-f3375a095ad4.png"
+                ],
+                description: "ניחוח ימי-רענן יוקרתי עם וייב נקי, אלגנטי ומרשים במיוחד.\nהבושם נפתח ברעננות הדרית-ימית חדה שמרגישה כמו רוח ים קרירה, מתפתח ללב ירוק-ארומטי נקי, ומתיישב על בסיס עצי-מושקי חלק שנותן תחושת יוקרה טבעית ומודרנית.\n\nפירמידת תווים:\nתווי פתיחה: (הדרים, מי ים, תווים רעננים)\nתווי לב: (תווים ירוקים, ארומטיים, נגיעות פרחוניות)\nתווי בסיס: (מושק, עצים בהירים, ענבר עדין)\n\nלמה הוא מתאים:\nמתאים ליום-יום, עבודה, חדר כושר, חופשות, דייטים קלילים ולכל מי שאוהב ריח נקי, מרענן ויוקרתי בלי להיות כבד.\n\nעונה מומלצת:\nאביב, קיץ וימים חמים — אידיאלי למזג אוויר חם בזכות הרעננות הימית שלו.\n\nביצועים:\nעמידות טובה עם שובל נקי, אלגנטי ולא חונק.\nבושם שנותן תחושת \"בן אדם מסודר שמריח יוקרתי\" — נקי, רענן ומושך מחמאות בצורה עדינה",
+                size: "70ml"
+            },
+            {
+                id: 86,
+                name: "ANONYMOUS LAVENDER",
+                brand: "Lavender",
+                price: 199,
+                season: "joker",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774617813/2fe745e7-7c02-4b3e-93e1-32797f31a0d8.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774617802/fdd82cdf-6cc6-4e21-b3e7-991e4e904f2f.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nImagination Louis Vuitton\n\nניחוח רענן, ארומטי ויוקרתי עם שילוב מדויק בין לבנדר נקי, הדרים מבריקים ותה שחור אלגנטי.\nהבושם נפתח ברעננות נוצצת ומרעננת, מתפתח ללב ארומטי-תהי ייחודי, ומתיישב על בסיס חלק, עצי-ענברי שנותן תחושת ניקיון יוקרתית וממכרת.\n\nפירמידת תווים:\nתווי פתיחה: (ברגמוט, תפוז סיציליאני, אתרוג)\nתווי לב: (לבנדר, תה שחור, ג׳ינג׳ר, נרולי)\nתווי בסיס: (אמברוקסן, עץ גואיאק, אוליבנום)\n\nלמה הוא מתאים:\nמתאים ליום-יום, עבודה, קיץ, חופשות, פגישות, דייטים ויציאות — בושם ורסטילי מאוד עם וייב נקי ויוקרתי.\n\nעונה מומלצת:\nאביב, קיץ וימים חמים — אך מתאים כמעט לכל השנה בזכות האיזון שלו.\n\nביצועים:\nעמידות גבוהה מאוד ביחס לבושם רענן, עם שובל נקי ומורגש לאורך שעות רבות.\nבושם אלגנטי, נקי ומלא סטייל שמביא תחושת יוקרה מודרנית",
+                size: "100ml"
+            },
+            {
+                id: 87,
+                name: "ANONYMOUS MARINO",
+                brand: "Lavender",
+                price: 199,
+                season: "summer",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774618041/1bdea11c-1573-4434-9259-127664c91c2c.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774618154/b319c3cf-3a32-4f05-84af-cb69c05d723d.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nTorino21 Xerjoff\n\nניחוח ירוק-רענן, אנרגטי ויוקרתי עם שילוב חד של הדרים, נענע ותווים ארומטיים נקיים.\nהבושם נפתח בפיצוץ רענן ומקרר של נענע ולימון, מתפתח ללב ארומטי-ירוק מלא חיים, ומתיישב על בסיס מושקי נקי שנותן תחושת רעננות יוקרתית לאורך זמן.\n\nפירמידת תווים:\nתווי פתיחה: (נענע, לימון, בזיליקום, טימין)\nתווי לב: (דומדמניות שחורות, רוזמרין, לבנדר, יסמין)\nתווי בסיס: (מושק, ורבנה)\n\nלמה הוא מתאים:\nמתאים ליום-יום, עבודה, חדר כושר, קיץ, חופשות ודייטים — בושם סופר ורסטילי עם וייב נקי ואנרגטי.\n\nעונה מומלצת:\nאביב, קיץ וימים חמים — אידיאלי למזג אוויר חם בזכות הרעננות הקרירה והירוקה שלו.\n\nביצועים:\nעמידות טובה מאוד עם שובל רענן ומורגש.\nבושם שנותן תחושת ניקיון, אנרגיה ויוקרה — כמו לצאת מהמקלחת ולהריח ברמה גבוהה כל היום",
+                size: "100ml"
+            },
+            {
+                id: 88,
+                name: "ANONYMOUS ACQUA",
+                brand: "Lavender",
+                price: 199,
+                season: "summer",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774617836/8dc97792-4cbe-44f0-8675-b4267d5e7f7c.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774617824/adf14794-bc0c-483a-bd36-a92e185bda77.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nAllure Homme Sport Chanel\n\nניחוח רענן, נקי וספורטיבי עם שילוב מושלם בין הדרים נוצצים, תווים ימיים ועומק עצי-מושקי אלגנטי.\nהבושם נפתח ברעננות חדה ומבריקה של הדרים, מתפתח ללב ימי-ארומטי נקי, ומתיישב על בסיס חלק, מושקי-עצי שנותן תחושת ניקיון יוקרתית לאורך זמן.\n\nפירמידת תווים:\nתווי פתיחה: (תפוז, מנדרינה, ברגמוט, אלדהידים)\nתווי לב: (מי ים, נרולי, פלפל)\nתווי בסיס: (מושק לבן, וטיבר, ארז, טונקה)\n\nלמה הוא מתאים:\nמתאים ליום-יום, עבודה, חדר כושר, קיץ, חופשות, דייטים ולכל מי שאוהב ריח נקי, ספורטיבי ויוקרתי.\n\nעונה מומלצת:\nאביב, קיץ וימים חמים — אידיאלי למזג אוויר חם בזכות הרעננות והקלילות שלו.\n\nביצועים:\nעמידות טובה מאוד עם שובל נקי ומורגש לאורך שעות רבות.\nבושם שנותן תחושת רעננות, ניקיון וסטייל יוקרתי — קליל אבל מאוד מרשים",
+                size: "100ml"
+            },
+            {
+                id: 89,
+                name: "ANONYMOUS LEADER",
+                brand: "Lavender",
+                price: 199,
+                season: "joker",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774618270/35974a48-66c9-48dc-98ad-fcdf4c69c872.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774619001/leader2_sample.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nCastley Parfums de Marly\n\nניחוח ארומטי-רענן, חד ויוקרתי עם שילוב מושלם בין הדרים, תבלינים ועומק עצי מודרני.\nהבושם נפתח ברעננות הדרית חדה עם טאץ' מתובל שנותן נוכחות מידית, מתפתח ללב ארומטי-נקי וגברי, ומתיישב על בסיס עצי-ענברי חלק שמעניק תחושת יוקרה עוצמתית ובטוחה בעצמה.\n\nפירמידת תווים:\nתווי פתיחה: (לימון, ברגמוט, פלפל ורוד)\nתווי לב: (לבנדר, גרניום, תווים ארומטיים)\nתווי בסיס: (אמבר, עצים יבשים, מושק, וטיבר)\n\nלמה הוא מתאים:\nמתאים ליום-יום, עבודה, פגישות, דייטים ואירועים — בושם גברי, בטוח בעצמו ומאוד ורסטילי.\n\nעונה מומלצת:\nאביב, קיץ, סתיו וימים נעימים — עובד כמעט בכל עונה בזכות האיזון בין רעננות לעומק.\n\nביצועים:\nעמידות גבוהה עם שובל מורגש ונוכחות אלגנטית לאורך שעות רבות.\nבושם שנותן וייב של \"מנהיג\" — נקי, חד, יוקרתי ובולט בלי להיות כבד מדי",
+                size: "100ml"
+            },
+            {
+                id: 91,
+                name: "PISA",
+                brand: "Lattafa",
+                price: 199,
+                season: "joker",
+                gender: "unisex",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774618404/7e196c68-013b-484b-a4fa-188fc657d6d1.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774618441/d8d48977-a645-42db-8a09-da7323d58ce2.png"
+                ],
+                description: "ניחוח הדרי-יוקרתי, נקי ורענן עם אופי מודרני ואלגנטי.\n\nהבושם נפתח בפיצוץ הדרים מבריק ומלא אנרגיה, מתפתח ללב עצי-נקי שנותן תחושת גבריות יציבה, ומתיישב על בסיס חם ועדין שמשאיר שובל יוקרתי ונעים.\n\nפירמידת תווים:\nתווי פתיחה: (מנדרינה, לימון, ברגמוט)\nתווי לב: (עץ ארז)\nתווי בסיס: (אלגום, ענבר)\n\nלמה הוא מתאים:\nמתאים ליום-יום, עבודה, קיץ, חדר כושר, דייטים ופגישות — בושם סופר ורסטילי למי שאוהב ריח נקי ויוקרתי.\n\nעונה מומלצת:\nאביב, קיץ וימים חמים — אידיאלי למזג אוויר חם בזכות הרעננות ההדרית שלו.\n\nביצועים:\nעמידות טובה עם שובל נקי ומורגש.\nלא בושם “מפוצץ”, אלא יותר אלגנטי, נקי ויוקרתי — כזה שמרגיש מסודר ומושך מחמאות בלי להיות כבד",
+                size: "100ml"
+            },
+            {
+                id: 92,
+                name: "ANGHAM",
+                brand: "Lattafa",
+                price: 139,
+                season: "joker",
+                gender: "female",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774618535/1cfe2bf9-34a8-429e-abcb-4b29ceab4f4c.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774618548/51550219-3492-4b3f-990c-a4f10790dcf5.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nGoddess Burberry\n\nניחוח ונילי-יוקרתי, חם וממכר עם שילוב מושלם בין מתיקות רכה, לבנדר ותבלינים עדינים.\n\nהבושם נפתח ברעננות מתובלת עם טאץ' הדרי, מתפתח ללב מתוק-קרמי עשיר, ומתיישב על בסיס ונילי-ענברי עמוק שיוצר תחושת יוקרה נשית ומלטפת.\n\nפירמידת תווים:\nתווי פתיחה: (מנדרינה, ג'ינג'ר, פלפל ורוד)\nתווי לב: (לבנדר, פרלין, קקאו, יסמין)\nתווי בסיס: (וניל, ענבר, מושק)\n\nלמה הוא מתאים:\nמתאים לדייטים, ערב, יציאות, יום-יום ולכל מי שאוהבת ריח מתוק, רך ויוקרתי עם נוכחות נעימה.\n\nעונה מומלצת:\nסתיו, חורף וערבים נעימים — אך יכול לעבוד גם כל השנה למי שאוהבת וניל.\n\nביצועים:\nעמידות גבוהה מאוד עם שובל מתוק, רך ומורגש לאורך שעות רבות.\nבושם שמרגיש יוקרתי, נעים וממכר — לא כבד מדי אבל כן בולט",
+                size: "100ml"
+            },
+            {
+                id: 93,
+                name: "MUSAMAM Black intense",
+                brand: "Lattafa",
+                price: 185,
+                season: "winter",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774618728/2ae63d00-8ac2-4baf-9ef0-80a8a744bc6d.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774618593/bc6e309b-99c6-45dc-b8ef-1af73cb6b5a1.png"
+                ],
+                description: "ניחוח עמוק, כהה ועוצמתי במיוחד עם שילוב יוקרתי של תבלינים, אוד ועצים מעושנים.\n\nהבושם נפתח בתבלינים חמים עם טאץ' מסתורי ומעט חד, מתפתח ללב עצי-כהה עשיר, ומתיישב על בסיס כבד, מעושן ומעט מתוק שיוצר חתימה גברית יוקרתית וממכרת.\n\nפירמידת תווים:\nתווי פתיחה: (תבלינים חמים, זעפרן, הדרים עדינים)\nתווי לב: (אוד, עצים כהים, ענבר)\nתווי בסיס: (קטורת, מושק, פצ'ולי, עצים מעושנים)\n\nלמה הוא מתאים:\nמתאים במיוחד לערב, דייטים, אירועים, יציאות ולכל מי שאוהב בשמים כבדים, עמוקים ובולטים עם נוכחות חזקה מאוד.\n\nעונה מומלצת:\nחורף, סתיו וערבים קרים — אידיאלי למזג אוויר קר בזכות העומק והכבדות שלו.\n\nביצועים:\nבושם עוצמתי מאוד עם שובל חזק ועמידות גבוהה לאורך שעות רבות.\nניחוח שלא מתאים לכל אחד — כהה, יוקרתי ומאוד בולט, כזה שמושך תשומת לב מהרגע הראשון",
+                size: "100ml"
+            },
+            {
+                id: 94,
+                name: "ATLAS",
+                brand: "Lattafa",
+                price: 129,
+                season: "summer",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774618786/c51d1dca-4da1-41b9-9d16-49ca9a58872d.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774618822/821e995b-4083-4478-ac4d-3874cbdd28ed.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nMegamare Orto Parisi\n\nניחוח ימי-עוצמתי, מלוח ועמוק במיוחד עם אופי חד, מסתורי ולא שגרתי.\n\nהבושם נפתח בגל חזק של רעננות ימית ומליחות מורגשת, מתפתח ללב ארומטי-כהה עם עומק ייחודי, ומתיישב על בסיס מינרלי-עצי כבד שנותן תחושת יוקרה פראית ועוצמתית.\n\nפירמידת תווים:\nתווי פתיחה: (מי ים, מלח, תווים ימיים)\nתווי לב: (אצות ים, תווים ארומטיים, נגיעות ירוקות)\nתווי בסיס: (אמברגריס, מושק, עצים כהים)\n\nלמה הוא מתאים:\nמתאים למי שמחפש בושם ייחודי ולא רגיל — יציאות, ערב, דייטים ולמי שאוהב למשוך תשומת לב עם ריח שונה מהקהל.\n\nעונה מומלצת:\nאביב, קיץ וערבים — במיוחד ליד הים או במזג אוויר חם.\n\nביצועים:\nבושם חזק מאוד עם שובל עוצמתי ונוכחות בולטת לאורך שעות רבות.\nניחוח לא שגרתי בכלל — עמוק, מלוח, יוקרתי ומאוד מיוחד",
+                size: "55ml"
+            },
+            {
+                id: 95,
+                name: "DYNASTY",
+                brand: "Lattafa",
+                price: 149,
+                season: "joker",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774618835/188efb8c-3710-4867-a825-7806671be0a8.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nL Red Tea Vetiver\n\nניחוח יוקרתי, אלגנטי ומתוחכם עם שילוב ייחודי של תה אדום, הדרים ועומק עצי-וטיברי.\n\nהבושם נפתח ברעננות הדרית-תהית מבריקה, מתפתח ללב ארומטי-חם ומעודן, ומתיישב על בסיס עצי-עמוק עם וטיבר שנותן תחושת יוקרה קלאסית ובוגרת.\n\nפירמידת תווים:\nתווי פתיחה: (תה אדום, ברגמוט, לימון)\nתווי לב: (תבלינים עדינים, נגיעות פרחוניות, עשבים ארומטיים)\nתווי בסיס: (וטיבר, ענבר, עצים יבשים, מושק)\n\nלמה הוא מתאים:\nמתאים ליום-יום יוקרתי, עבודה, פגישות, דייטים ואירועים — בושם אלגנטי ומיוחד למי שאוהב ריחות לא שגרתיים.\n\nעונה מומלצת:\nאביב, סתיו וימים נעימים — אך עובד נהדר גם בערבים לאורך השנה.\n\nביצועים:\nעמידות גבוהה מאוד עם שובל אלגנטי ומורגש לאורך שעות רבות.\nבושם עם נוכחות שקטה אך יוקרתית — מתוחכם, נקי ובוגר",
+                size: "100ml"
+            },
+            {
+                id: 96,
+                name: "THARWAH",
+                brand: "Lattafa",
+                price: 155,
+                season: "joker",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774618848/84e4bff1-69f6-4928-92d4-63652a34e2d9.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nYves Saint Laurent Y Eau de Parfum\n\nניחוח מודרני, נקי וגברי עם שילוב מושלם בין רעננות פירותית, תווים ארומטיים ועומק עצי-ענברי.\nהבושם נפתח בפירותיות רעננה ואנרגטית, מתפתח ללב ארומטי נקי וגברי, ומתיישב על בסיס עמוק וחלק שיוצר חתימה יוקרתית ומלאת מחמאות.\n\nפירמידת תווים:\nתווי פתיחה: (תפוח, ברגמוט, ג׳ינג׳ר)\nתווי לב: (מרווה, גרגרי ערער, גרניום)\nתווי בסיס: (אמברווד, וטיבר, טונקה, ארז)\n\nלמה הוא מתאים:\nמתאים ליום-יום, עבודה, חדר כושר, דייטים, יציאות ואירועים — בושם ורסטילי מאוד שמתאים כמעט לכל סיטואציה.\n\nעונה מומלצת:\nאביב, קיץ, סתיו וימים נעימים — עובד נהדר כמעט כל השנה.\n\nביצועים:\nעמידות גבוהה מאוד עם שובל נקי ומורגש לאורך שעות רבות.\nבושם מודרני, גברי ומלא מחמאות עם וייב יוקרתי ונקי",
+                size: "100ml"
+            },
+            {
+                id: 97,
+                name: "ECLAIRE BANOFFI",
+                brand: "Lattafa",
+                price: 145,
+                season: "joker",
+                gender: "female",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774618862/88da6caf-c68d-4fc0-a808-29b7e26687fc.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774618874/5707aacd-40c0-496b-8cce-8b1925f8b503.png"
+                ],
+                description: "ניחוח גורמנדי עשיר, מתוק וממכר עם שילוב מושלם של בננה, קרמל וניל.\n\nהבושם נפתח במתיקות פירותית-קרמית של בננה בשלה, מתפתח ללב עשיר של קרמל וטופי, ומתיישב על בסיס ונילי-חם שמעניק תחושת פינוק עמוקה ויוקרתית.\n\nפירמידת תווים:\nתווי פתיחה: (בננה, סוכר, נגיעות פירותיות מתוקות)\nתווי לב: (קרמל, טופי, קרם חלב)\nתווי בסיס: (וניל, טונקה, מושק, נגיעות אגוזיות)\n\nלמה הוא מתאים:\nמתאים לדייטים, ערב, יציאות, יום-יום ולכל מי שאוהבת בשמים מתוקים, \"טעימים\" ומלאי נוכחות.\n\nעונה מומלצת:\nסתיו, חורף וערבים נעימים — אידיאלי למזג אוויר קר ולניחוחות חמים ומתוקים.\n\nביצועים:\nעמידות גבוהה מאוד עם שובל מתוק, קרמי ובולט לאורך שעות רבות.\nבושם ממכר במיוחד עם וייב של קינוח יוקרתי — כזה שמושך מחמאות מכל כיוון",
+                size: "100ml"
+            },
+            {
+                id: 98,
+                name: "ECLAIRE PISTACHE",
+                brand: "Lattafa",
+                price: 145,
+                season: "joker",
+                gender: "female",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774618887/90368be3-49e6-44be-9391-b36a36e47f1d.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774618906/cc7c4493-da1c-4f98-aa33-171b6dc355ec.png"
+                ],
+                description: "ניחוח גורמנדי-קרמי, מתוק וממכר עם טאץ’ יוקרתי של פיסטוק, וניל ונגיעות אגוזיות עדינות.\n\nהבושם נפתח במתיקות רכה ושובבה עם פיסטוק וסוכר עדין, מתפתח ללב קרמי-חלבי עשיר, ומתיישב על בסיס חם, ונילי ומעט אגוזי שיוצר תחושת פינוק ממכרת.\n\nפירמידת תווים:\nתווי פתיחה: (פיסטוק, סוכר, נגיעות פירותיות עדינות)\nתווי לב: (קרם חלב, פרחים לבנים, וניל)\nתווי בסיס: (טונקה, מושק, קרמל, אגוזים)\n\nלמה הוא מתאים:\nמתאים לדייטים, ערב, יציאות, יום-יום ולכל מי שאוהבת בשמים מתוקים, גורמנדיים ומיוחדים עם וייב מפנק.\n\nעונה מומלצת:\nסתיו, חורף וערבים נעימים — אך מתאים גם לאורך השנה למי שאוהבת מתוקים.\n\nביצועים:\nעמידות גבוהה מאוד עם שובל מתוק, קרמי ומורגש לאורך שעות רבות.\nבושם ייחודי עם טוויסט של פיסטוק שלא מריחים הרבה — ממכר ומלא מחמאות",
+                size: "100ml"
+            },
+            {
+                id: 99,
+                name: "ECLAIRE",
+                brand: "Lattafa",
+                price: 145,
+                season: "joker",
+                gender: "female",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774619397/9854d7c1-0c2c-41b6-bdf8-92c448392f46.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774619093/ed04ba34-58d7-43e3-a329-61a5a8fdbefc.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nBianco Latte\n\nניחוח גורמנדי-חלבי, מתוק וממכר במיוחד עם אופי רך, קרמי ויוקרתי.\n\nהבושם נפתח במתיקות עדינה ומלטפת, מתפתח ללב חלבי-קרמי עשיר, ומתיישב על בסיס ונילי-קרמלי עמוק שיוצר תחושת חמימות ונוחות ממכרת.\n\nפירמידת תווים:\nתווי פתיחה: (קרמל, סוכר)\nתווי לב: (חלב, דבש, נגיעות פרחוניות עדינות)\nתווי בסיס: (וניל, מושק, טונקה)\n\nלמה הוא מתאים:\nמתאים לדייטים, ערב, יציאות, יום-יום ולכל מי שאוהבת בשמים מתוקים, רכים וגורמנדיים עם וייב מפנק.\n\nעונה מומלצת:\nסתיו, חורף וערבים נעימים — אך מתאים לכל השנה למי שאוהבת מתוק.\n\nביצועים:\nעמידות גבוהה מאוד עם שובל מתוק, קרמי ומורגש לאורך שעות רבות.\nבושם ממכר במיוחד שמרגיש \"טעים\" ומלטף — מושך מחמאות בלי מאמץ",
+                size: "100ml"
+            },
+            {
+                id: 100,
+                name: "KHAMRAH DUKHAN",
+                brand: "Lattafa",
+                price: 149,
+                season: "winter",
+                gender: "unisex",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774619707/06355655-662e-48b9-b3b0-748796e492a6.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774619638/50fbb79b-9576-4107-b248-968d89c482c1.png"
+                ],
+                description: "ניחוח כהה, מעושן ועוצמתי עם אופי חם, מתוק ומסתורי.\n\nהבושם נפתח בתבלינים חמים עם טאץ’ מעושן ומעט חד, מתפתח ללב גורמנדי-כהה עשיר, ומתיישב על בסיס עמוק של וניל, ענבר ועצים מעושנים שיוצר חתימה יוקרתית וממכרת במיוחד.\n\nפירמידת תווים:\nתווי פתיחה: (קינמון, פלפל שחור, נגיעות מעושנות)\nתווי לב: (תמרים, פרלין, תבלינים חמים, קטורת)\nתווי בסיס: (וניל, טונקה, אמברווד, עצים מעושנים, מושק)\n\nלמה הוא מתאים:\nמתאים במיוחד לערב, דייטים, יציאות ואירועים — בושם למי שאוהב ניחוחות כבדים, כהים ובולטים עם נוכחות חזקה.\n\nעונה מומלצת:\nחורף, סתיו וערבים קרים — אידיאלי למזג אוויר קר בזכות העומק והעישון שלו.\n\nביצועים:\nבושם עוצמתי מאוד עם שובל חזק ונוכחות מורגשת לאורך שעות רבות.\nניחוח ייחודי, כהה וממכר — לא לכולם, אבל מי שאוהב סטייל מעושן יתאהב בו",
+                size: "100ml"
+            },
+            {
+                id: 101,
+                name: "KHAMRAH",
+                brand: "Lattafa",
+                price: 149,
+                season: "winter",
+                gender: "unisex",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774619821/ffdb79a9-dfdf-41f3-9100-a14b8d83ac10.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774619874/e6473d94-cb8c-4f18-878e-cbc388ce37f9.png"
+                ],
+                description: "ניחוח חם, מתוק ויוקרתי עם אופי עמוק וממכר שמרגיש כמו קינוח אלכוהולי עשיר.\n\nהבושם נפתח בטוויסט מתובל ומתוק עם נוכחות חזקה, מתפתח ללב גורמנדי עשיר ומפנק, ומתיישב על בסיס חם, ונילי-ענברי שמעניק תחושת יוקרה כבדה וממכרת.\n\nפירמידת תווים:\nתווי פתיחה: (קינמון, אגוז מוסקט, ברגמוט)\nתווי לב: (פרלין, תמרים, טוברוז, מהלבה)\nתווי בסיס: (וניל, טונקה, בנזואין, אמברווד, מור)\n\nלמה הוא מתאים:\nמתאים במיוחד לדייטים, ערב, יציאות, אירועים ולכל מי שאוהב בשמים מתוקים, עמוקים ומלאי נוכחות.\n\nעונה מומלצת:\nסתיו, חורף וערבים קרים — אידיאלי למזג אוויר קר בזכות העומק והמתיקות שלו.\n\nביצועים:\nבושם חזק מאוד עם שובל עוצמתי ועמידות גבוהה לאורך שעות רבות.\nניחוח ממכר במיוחד שמרגיש יוקרתי ובולט — כזה שמושך מחמאות בלי סוף",
+                size: "100ml"
+            },
+            {
+                id: 102,
+                name: "YARA Elixir",
+                brand: "Lattafa",
+                price: 119,
+                season: "joker",
+                gender: "female",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774619980/c121edbd-11fd-435c-a0eb-95eb6d095eca.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774620002/c8a3ed73-08f8-4ca2-b2b7-dc898cfff26c.png"
+                ],
+                description: "בהשראת הבושם היוקרתי\nYum Boujee Marshmallow | 81\n\nניחוח מתוק, קרמי וממכר עם וייב נשי, רך ומפנק במיוחד.\n\nהבושם נפתח במתיקות פירותית-שובבה, מתפתח ללב מרשמלו-ונילי עשיר, ומתיישב על בסיס רך, מושקי ומתוק שיוצר תחושת חמימות ונשיות יוקרתית.\n\nפירמידת תווים:\nתווי פתיחה: (פירות אדומים, הדרים מתוקים, סוכר עדין)\nתווי לב: (מרשמלו, קרם וניל, פרחים לבנים)\nתווי בסיס: (וניל, מושק, טונקה, אמבר)\n\nלמה הוא מתאים:\nמתאים לדייטים, יציאות, ערב, יום-יום ולכל מי שאוהבת בשמים מתוקים, נשיים וגורמנדיים עם נוכחות.\n\nעונה מומלצת:\nסתיו, חורף, אביב וערבים נעימים — מושלם למי שאוהבת ניחוחות מתוקים לאורך השנה.\n\nביצועים:\nעמידות גבוהה מאוד עם שובל מתוק, רך ומורגש לאורך שעות רבות.\nבושם נשי, ממכר ומלא מחמאות עם וייב “טעים” ומפנק במיוחד",
+                size: "100ml"
+            },
+            {
+                id: 103,
+                name: "KHAMRAH QAHWA",
+                brand: "Lattafa",
+                price: 149,
+                season: "winter",
+                gender: "unisex",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774619742/2f39d839-0e51-4324-9028-0f364bea088e.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774619937/490b34c9-297c-4b20-b46e-b49b06556f72.png"
+                ],
+                description: "ניחוח חם, מתוק וממכר עם טוויסט עמוק של קפה שמוסיף לו אופי יוקרתי ובוגר יותר.\n\nהבושם נפתח בתבלינים חמים עם נגיעות קפה קלות, מתפתח ללב גורמנדי עשיר עם מתיקות אלגנטית, ומתיישב על בסיס ונילי-ענברי עמוק שמעניק תחושת חמימות יוקרתית וממכרת.\n\nפירמידת תווים:\nתווי פתיחה: (קינמון, הל, ג'ינג'ר)\nתווי לב: (קפה, פרלין, תמרים, טוברוז)\nתווי בסיס: (וניל, טונקה, בנזואין, מושק, אמברווד)\n\nלמה הוא מתאים:\nמתאים במיוחד לדייטים, ערב, יציאות, אירועים ולמי שאוהב בשמים מתוקים עם עומק וגבריות נוספת.\n\nעונה מומלצת:\nסתיו, חורף וערבים קרים — אידיאלי למזג אוויר קר בזכות החמימות והעומק שלו.\n\nביצועים:\nבושם חזק מאוד עם שובל עוצמתי ועמידות גבוהה לאורך שעות רבות.\nגרסה עמוקה ובוגרת יותר עם טאץ' של קפה שמוסיף ייחודיות ונוכחות — ממכר ומלא מחמאות",
+                size: "100ml"
+            },
+            {
+                id: 104,
+                name: "ASAD BOURBON",
+                brand: "Lattafa",
+                price: 119,
+                season: "winter",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774620231/1da90008-bb76-4ae3-94f7-1e19f734b36e.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774620316/0b00a97f-b998-441d-b067-9a5cef5adef3.png"
+                ],
+                description: "ניחוח חם, מתוק-אלכוהולי ועוצמתי עם אופי גברי, עמוק ויוקרתי.\n\nהבושם נפתח בטוויסט בורבון חלק ומעט מתובל שמיד נותן תחושת יוקרה, מתפתח ללב מתוק-חמים עם נגיעות תבלינים, ומתיישב על בסיס ונילי-עצים עמוק שמעניק חתימה ממכרת ובולטת.\n\nפירמידת תווים:\nתווי פתיחה: (בורבון, קינמון, פלפל שחור)\nתווי לב: (וניל, לבנדר, תבלינים חמים)\nתווי בסיס: (טונקה, ענבר, עצים יבשים, מושק)\n\nלמה הוא מתאים:\nמתאים במיוחד לדייטים, ערב, יציאות, אירועים ולכל מי שאוהב בשמים מתוקים-גבריים עם עומק ונוכחות.\n\nעונה מומלצת:\nסתיו, חורף וערבים קרים — אידיאלי למזג אוויר קר בזכות החמימות והעומק שלו.\n\nביצועים:\nבושם חזק מאוד עם שובל מורגש ונוכחות בולטת לאורך שעות רבות.\nניחוח ממכר עם וייב יוקרתי ובוגר — כזה שמושך מחמאות ומרגיש ברמה גבוהה",
+                size: "100ml"
+            },
+            {
+                id: 105,
+                name: "MASHRABYA",
+                brand: "Lattafa",
+                price: 149,
+                season: "winter",
+                gender: "unisex",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774620334/08b874a0-f9ea-4ed4-803d-6751bbdbea21.png"
+                ],
+                description: "בהשראת הבושם\nSmoking Hot By Kilian\n\nניחוח כהה, מעושן ומתוק עם אופי עמוק, מסתורי וממכר במיוחד.\n\nהבושם נפתח בטוויסט חם של תבלינים ופירות יבשים עם נגיעה אלכוהולית עדינה, מתפתח ללב גורמנדי-מעושן עשיר, ומתיישב על בסיס ונילי-עצים כבד שמעניק תחושת יוקרה אפלה ועוצמתית.\n\nפירמידת תווים:\nתווי פתיחה: (תפוח, קינמון, נגיעות מעושנות)\nתווי לב: (טבק, וניל, תבלינים חמים)\nתווי בסיס: (עץ אוד, טונקה, ענבר, עצים מעושנים)\n\nלמה הוא מתאים:\nמתאים במיוחד לערב, דייטים, יציאות, אירועים ולמי שאוהב בשמים כבדים, מתוקים ומעושנים עם נוכחות חזקה מאוד.\n\nעונה מומלצת:\nחורף, סתיו וערבים קרים — אידיאלי למזג אוויר קר בזכות העומק והעישון שלו.\n\nביצועים:\nבושם עוצמתי מאוד עם שובל חזק ונוכחות מורגשת לאורך שעות רבות.\nניחוח ממכר, כהה ויוקרתי — לא לכל אחד, אבל מי שמתחבר לסגנון יתאהב בו מהר",
+                size: "100ml"
+            },
+            {
+                id: 106,
+                name: "PHILOS Messenger",
+                brand: "Maison Alhambra",
+                price: 135,
+                season: "joker",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774620614/8659f039-54c3-424c-80c1-89ca21bf6ea5.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774620764/b6eed2a5-8520-4e3c-89ba-776336392b51.png"
+                ],
+                description: "בהשראת הבושם\nVibrato Sospiro\n\nניחוח רענן-יוקרתי, נקי ומבריק עם שילוב מושלם בין הדרים נוצצים, תווים ארומטיים ועומק עצי אלגנטי.\n\nהבושם נפתח ברעננות הדרית חדה ומלאת אנרגיה, מתפתח ללב נקי-ארומטי יוקרתי, ומתיישב על בסיס חלק, מושקי-עצי שנותן תחושת ניקיון וסטייל ברמה גבוהה.\n\nפירמידת תווים:\nתווי פתיחה: (ברגמוט, אשכולית, מנדרינה)\nתווי לב: (ג'ינג'ר, לבנדר, תווים ארומטיים)\nתווי בסיס: (אמברווד, מושק, וטיבר, עצים בהירים)\n\nלמה הוא מתאים:\nמתאים ליום-יום, עבודה, פגישות, דייטים, יציאות ואירועים — בושם ורסטילי מאוד עם וייב יוקרתי ונקי.\n\nעונה מומלצת:\nאביב, קיץ וימים חמים — אך מתאים כמעט לכל השנה בזכות האיזון שלו.\n\nביצועים:\nעמידות גבוהה מאוד עם שובל נקי ומורגש לאורך שעות רבות.\nבושם שנותן תחושת יוקרה, ניקיון ואנרגיה — אלגנטי, מודרני ומלא מחמאות",
+                size: "100ml"
+            },
+            {
+                id: 107,
+                name: "YEAH ! PARFUM",
+                brand: "Maison Alhambra",
+                price: 99,
+                season: "joker",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774621260/13fe637a-1ca6-4530-9e03-dc1ef4b51e20.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774621263/5bba45b6-fba4-4724-a6bf-64422c9b41a9.png"
+                ],
+                description: "בהשראת הבושם\nY Eau de Parfum Yves Saint Laurent\n\nניחוח מודרני, רענן וגברי עם שילוב מושלם בין פירותיות נקייה, תווים ארומטיים ועומק עצי-ענברי.\n\nהבושם נפתח בפירותיות חדה ומלאת אנרגיה, מתפתח ללב ארומטי נקי וגברי, ומתיישב על בסיס עמוק וחלק שיוצר חתימה יוקרתית ומלאת מחמאות.\n\nפירמידת תווים:\nתווי פתיחה: (תפוח, ברגמוט, ג׳ינג׳ר)\nתווי לב: (מרווה, גרגרי ערער, גרניום)\nתווי בסיס: (אמברווד, וטיבר, טונקה, ארז)\n\nלמה הוא מתאים:\nמתאים ליום-יום, עבודה, חדר כושר, דייטים, יציאות ואירועים — בושם ורסטילי מאוד שמתאים כמעט לכל סיטואציה.\n\nעונה מומלצת:\nאביב, קיץ, סתיו וימים נעימים — עובד נהדר כמעט כל השנה.\n\nביצועים:\nעמידות גבוהה מאוד עם שובל נקי ומורגש לאורך שעות רבות.\n\nבושם מודרני, גברי ומלא מחמאות עם וייב יוקרתי ונקי",
+                size: "100ml"
+            },
+            {
+                id: 108,
+                name: "Mia Dolcezza",
+                brand: "Maison Alhambra",
+                price: 99,
+                season: "joker",
+                gender: "female",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774620929/77ec94bd-c811-43cd-ad13-3a6158b75c0b.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774620451/5877ab43-196e-434a-bc60-ae5ba9022b24.png"
+                ],
+                description: "בהשראת הבושם\nValentino Donna Born In Roma\n\nניחוח נשי, אלגנטי ומתוק עם שילוב מושלם בין פרחים לבנים, וניל ונגיעות פירותיות עדינות.\n\nהבושם נפתח ברעננות מבריקה עם טאץ’ פירותי עדין, מתפתח ללב פרחוני-יוקרתי עשיר, ומתיישב על בסיס ונילי-עצים חם שיוצר חתימה נשית ממכרת ומלאת נוכחות.\n\nפירמידת תווים:\nתווי פתיחה: (דומדמניות שחורות, ברגמוט, פלפל ורוד)\nתווי לב: (יסמין, פריחת תפוז, יסמין סמבק)\nתווי בסיס: (וניל בורבון, קשמיר, עצים בהירים)\n\nלמה הוא מתאים:\nמתאים לדייטים, ערב, יציאות, אירועים וגם ליום-יום למי שאוהבת ניחוח נשי, יוקרתי ומושך מחמאות.\n\nעונה מומלצת:\nסתיו, חורף, אביב וערבים נעימים — ורסטילי מאוד ומתאים לרוב השנה.\n\nביצועים:\nעמידות גבוהה מאוד עם שובל נשי, מורגש ואלגנטי לאורך שעות רבות.\n\nבושם נשי, מתוק ומלא סטייל — מודרני, יוקרתי וממכר במיוחד",
+                size: "100ml"
+            },
+            {
+                id: 109,
+                name: "Aurum Luxura",
+                brand: "Maison Alhambra",
+                price: 135,
+                season: "joker",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774621216/9235a300-1ab4-480c-8b95-087c9da459bb.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774621227/edeb1675-ba63-4bb3-9a83-df0d0c755c67.png"
+                ],
+                description: "בהשראת הבושם\nXJ 1861 Naxos Xerjoff\n\nניחוח עשיר, חם וממכר עם שילוב מושלם של דבש, טבק ותבלינים יוקרתיים.\n\nהבושם נפתח בתבלינים חמים ורעננות עדינה, מתפתח ללב מתוק-דבשי עמוק עם טאץ’ טבקי אלגנטי, ומתיישב על בסיס ונילי-ענברי חלק שיוצר חתימה יוקרתית ובולטת במיוחד.\n\nפירמידת תווים:\nתווי פתיחה: (לבנדר, ברגמוט, לימון)\nתווי לב: (דבש, קינמון, קשמיר, יסמין)\nתווי בסיס: (טבק, וניל, טונקה)\n\nלמה הוא מתאים:\nמתאים במיוחד לדייטים, ערב, יציאות, אירועים ולכל מי שאוהב בשמים מתוקים-חמים עם אופי יוקרתי ונוכחות חזקה.\n\nעונה מומלצת:\nסתיו, חורף וערבים קרירים — אידיאלי למזג אוויר קר בזכות החמימות והעומק שלו.\n\nביצועים:\nבושם חזק מאוד עם שובל עוצמתי ועמידות גבוהה לאורך שעות רבות.\n\nניחוח ממכר במיוחד עם וייב יוקרתי, מתוק וגברי שמביא הרבה מחמאות",
+                size: "100ml"
+            },
+            {
+                id: 110,
+                name: "Kismet LUAR MAGIC",
+                brand: "Maison Alhambra",
+                price: 135,
+                season: "joker",
+                gender: "unisex",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774621185/a1b101a9-b338-4be9-8df4-19ce60742636.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774621207/bb6bc165-6123-49b6-8e70-ef9c409ab5d4.png"
+                ],
+                description: "בהשראת הבושם\nBlue Moon Ginger Dash By Kilian\n\nניחוח רענן-אלכוהולי, נוצץ ומודרני עם שילוב ייחודי של הדרים, ג׳ינג׳ר וטוויסט קוקטיילי יוקרתי.\n\nהבושם נפתח ברעננות הדרית מבריקה עם בעיטה של ג׳ינג׳ר, מתפתח ללב קליל ומעט מתוק עם אופי אלכוהולי, ומתיישב על בסיס נקי וחלק שמעניק תחושת יוקרה רעננה וממכרת.\n\nפירמידת תווים:\nתווי פתיחה: (לימון, ג׳ינג׳ר, וודקה)\nתווי לב: (אקורדים אלכוהוליים, נגיעות פירותיות עדינות)\nתווי בסיס: (אמברוקסן, מושק, עצים בהירים)\n\nלמה הוא מתאים:\nמתאים ליום-יום, קיץ, יציאות, מסיבות, דייטים ואירועים — בושם קליל אך יוקרתי עם וייב מיוחד ולא שגרתי.\n\nעונה מומלצת:\nאביב, קיץ וימים חמים — אידיאלי למזג אוויר חם בזכות הרעננות והקלילות שלו.\n\nביצועים:\nעמידות טובה מאוד עם שובל רענן ומורגש לאורך שעות רבות.\n\nבושם ייחודי עם וייב של קוקטייל יוקרתי — קליל, נוצץ ומושך תשומת לב",
+                size: "100ml"
+            },
+            {
+                id: 111,
+                name: "LUMINOUS SAHARA",
+                brand: "Maison Alhambra",
+                price: 135,
+                season: "winter",
+                gender: "unisex",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774621243/75c672b8-abe2-424b-945f-fd8777bcc31f.png"
+                ],
+                description: "בהשראת הבושם\nAlthaïr Parfums de Marly\n\nניחוח ונילי-ענברי יוקרתי, חם וממכר עם שילוב מושלם בין מתיקות חלקה לעומק גברי אלגנטי.\n\nהבושם נפתח בתבלינים חמים עם רעננות עדינה, מתפתח ללב ונילי-קרמי עשיר, ומתיישב על בסיס עצי-ענברי עמוק שמעניק תחושת יוקרה עוטפת ובולטת.\n\nפירמידת תווים:\nתווי פתיחה: (קינמון, הל, תפוז, ברגמוט)\nתווי לב: (וניל בורבון, אלמי)\nתווי בסיס: (פרלין, מושק, אמברוקסן, עץ גואיאק, טונקה)\n\nלמה הוא מתאים:\nמתאים במיוחד לדייטים, ערב, יציאות, אירועים ולכל מי שאוהב בשמים מתוקים-יוקרתיים עם נוכחות מרשימה.\n\nעונה מומלצת:\nסתיו, חורף וערבים קרירים — אידיאלי למזג אוויר קר וללילות מיוחדים.\n\nביצועים:\nעמידות גבוהה מאוד עם שובל עשיר, עוטף ומורגש לאורך שעות רבות.\n\nבושם ממכר, יוקרתי ומלא מחמאות עם תחושת עומק וחום אלגנטי",
+                size: "100ml"
+            },
+            {
+                id: 112,
+                name: "The Memory Of Oud",
+                brand: "Maison Alhambra",
+                price: 145,
+                season: "winter",
+                gender: "male",
+                soldOut: true,
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774622276/25866b91-4213-4768-8ce8-2666ebd637cd.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774622293/bf5616cc-2c1d-4086-bae8-f50795cf35dc.png"
+                ],
+                description: "The memory of Oud\nבהשראת הבושם\nOud Maracujá Maison Crivell\n\nניחוח אקזוטי, עמוק ועוצמתי עם שילוב ייחודי בין פסיפלורה טרופית, עור ואוד כהה.\n\nהבושם נפתח בפירותיות חדה ואקזוטית עם טאץ’ חמים ומתובל, מתפתח ללב עור-עצי עשיר, ומתיישב על בסיס כהה, מעושן ועמוק שיוצר חתימה יוקרתית וממכרת במיוחד.\n\nפירמידת תווים:\nתווי פתיחה: (פסיפלורה, זעפרן, תבלינים חמים)\nתווי לב: (עור, אוד, ורד טורקי)\nתווי בסיס: (ענבר, וניל, פצ’ולי, עצים מעושנים)\n\nלמה הוא מתאים:\nמתאים במיוחד לערב, דייטים, אירועים, יציאות ולמי שאוהב בשמים ייחודיים, כבדים ובולטים עם נוכחות חזקה מאוד.\n\nעונה מומלצת:\nסתיו, חורף וערבים קרים — אידיאלי למזג אוויר קר בזכות העומק והעוצמה שלו.\n\nביצועים:\nבושם עוצמתי מאוד עם שובל חזק ועמידות גבוהה לאורך שעות רבות.\n\nניחוח לא שגרתי בכלל — טרופי, כהה, יוקרתי וממכר בצורה יוצאת דופן",
+                size: "60ml"
+            },
+            {
+                id: 113,
+                name: "PINK ECLIPSE",
+                brand: "Maison Alhambra",
+                price: 135,
+                season: "joker",
+                gender: "female",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774621342/3e331de2-46d9-420c-aa0e-9ed6bc82c857.png"
+                ],
+                description: "PINK ECLIPSE\nבהשראת הבושם\nPrada Paradoxe\n\nניחוח נשי, מודרני וזוהר עם שילוב מושלם בין פרחים לבנים, מתיקות עדינה ורעננות נקייה.\n\nהבושם נפתח ברעננות בהירה ומבריקה, מתפתח ללב פרחוני-יוקרתי עשיר, ומתיישב על בסיס רך, מושקי-ענברי שמעניק תחושת נשיות אלגנטית וממכרת.\n\nפירמידת תווים:\nתווי פתיחה: (ברגמוט, אגס, מנדרינה)\nתווי לב: (פריחת תפוז, יסמין סמבק, נרולי)\nתווי בסיס: (וניל, אמבר, מושק לבן, בנזואין)\n\nלמה הוא מתאים:\nמתאים ליום-יום, דייטים, עבודה, יציאות ואירועים — בושם נשי, יוקרתי ומלא מחמאות שמתאים כמעט לכל סיטואציה.\n\nעונה מומלצת:\nאביב, קיץ, סתיו וערבים נעימים — ורסטילי מאוד ומתאים לרוב השנה.\n\nביצועים:\nעמידות גבוהה מאוד עם שובל נשי, נקי ומורגש לאורך שעות רבות.\n\nבושם מודרני, אלגנטי וממכר עם וייב נשי יוקרתי ומבריק",
+                size: "100ml"
+            },
+            {
+                id: 114,
+                name: "HIS CONFESSION",
+                brand: "Lattafa",
+                price: 165,
+                season: "joker",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774622648/b5e62445-7fe3-418f-8e11-76fd630612e3.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774622672/7ceadcbd-77a0-422e-8e5a-f707c05feae2.png"
+                ],
+                description: "בהשראת הבשמים היוקרתיים\nGentleman Eau de Parfum\nDior Homme Intense 2011\n\nניחוח אלגנטי, עמוק וממכר עם שילוב מושלם בין איריס קטיפתי, תבלינים חמים ועומק עצי-ענברי יוקרתי.\n\nהבושם נפתח ברעננות מתובלת ועדינה, מתפתח ללב פודרתי-קרמי עשיר עם אופי יוקרתי ובוגר, ומתיישב על בסיס חם, עצי ומתוק שיוצר חתימה גברית אלגנטית ומלאת נוכחות.\n\nפירמידת תווים:\nתווי פתיחה: (פלפל שחור, ברגמוט, לבנדר)\nתווי לב: (איריס, וניל, קקאו, ציפורן)\nתווי בסיס: (פצ’ולי, ענבר, ארז, טונקה)\n\nלמה הוא מתאים:\nמתאים במיוחד לדייטים, ערב, אירועים, פגישות ויציאות — בושם למי שאוהב סטייל אלגנטי, בוגר ויוקרתי.\n\nעונה מומלצת:\nסתיו, חורף וערבים קרירים — אידיאלי למזג אוויר קר בזכות העומק והחמימות שלו.\n\nביצועים:\nעמידות גבוהה מאוד עם שובל אלגנטי ומורגש לאורך שעות רבות.\nניחוח יוקרתי, חלק וממכר עם וייב של “גבר מסודר ברמה גבוהה” — קלאסי, עמוק ומלא מחמאות.",
+                size: "100ml"
+            },
+            {
+                id: 115,
+                name: "HER CONFESSION",
+                brand: "Lattafa",
+                price: 165,
+                season: "joker",
+                gender: "female",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774622763/24d70c57-1899-4b73-9ed0-6ee26053f431.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774622753/c6b34172-412c-4b86-8f67-0189a1fec508.png"
+                ],
+                description: "בהשראת הבושם\nBlanche Bête Les Liquides Imaginaire\n\nניחוח חלבי, קרמי ומסתורי עם שילוב מהפנט של וניל, מושק ופרחים לבנים.\n\nהבושם נפתח ברכות נקייה ומלטפת, מתפתח ללב חלבי-פרחוני עשיר, ומתיישב על בסיס ונילי-מושקי עמוק שיוצר תחושת יוקרה רכה וממכרת במיוחד.\n\nפירמידת תווים:\nתווי פתיחה: (חלב, אמברט, נגיעות מתוקות עדינות)\nתווי לב: (יסמין, טוברוז, קטורת, מהלבה)\nתווי בסיס: (וניל, מושק, טונקה, קקאו עדין)\n\nלמה הוא מתאים:\nמתאים לדייטים, ערב, יציאות, אירועים ולכל מי שאוהבת בשמים רכים, קרמיים וייחודיים עם נוכחות אלגנטית.\n\nעונה מומלצת:\nסתיו, חורף, אביב וערבים נעימים — אידיאלי למי שאוהבת ניחוחות קרמיים וחמימים.\n\nביצועים:\nעמידות גבוהה מאוד עם שובל רך, קרמי ומורגש לאורך שעות רבות.\nבושם ייחודי וממכר עם וייב חלבי-יוקרתי שלא מריחים על כל אחת.",
+                size: "100ml"
+            },
+            {
+                id: 116,
+                name: "LA ROUGE BAROQUE",
+                brand: "Maison Alhambra",
+                price: 109,
+                season: "joker",
+                gender: "female",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774623700/3e985703-938c-43dd-8d4f-544b999f8057.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774623632/823efc07-7259-45af-ba7c-4680018dba2f.png"
+                ],
+                description: "בהשראת הבושם\nBaccarat Rouge 540 Maison Francis Kurkdjian\n\nניחוח יוקרתי, אוורירי וממכר עם שילוב ייחודי של ענבר, זעפרן ומתיקות שקופה ומבריקה.\n\nהבושם נפתח בזעפרן חמים עם טאץ’ מתוק ועדין, מתפתח ללב ענברי-פרחוני אלגנטי, ומתיישב על בסיס עצי-מושקי חלק שיוצר חתימה יוקרתית ומוכרת במיוחד.\n\nפירמידת תווים:\nתווי פתיחה: (זעפרן, יסמין)\nתווי לב: (אמברווד, ענבר אפור)\nתווי בסיס: (שרף אשוח, ארז, מושק)\n\nלמה הוא מתאים:\nמתאים לדייטים, ערב, אירועים, יציאות וגם ליום-יום למי שאוהב ריח יוקרתי ובולט עם נוכחות מיוחדת.\n\nעונה מומלצת:\nסתיו, חורף, אביב וערבים נעימים — אך עובד נהדר כמעט כל השנה בזכות האיזון שלו.\n\nביצועים:\nעמידות גבוהה מאוד עם שובל עוצמתי ומורגש לאורך שעות רבות.\nניחוח יוקרתי, אלגנטי וממכר שמושך מחמאות בצורה יוצאת דופן",
+                size: "100ml"
+            },
+            {
+                id: 117,
+                name: "LA ROUGE BAROQUE EXTREME",
+                brand: "Maison Alhambra",
+                price: 119,
+                season: "winter",
+                gender: "female",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774623595/4819f124-1777-4a58-8386-7cf5d05bb95f.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774623617/6ab2449a-4057-4642-85d6-967d707349e1.png"
+                ],
+                description: "בהשראת הבושם\nBaccarat Rouge 540 Extrait de Parfum Maison Francis Kurkdjian\n\nניחוח עמוק, עשיר ועוצמתי עם שילוב יוקרתי של זעפרן, שקדים מרים וענבר חמים.\n\nהבושם נפתח בזעפרן מתוק ואלגנטי עם טאץ’ שקדי ייחודי, מתפתח ללב ענברי-פרחוני עשיר, ומתיישב על בסיס עצי-מושקי עמוק שיוצר חתימה ממכרת ויוקרתית במיוחד.\n\nפירמידת תווים:\nתווי פתיחה: (זעפרן, שקדים מרים)\nתווי לב: (יסמין מצרי, ארז)\nתווי בסיס: (אמברגריס, מושק, עצים ענבריים)\n\nלמה הוא מתאים:\nמתאים במיוחד לערב, דייטים, אירועים, יציאות ולמי שאוהב בשמים יוקרתיים עם נוכחות חזקה ועומק מרשים.\n\nעונה מומלצת:\nסתיו, חורף וערבים נעימים — אך יכול לעבוד לאורך כל השנה למי שאוהב בשמים עשירים ובולטים.\n\nביצועים:\nבושם עוצמתי מאוד עם שובל חזק ועמידות גבוהה לאורך שעות רבות.\nניחוח יוקרתי, ממכר ומלא נוכחות עם וייב אלגנטי ואקסקלוסיבי במיוחד",
+                size: "100ml"
+            },
+            {
+                id: 118,
+                name: "LEO",
+                brand: "Maison Asrar",
+                price: 149,
+                season: "joker",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774635224/1b581bf6-6e10-4ea6-b657-4861c6024fd5.png",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774635233/68cbabdd-3b5f-414c-8364-590e340f1621.png"
+                ],
+                description: "בהשראת הבושם\nOmbre leather Tom ford\n\nניחוח עור יוקרתי, עמוק ועוצמתי עם שילוב מושלם בין עור כהה, תבלינים ופרחים חמים.\n\nהבושם נפתח בתווים חדים ומתובלים עם תחושת עור יוקרתית כבר מהרגע הראשון, מתפתח ללב פרחוני-כהה אלגנטי, ומתיישב על בסיס עצי-ענברי עמוק שיוצר חתימה גברית ממכרת ומלאת נוכחות.\n\nפירמידת תווים:\nתווי פתיחה: (הל, תבלינים חמים)\nתווי לב: (עור, יסמין סמבק)\nתווי בסיס: (ענבר, פצ’ולי, מושק, עצים כהים)\n\nלמה הוא מתאים:\nמתאים במיוחד לערב, דייטים, יציאות, אירועים ולמי שאוהב בשמים כהים, יוקרתיים ובולטים עם אופי חזק.\n\nעונה מומלצת:\nסתיו, חורף וערבים קרים — אידיאלי למזג אוויר קר בזכות העומק והחמימות שלו.\n\nביצועים:\nבושם עוצמתי מאוד עם שובל חזק ונוכחות מורגשת לאורך שעות רבות.\nניחוח עור יוקרתי וממכר עם וייב מסתורי, בוגר ואלגנטי במיוחד",
+                size: "100ml"
+            },
+            {
+                id: 119,
+                name: "Jean Lowe Verde Aura",
+                brand: "Maison Alhambra",
+                price: 139,
+                season: "summer",
+                gender: "unisex",
+                images: [
+                    "images/PHOTO-2026-05-21-18-35-10.jpg",
+                    "images/PHOTO-2026-05-21-18-37-07.jpg"
+                ],
+                description: "JEAN LOWE - VERDE AURA\nבהשראת הבושם Louis Vuitton Cactus Garden\n\nהוא בושם קיצי יוקרתי ומרענן עם וייב נקי, ירוק ומיוחד שמרגיש שונה מכל בושם פרשי רגיל. הפתיחה מלאה בהדרים ירוקים ולמון גראס שנותנים תחושת רעננות חדה וממכרת, ובהמשך נכנסים תווים ארומטיים ומושק נקי שמעניקים לו עומק אלגנטי וגברי.\n\nתווים מרכזיים:\n• ברגמוט\n• למון גראס\n• מאטה ירוק\n• תווים ארומטיים\n• מושק נקי ועצים רכים\n\nהבושם מתאים במיוחד לקיץ, ליום יום, ליציאות ולמזג אוויר חם, עם ריח נקי ויוקרתי שמושך מחמאות בלי להיות כבד מדי. העמידות והשובל שלו חזקים מאוד ביחס לבושם פרשי, והוא נשאר מורגש לאורך שעות בצורה נעימה וממכרת.\n\nאם אתם אוהבים בשמים רעננים עם אופי יוקרתי ונישתי,\nJEAN LOWE VERDE AURA\nהוא בדיוק הבושם שיגרום לכם להתבלט",
+                size: "100ml"
+            }
+            {
+                id: 120,
+                name: "Jean Lowe Summer vibes",
+                brand: "Maison alhambra",
+                price: 139,
+                season: "joker",
+                gender: "male",
+                images: [
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1779461113/PHOTO-2026-05-21-18-48-42_q5v8nc.jpg",
+                    "https://res.cloudinary.com/dtsxyswbl/image/upload/v1779461113/PHOTO-2026-05-21-18-48-43_fqzowm.jpg"
+                ],
+                description: "JEAN LOWE – SUMMER VIBS\nבהשראת הבושם Louis Vuitton Sun Song\n\nSUMMER VIBS הוא בושם קיצי ממכר עם ריח נקי, שמשי ואנרגטי שנותן תחושה של חופשת קיץ יוקרתית. הפתיחה מלאה בהדרים עסיסיים ולימון רענן שמביאים פרשיות חזקה ונעימה, ובהמשך נכנסים תווים פרחוניים לבנים ומושק נקי שיוצרים ריח חלק, אלגנטי ומאוד ממכר.\n\nתווים מרכזיים:\n• לימון\n• תפוז והדרים רעננים\n• פריחת תפוז\n• מושק לבן\n• תווים פרשיים ונקיים\n\nהבושם מתאים במיוחד לימים חמים, לקיץ, לים, לחופשות ולשימוש יומיומי למי שאוהב להריח נקי, יוקרתי ומלא אנרגיה. הוא קליל ונעים אבל עדיין מורגש מאוד על הגוף, עם שובל רענן שמביא המון מחמאות.\n\nהעמידות שלו גבוהה מאוד ביחס לבושם קיצי, והוא מצליח לשלב בצורה מושלמת בין רעננות נקייה לבין תחושה יוקרתית ומיוחדת שלא מריחים על כל אחד",
+                size: "100ml"
+            },
+            
+        ];
+
+        const brands = ["הכל", "Afnan", "Zimaya", "French Avenue", "Lattafa", "Rasasi", "Ibraq", "laverne", "Gulf Orchid", "Volare", "Reef", "Lavender", "Al Ezz", "Maison Asrar", "Maison Alhambra", "Fragrance World", "ARMAF", "SHAMS Perfumes"];
+        
+        let cart = [];
+        let payMoreAmount = 0;
+        let currentFilter = "הכל";
+        let maxPrice = 500;
+        let currentSort = "default";
+        let brandsExpanded = false;
+        let currentSeason = "all"; // all, summer, winter
+        let currentGender = "all"; // all, male, female, unisex
+        let searchQuery = "";
+        
+        // Card image navigation state
+        const cardImageIndices = {};
+        
+        function nextCardImage(event, id) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            const perfume = perfumes.find(p => p.id === id);
+            if (!perfume || perfume.images.length <= 1) return;
+            
+            cardImageIndices[id] = (cardImageIndices[id] || 0) + 1;
+            if (cardImageIndices[id] >= perfume.images.length) {
+                cardImageIndices[id] = 0;
+            }
+            updateCardImage(id, perfume);
+        }
+        
+        function prevCardImage(event, id) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            const perfume = perfumes.find(p => p.id === id);
+            if (!perfume || perfume.images.length <= 1) return;
+            
+            cardImageIndices[id] = (cardImageIndices[id] || 0) - 1;
+            if (cardImageIndices[id] < 0) {
+                cardImageIndices[id] = perfume.images.length - 1;
+            }
+            updateCardImage(id, perfume);
+        }
+        
+        function updateCardImage(id, perfume) {
+            const img = document.getElementById(`card-img-${id}`);
+            const counter = document.getElementById(`card-counter-${id}`);
+            const idx = cardImageIndices[id] || 0;
+            if (img) {
+                img.src = perfume.images[idx];
+            }
+            if (counter) {
+                counter.textContent = (idx + 1) + ' / ' + perfume.images.length;
+            }
+        }
+        
+        function toggleBrandFilters() {
+            brandsExpanded = !brandsExpanded;
+            const wrapper = document.getElementById('brands-wrapper');
+            const title = document.getElementById('filter-title');
+            const chevron = document.getElementById('filter-chevron');
+            
+            if (brandsExpanded) {
+                wrapper.classList.remove('hidden');
+                title.textContent = 'סנן לפי מותג';
+                chevron.style.transform = 'rotate(180deg)';
+            } else {
+                wrapper.classList.add('hidden');
+                title.textContent = 'סנן ומיין מוצרים';
+                chevron.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // Disable browser's automatic scroll restoration to prevent conflicts
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            
+            // Try to restore previous state first
+            const restored = restorePageState();
+            
+            renderBrands();
+            
+            // If not restored, set default active brand
+            if (!restored) {
+                renderProducts();
+            } else {
+                // Re-render with restored filters
+                filterByBrand(currentFilter);
+            }
+            
+            loadCart();
+        });
+
+        // Brand Images Mapping
+        const brandImages = {
+            "הכל": "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774352234/PHOTO-2026-03-23-22-55-42_qlqdgn.jpg",
+            "Afnan": "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774353768/brand1_u7hmzo.jpg",
+            "Zimaya": "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774353803/brand2_zhacap.jpg",
+            "French Avenue": "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774353853/brand3_rvvjbq.jpg",
+            "Lattafa": "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774353887/brand4_gwho25.jpg",
+            "Rasasi": "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774353888/brand5_bal9wa.jpg",
+            "Ibraq": "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774356807/brand6_jlge3k.jpg",
+            "laverne": "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774356808/brand8_worgad.jpg",
+            "Gulf Orchid": "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774356808/brand7_wgdq5i.jpg",
+            "Volare": "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774356808/brand9_d3sebg.jpg",
+            "Reef": "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774356808/brand10_xhmrh5.jpg",
+            "Lavender": "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774356810/brand11_osbm5k.jpg",
+            "Al Ezz": "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774356810/brand12_ogelzl.jpg",
+            "Maison Asrar": "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774356811/brand13_qfqwwr.jpg",
+            "Maison Alhambra": "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774356812/brand14_mftmky.jpg",
+            "Fragrance World": "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774613536/c9dd6ebc-fd1c-4c27-ad8e-3861d995c14f.png",
+            "ARMAF": "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774615673/a859ef92-8e9a-4e30-ac8b-aaa4ce62b433.png",
+            "SHAMS Perfumes": "https://res.cloudinary.com/dtsxyswbl/image/upload/v1774616898/91443c4c-1bfe-4363-a4d3-97320176aa01.png"
+        };
+
+        // Render Brands as Images
+        function renderBrands() {
+            const container = document.getElementById('brand-filters');
+            container.innerHTML = brands.map(brand => `
+                <div onclick="filterByBrand('${brand}')" 
+                     class="brand-filter-item flex flex-col items-center cursor-pointer transition-all duration-300 min-w-[90px] group ${brand === 'הכל' ? 'active-brand' : ''}"
+                     data-brand="${brand}">
+                    <div class="w-24 h-24 md:w-32 md:h-32 rounded-lg overflow-hidden border-2 transition-all duration-300 mb-3 relative ${brand === 'הכל' ? 'border-gold-400 shadow-lg shadow-gold-400/30' : 'border-gold-400/30 group-hover:border-gold-400/60'}">
+                        <img src="${brandImages[brand] || 'https://static.photos/luxury/200x200/99'}" 
+                             alt="${brand}" 
+                             class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-dark-900/20 group-hover:bg-transparent transition-colors"></div>
+                    </div>
+                    <span class="text-sm text-center transition-colors duration-300 ${brand === 'הכל' ? 'text-gold-400 font-bold' : 'text-gray-400 group-hover:text-gray-300'}">${brand}</span>
+                </div>
+            `).join('');
+        }
+
+        // Sorting Function
+        function sortProducts() {
+            currentSort = document.getElementById('sort-select').value;
+            renderProducts();
+        }
+
+        function getSortedProducts(products) {
+            const sorted = [...products];
+            
+            switch(currentSort) {
+                case 'price-low':
+                    sorted.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-high':
+                    sorted.sort((a, b) => b.price - a.price);
+                    break;
+                case 'name-asc':
+                    sorted.sort((a, b) => a.name.localeCompare(b.name, 'en'));
+                    break;
+                case 'season-summer':
+                    sorted.sort((a, b) => {
+                        if (a.season === 'summer' && b.season !== 'summer') return -1;
+                        if (a.season !== 'summer' && b.season === 'summer') return 1;
+                        return 0;
+                    });
+                    break;
+                case 'season-winter':
+                    sorted.sort((a, b) => {
+                        if (a.season === 'winter' && b.season !== 'winter') return -1;
+                        if (a.season !== 'winter' && b.season === 'winter') return 1;
+                        return 0;
+                    });
+                    break;
+                default:
+                    break;
+            }
+            
+            return sorted;
+        }
+
+        // Filter by Season
+        function filterBySeason(season) {
+            currentSeason = season;
+            
+            // Update buttons UI
+            ['all', 'summer', 'winter', 'joker'].forEach(s => {
+                const btn = document.getElementById(`season-${s}`);
+                if (s === season) {
+                    btn.classList.remove('border-gold-400/30', 'text-gold-400', 'hover:bg-gold-400/10');
+                    btn.classList.add('border-gold-400', 'bg-gold-400', 'text-dark-900', 'font-bold');
+                } else {
+                    btn.classList.add('border-gold-400/30', 'text-gold-400', 'hover:bg-gold-400/10');
+                    btn.classList.remove('border-gold-400', 'bg-gold-400', 'text-dark-900', 'font-bold');
+                }
+            });
+            
+            lucide.createIcons();
+            renderProducts();
+        }
+
+        // Filter by Gender
+        function filterByGender(gender) {
+            currentGender = gender;
+            
+            // Update buttons UI
+            ['all', 'male', 'female', 'unisex'].forEach(g => {
+                const btn = document.getElementById(`gender-${g}`);
+                if (g === gender) {
+                    btn.classList.remove('border-gold-400/30', 'text-gold-400', 'hover:bg-gold-400/10');
+                    btn.classList.add('border-gold-400', 'bg-gold-400', 'text-dark-900', 'font-bold');
+                } else {
+                    btn.classList.add('border-gold-400/30', 'text-gold-400', 'hover:bg-gold-400/10');
+                    btn.classList.remove('border-gold-400', 'bg-gold-400', 'text-dark-900', 'font-bold');
+                }
+            });
+            
+            lucide.createIcons();
+            renderProducts();
+        }
+
+        // Render Products
+        function renderProducts() {
+            const grid = document.getElementById('products-grid');
+            const noProducts = document.getElementById('no-products');
+            
+            if (perfumes.length === 0) {
+                grid.innerHTML = '';
+                noProducts.classList.remove('hidden');
+                return;
+            }
+            
+            let filtered = perfumes.filter(p => {
+                const matchBrand = currentFilter === "הכל" || p.brand === currentFilter;
+                const matchPrice = p.price <= maxPrice;
+                const matchSeason = currentSeason === "all" || p.season === currentSeason;
+                const matchGender = currentGender === "all" || p.gender === currentGender;
+                const searchLower = searchQuery.toLowerCase().trim();
+                const matchSearch = !searchLower || 
+                    p.name.toLowerCase().includes(searchLower) || 
+                    p.brand.toLowerCase().includes(searchLower) ||
+                    (p.description && p.description.toLowerCase().includes(searchLower));
+                return matchBrand && matchPrice && matchSeason && matchGender && matchSearch;
+            });
+            
+            filtered = getSortedProducts(filtered);
+            
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                noProducts.classList.remove('hidden');
+            } else {
+                noProducts.classList.add('hidden');
+                grid.innerHTML = filtered.map(perfume => `
+                    <a href="product.html?id=${perfume.id}" onclick="savePageState()" class="bg-dark-800 rounded-lg overflow-hidden border border-gold-400/20 card-hover group block cursor-pointer">
+                        <div class="relative overflow-hidden bg-dark-800">
+                            <img id="card-img-${perfume.id}" src="${perfume.images[cardImageIndices[perfume.id] || 0]}" alt="${perfume.name}" 
+                                 class="w-full product-image shimmer"
+                                 onerror="this.src='https://static.photos/luxury/640x360/999'">
+                            <div class="absolute inset-0 bg-gradient-to-t from-dark-900 to-transparent opacity-60"></div>
+                            <span class="absolute top-2 right-2 sm:top-3 sm:right-3 bg-gold-400 text-dark-900 text-[10px] sm:text-xs font-bold px-1.5 sm:px-2 py-0.5 sm:py-1 rounded">${perfume.size}</span>
+                            ${perfume.season === 'summer' ? `<div class="absolute top-2 left-2 sm:top-3 sm:left-3 bg-orange-500/90 text-white text-[10px] sm:text-xs px-2 py-0.5 sm:py-1 rounded-full flex items-center gap-1"><i data-lucide="sun" class="w-3 h-3"></i>קיץ</div>` : ''}
+                    ${perfume.season === 'winter' ? `<div class="absolute top-2 left-2 sm:top-3 sm:left-3 bg-blue-500/90 text-white text-[10px] sm:text-xs px-2 py-0.5 sm:py-1 rounded-full flex items-center gap-1"><i data-lucide="snowflake" class="w-3 h-3"></i>חורף</div>` : ''}
+                    ${perfume.season === 'joker' ? `<div class="absolute top-2 left-2 sm:top-3 sm:left-3 bg-purple-500/90 text-white text-[10px] sm:text-xs px-2 py-0.5 sm:py-1 rounded-full flex items-center gap-1"><i data-lucide="sparkles" class="w-3 h-3"></i>ג'וקר</div>` : ''}
+                    
+                            <div class="absolute bottom-2 left-2 sm:bottom-3 sm:left-3 bg-dark-900/80 backdrop-blur-sm text-gold-400 text-[10px] sm:text-xs px-2 sm:px-3 py-0.5 sm:py-1 rounded-full border border-gold-400/30">
+                                לחץ לפרטים
+                            </div>
+                            ${perfume.soldOut ? `<div class="absolute bottom-2 right-2 sm:bottom-3 sm:right-3 z-20"><span class="bg-red-600 text-white font-bold px-2 py-0.5 rounded text-[10px] sm:text-xs border border-red-400 shadow-lg tracking-wide">אזל מהמלאי</span></div>` : ''}
+                            ${perfume.images.length > 1 ? `
+                            <!-- Image Navigation Arrows -->
+                            <button onclick="prevCardImage(event, ${perfume.id})" class="absolute left-2 sm:left-3 top-1/2 transform -translate-y-1/2 bg-dark-900/70 hover:bg-dark-700 text-gold-400 p-1 sm:p-1.5 rounded-full transition-colors z-20 backdrop-blur-sm border border-gold-400/20">
+                                <i data-lucide="chevron-left" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                            </button>
+                            <button onclick="nextCardImage(event, ${perfume.id})" class="absolute right-2 sm:right-3 top-1/2 transform -translate-y-1/2 bg-dark-900/70 hover:bg-dark-700 text-gold-400 p-1 sm:p-1.5 rounded-full transition-colors z-20 backdrop-blur-sm border border-gold-400/20">
+                                <i data-lucide="chevron-right" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                            </button>
+                            <!-- Image Counter -->
+                            <div class="absolute top-2 left-1/2 transform -translate-x-1/2 bg-dark-900/70 text-gold-400 px-2 py-0.5 rounded-full text-[10px] sm:text-xs border border-gold-400/20 z-20 backdrop-blur-sm">
+                                <span id="card-counter-${perfume.id}">${(cardImageIndices[perfume.id] || 0) + 1} / ${perfume.images.length}</span>
+                            </div>
+                            ` : ''}
+                        </div>
+                        
+                        <div class="p-2 sm:p-4">
+                            <div class="text-[10px] sm:text-xs text-gold-400 mb-0.5 sm:mb-1">${perfume.brand}</div>
+                            <h4 class="font-serif text-base sm:text-xl font-bold mb-2 sm:mb-3 text-white group-hover:text-gold-400 transition-colors line-clamp-1">${perfume.name}</h4>
+                            
+                            <div class="flex items-center justify-between mt-auto">
+                                <span class="text-lg sm:text-2xl font-bold text-gold-400">₪${perfume.price}</span>
+                                <span class="text-xs sm:text-sm text-gray-400 group-hover:text-gold-400 transition-colors">צפה בפרטים</span>
+                            </div>
+                        </div>
+                    </a>
+                `).join('');
+                
+                lucide.createIcons();
+            }
+        }
+
+        
+
+        // Filter Functions
+        function filterByBrand(brand) {
+            currentFilter = brand;
+            
+            document.querySelectorAll('.brand-filter-item').forEach(item => {
+                const imgContainer = item.querySelector('div');
+                const text = item.querySelector('span');
+                
+                if (item.dataset.brand === brand) {
+                    imgContainer.classList.add('border-gold-400', 'shadow-lg', 'shadow-gold-400/30');
+                    imgContainer.classList.remove('border-gold-400/30', 'group-hover:border-gold-400/60');
+                    text.classList.add('text-gold-400', 'font-bold');
+                    text.classList.remove('text-gray-400', 'group-hover:text-gray-300');
+                } else {
+                    imgContainer.classList.remove('border-gold-400', 'shadow-lg', 'shadow-gold-400/30');
+                    imgContainer.classList.add('border-gold-400/30', 'group-hover:border-gold-400/60');
+                    text.classList.remove('text-gold-400', 'font-bold');
+                    text.classList.add('text-gray-400', 'group-hover:text-gray-300');
+                }
+            });
+            
+            renderProducts();
+            
+            // Update brand filter active state in renderBrands if needed
+            const brandItems = document.querySelectorAll('.brand-filter-item');
+            brandItems.forEach(item => {
+                if (item.dataset.brand === brand) {
+                    item.classList.add('active-brand');
+                } else {
+                    item.classList.remove('active-brand');
+                }
+            });
+        }
+
+        function updatePriceDisplay() {
+            maxPrice = document.getElementById('price-range').value;
+            document.getElementById('price-value').textContent = `עד ${maxPrice} ש"ח`;
+            renderProducts();
+        }
+
+        function resetFilters() {
+            currentFilter = "הכל";
+            maxPrice = 500;
+            currentSort = "default";
+            currentSeason = "all";
+            currentGender = "all";
+            searchQuery = "";
+            document.getElementById('price-range').value = 500;
+            document.getElementById('sort-select').value = "default";
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) searchInput.value = "";
+            const clearBtn = document.getElementById('search-clear');
+            if (clearBtn) clearBtn.classList.add('hidden');
+            updatePriceDisplay();
+            filterBySeason('all');
+            filterByGender('all');
+            renderBrands();
+            renderProducts();
+        }
+
+        function handleSearch(value) {
+            searchQuery = value;
+            const clearBtn = document.getElementById('search-clear');
+            if (clearBtn) {
+                if (value.length > 0) {
+                    clearBtn.classList.remove('hidden');
+                } else {
+                    clearBtn.classList.add('hidden');
+                }
+            }
+            renderProducts();
+        }
+
+        function clearSearch() {
+            searchQuery = "";
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) searchInput.value = "";
+            const clearBtn = document.getElementById('search-clear');
+            if (clearBtn) clearBtn.classList.add('hidden');
+            renderProducts();
+        }
+
+        // Cart Functions
+        function addToCart(id) {
+            const perfume = perfumes.find(p => p.id === id);
+            const existing = cart.find(item => item.id === id);
+            
+            if (existing) {
+                existing.quantity++;
+            } else {
+                cart.push({ ...perfume, quantity: 1 });
+            }
+            
+            saveCart();
+            updateCartUI();
+            showToast(`הוסף לעגלה: ${perfume.name}`);
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            saveCart();
+            updateCartUI();
+        }
+
+        function updateQuantity(id, change) {
+            const item = cart.find(item => item.id === id);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(id);
+                } else {
+                    saveCart();
+                    updateCartUI();
+                }
+            }
+        }
+
+        function clearCart() {
+            if (confirm('האם אתה בטוח שברצונך לרוקן את העגלה?')) {
+                cart = [];
+                payMoreAmount = 0;
+                document.getElementById('pay-more-input').value = '';
+                saveCart();
+                updateCartUI();
+            }
+        }
+
+        // Pay More Functions
+        function updatePayMore() {
+            const input = document.getElementById('pay-more-input');
+            const value = parseFloat(input.value) || 0;
+            payMoreAmount = value >= 0 ? value : 0;
+            updateCartTotals();
+        }
+
+        function updateCartTotals() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const total = subtotal + payMoreAmount;
+            
+            document.getElementById('cart-subtotal').textContent = `₪${subtotal}`;
+            document.getElementById('cart-total').textContent = `₪${total}`;
+            
+            // Visual feedback if paying more
+            if (payMoreAmount > 0) {
+                document.getElementById('cart-total').classList.add('text-gold-400');
+                document.getElementById('cart-total').classList.remove('text-white');
+            } else {
+                document.getElementById('cart-total').classList.remove('text-gold-400');
+                document.getElementById('cart-total').classList.add('text-white');
+            }
+        }
+
+        function updateCartUI() {
+            const cartItems = document.getElementById('cart-items');
+            const cartFooter = document.getElementById('cart-footer');
+            const cartCount = document.getElementById('cart-count');
+            
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p class="text-gray-400 text-center py-8">העגלה שלך ריקה</p>';
+                cartFooter.classList.add('hidden');
+                cartCount.classList.add('hidden');
+                payMoreAmount = 0;
+                document.getElementById('pay-more-input').value = '';
+            } else {
+                cartCount.textContent = totalItems;
+                cartCount.classList.remove('hidden');
+                
+                cartItems.innerHTML = cart.map(item => `
+                    <div class="flex gap-3 bg-dark-900 p-3 rounded-lg border border-gold-400/10">
+                        <img src="${item.images[0]}" class="w-16 h-16 object-cover rounded" onerror="this.src='https://static.photos/luxury/640x360/999'">
+                        <div class="flex-1">
+                            <h4 class="font-bold text-sm text-white mb-1">${item.name}</h4>
+                            <div class="text-gold-400 text-sm mb-2">₪${item.price}</div>
+                            <div class="flex items-center gap-2">
+                                <button onclick="updateQuantity(${item.id}, -1)" class="w-6 h-6 rounded-full bg-dark-700 hover:bg-dark-600 flex items-center justify-center text-xs transition-colors">-</button>
+                                <span class="text-sm w-4 text-center">${item.quantity}</span>
+                                <button onclick="updateQuantity(${item.id}, 1)" class="w-6 h-6 rounded-full bg-dark-700 hover:bg-dark-600 flex items-center justify-center text-xs transition-colors">+</button>
+                            </div>
+                        </div>
+                        <button onclick="removeFromCart(${item.id})" class="text-red-500 hover:text-red-400 self-start">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                `).join('');
+                
+                updateCartTotals();
+                cartFooter.classList.remove('hidden');
+                
+                lucide.createIcons();
+            }
+        }
+
+        function toggleCart() {
+            const sidebar = document.getElementById('cart-sidebar');
+            const overlay = document.getElementById('cart-overlay');
+            
+            const isOpen = sidebar.classList.contains('open');
+            
+            if (isOpen) {
+                closeCart();
+            } else {
+                openCart();
+            }
+        }
+
+        function closeCart() {
+            const sidebar = document.getElementById('cart-sidebar');
+            const overlay = document.getElementById('cart-overlay');
+            
+            sidebar.classList.remove('open');
+            overlay.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        function openCart() {
+            const sidebar = document.getElementById('cart-sidebar');
+            const overlay = document.getElementById('cart-overlay');
+            
+            sidebar.classList.add('open');
+            overlay.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            updateCartUI();
+        }
+
+        function sendWhatsAppOrder() {
+            if (cart.length === 0) return;
+            
+            let message = "היי! אשמח להזמין את הבשמים הבאים:\n\n";
+            let subtotal = 0;
+            
+            cart.forEach(item => {
+                message += `• ${item.name} (${item.brand}) - כמות: ${item.quantity} - מחיר: ₪${item.price * item.quantity}\n`;
+                subtotal += item.price * item.quantity;
+            });
+            
+            message += `\nסכום מוצרים: ₪${subtotal}`;
+            
+            if (payMoreAmount > 0) {
+                message += `\n+ תוספת/טיפ: ₪${payMoreAmount}`;
+            }
+            
+            const total = subtotal + payMoreAmount;
+            message += `\nסכום כולל: ₪${total}\n\nתודה רבה! ‎🦁`;
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = "https://api.whatsapp.com/send?phone=972543102706&text=" + encodedMessage;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        function saveCart() {
+            localStorage.setItem('lionPerfumesCart', JSON.stringify(cart));
+            localStorage.setItem('lionPerfumesPayMore', payMoreAmount.toString());
+        }
+
+        function loadCart() {
+            const saved = localStorage.getItem('lionPerfumesCart');
+            const savedPayMore = localStorage.getItem('lionPerfumesPayMore');
+            
+            if (saved && saved !== 'null' && saved !== 'undefined') {
+                try {
+                    cart = JSON.parse(saved);
+                } catch (e) {
+                    cart = [];
+                }
+            }
+            
+            if (savedPayMore && savedPayMore !== 'null') {
+                payMoreAmount = parseFloat(savedPayMore) || 0;
+                document.getElementById('pay-more-input').value = payMoreAmount > 0 ? payMoreAmount : '';
+            }
+            
+            updateCartUI();
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').textContent = message;
+            
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        // Close cart on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const sidebar = document.getElementById('cart-sidebar');
+                const modal = document.getElementById('product-modal');
+                if (sidebar.classList.contains('open')) {
+                    closeCart();
+                } else if (!modal.classList.contains('hidden')) {
+                    closeProductModal();
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
