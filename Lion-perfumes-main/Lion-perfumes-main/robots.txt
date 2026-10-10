@@ -1,6 +1,0 @@
-User-agent: *
-Allow: /
-Allow: /index.html
-Allow: /product.html
-
-Sitemap: https://lionperfumes.netlify.app/sitemap.xml
