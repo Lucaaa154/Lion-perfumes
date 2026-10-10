@@ -979,7 +979,8 @@ function parsePerfumes(html) {
         const soldOut = /soldOut:\s*true/.test(e);
         const salePrice = parseInt((e.match(/salePrice:\s*(\d+)/) || [])[1]) || 0;
         const desc = (e.match(/description:\s*"((?:[^"\\]|\\.)*)"/) || [])[1] || '';
-        const imgs = [...e.matchAll(/"(https?:\/\/[^"]+)"/g)].map(x => x[1]);
+        const imgBlock = (e.match(/images:\s*\[([\s\S]*?)\]/) || [])[1] || '';
+        const imgs = [...imgBlock.matchAll(/"([^"]+)"/g)].map(x => x[1]);
         if (id && name) arr.push({ id, name, brand, price, season, gender, size, soldOut, salePrice, description: desc, images: imgs });
     }
     return arr;
