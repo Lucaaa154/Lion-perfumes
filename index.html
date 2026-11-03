@@ -596,6 +596,21 @@
         // Data - Ready for new perfumes with multiple images support
         const perfumes = [
             {
+                id: 3,
+                name: "Faris Al Arab",
+                brand: "Maison Asrar",
+                price: 249,
+                season: "winter",
+                gender: "unisex",
+                salePrice: 189,
+                images: [
+                    "images/products/maison-asrar-faris-al-arab-1.webp",
+                    "images/products/maison-asrar-faris-al-arab-2.webp"
+                ],
+                description: "בהשראת הבושם\nBlonde Amber Clive Christian\n\nניחוח עוצמתי במיוחד עם נוכחות עשירה ובלתי מתפשרת – בושם חזק שמחזיק לאורך כל היום ומשאיר שובל מרשים בכל מקום.\n\nבושם שמתאים לאירועים מיוחדים, לערבים יוקרתיים ולרגעים שבהם אתה רוצה לבלוט באמת.\n\nריח ייחודי, עמוק ושונה מכל מה שאתה מכיר – לא לכל אחד, אלא למי שמבין איכות וסטייל.\n\nבחירה מושלמת למי שמחפש בושם יוצא דופן עם נוכחות שלא ניתן להתעלם ממנה",
+                size: "100ml"
+            },
+            {
                 id: 173,
                 name: "GREY PEARL DIAMOND",
                 brand: "Ibraq",
@@ -1551,21 +1566,6 @@
                     "images/products/lattafa-khamrah-2.webp"
                 ],
                 description: "ניחוח חם, מתוק ויוקרתי עם אופי עמוק וממכר שמרגיש כמו קינוח אלכוהולי עשיר.\n\nהבושם נפתח בטוויסט מתובל ומתוק עם נוכחות חזקה, מתפתח ללב גורמנדי עשיר ומפנק, ומתיישב על בסיס חם, ונילי-ענברי שמעניק תחושת יוקרה כבדה וממכרת.\n\nפירמידת תווים:\nתווי פתיחה: (קינמון, אגוז מוסקט, ברגמוט)\nתווי לב: (פרלין, תמרים, טוברוז, מהלבה)\nתווי בסיס: (וניל, טונקה, בנזואין, אמברווד, מור)\n\nלמה הוא מתאים:\nמתאים במיוחד לדייטים, ערב, יציאות, אירועים ולכל מי שאוהב בשמים מתוקים, עמוקים ומלאי נוכחות.\n\nעונה מומלצת:\nסתיו, חורף וערבים קרים — אידיאלי למזג אוויר קר בזכות העומק והמתיקות שלו.\n\nביצועים:\nבושם חזק מאוד עם שובל עוצמתי ועמידות גבוהה לאורך שעות רבות.\nניחוח ממכר במיוחד שמרגיש יוקרתי ובולט — כזה שמושך מחמאות בלי סוף",
-                size: "100ml"
-            },
-            {
-                id: 3,
-                name: "Faris Al Arab",
-                brand: "Maison Asrar",
-                price: 219,
-                season: "winter",
-                gender: "unisex",
-                salePrice: 149,
-                images: [
-                    "images/products/maison-asrar-faris-al-arab-1.webp",
-                    "images/products/maison-asrar-faris-al-arab-2.webp"
-                ],
-                description: "בהשראת הבושם\nBlonde Amber Clive Christian\n\nניחוח עוצמתי במיוחד עם נוכחות עשירה ובלתי מתפשרת – בושם חזק שמחזיק לאורך כל היום ומשאיר שובל מרשים בכל מקום.\n\nבושם שמתאים לאירועים מיוחדים, לערבים יוקרתיים ולרגעים שבהם אתה רוצה לבלוט באמת.\n\nריח ייחודי, עמוק ושונה מכל מה שאתה מכיר – לא לכל אחד, אלא למי שמבין איכות וסטייל.\n\nבחירה מושלמת למי שמחפש בושם יוצא דופן עם נוכחות שלא ניתן להתעלם ממנה",
                 size: "100ml"
             },
             {
@@ -2683,7 +2683,7 @@
             },
         ];
 
-        const brands = ["הכל", "Shams", "KHADLAJ", "Riffs", "ASSAF", "Rayhaan", "Afnan", "Zimaya", "French Avenue", "Lattafa", "Rasasi", "Ibraq", "laverne", "Gulf Orchid", "Volare", "Reef", "Lavender", "Al Ezz", "Maison Asrar", "Maison Alhambra", "Fragrance World", "ARMAF"];
+        const brands = ["הכל", "BUJAIRAMI SYDNEY", "Shams", "KHADLAJ", "Riffs", "ASSAF", "Rayhaan", "Afnan", "Zimaya", "French Avenue", "Lattafa", "Rasasi", "Ibraq", "laverne", "Gulf Orchid", "Volare", "Reef", "Lavender", "Al Ezz", "Maison Asrar", "Maison Alhambra", "Fragrance World", "ARMAF"];
         
         let cart = [];
         let payMoreAmount = 0;
@@ -2784,6 +2784,7 @@
 
         // Brand Images Mapping
         const brandImages = {
+            "BUJAIRAMI SYDNEY": "images/brands/bujairami-sydney-mw0xmrb6uvn.jpg",
             "Shams": "images/brands/shams.webp",
             "KHADLAJ": "images/brands/khadlaj.webp",
             "Riffs": "images/brands/riffs.webp",
