@@ -59,6 +59,7 @@
         <button class="tab" onclick="switchTab('brands')" id="tab-brands">ניהול מותגים</button>
         <button class="tab" onclick="switchTab('bestsellers')" id="tab-bestsellers">👑 נמכרים ביותר</button>
         <button class="tab" onclick="switchTab('sections')" id="tab-sections">🗂️ מדורים</button>
+        <button class="tab" onclick="switchTab('blackfriday')" id="tab-blackfriday">🖤 בלאק פריידי</button>
     </div>
 
     <div class="px-4 pb-10 max-w-lg mx-auto">
@@ -157,6 +158,38 @@
             <h3 class="gold font-bold mb-3">הוסף מוצרים למדור</h3>
             <input type="text" id="sec-search" placeholder="חפש בושם..." oninput="renderSectionAdmin()" style="margin-bottom:14px;">
             <div id="sec-all"></div>
+        </div>
+
+        <!-- BLACK FRIDAY TAB -->
+        <div id="panel-blackfriday" style="display:none;">
+            <div class="dark-card p-5 mb-4">
+                <h2 class="text-lg font-bold gold mb-1">🖤 מבצע בלאק פריידי</h2>
+                <p class="text-gray-500 text-sm mb-4">המדור יופיע בראש האתר מיד אחרי הבאנר הראשי. המחירים מתעדכנים גם בכרטיסים, בעמוד המוצר ובעגלה. כשהמבצע כבוי או שתאריך הסיום עבר — הכל חוזר אוטומטית למחירים הרגילים.</p>
+                <div class="flex items-center gap-3 mb-3 p-3 rounded-lg" style="background:#111;border:1px solid #2a2a2a;">
+                    <input type="checkbox" id="bf-enabled" style="width:18px;height:18px;accent-color:#D4AF37;flex-shrink:0;">
+                    <label for="bf-enabled" style="color:white;margin:0;cursor:pointer;">המבצע פעיל באתר</label>
+                </div>
+                <div class="mb-3"><label>כותרת</label><input type="text" id="bf-title-in" placeholder="BLACK FRIDAY"></div>
+                <div class="mb-3"><label>תת-כותרת</label><input type="text" id="bf-subtitle-in" placeholder="הנחות ענק לזמן מוגבל"></div>
+                <div class="mb-3">
+                    <label>תאריך ושעת סיום <span style="color:#666;font-weight:400;">(ריק = בלי ספירה לאחור, עד שמכבים ידנית)</span></label>
+                    <input type="datetime-local" id="bf-end" style="direction:ltr;">
+                </div>
+                <div class="mb-4 p-3 rounded-lg" style="background:#111;border:1px solid #2a2a2a;">
+                    <label>הנחה מהירה לכל המוצרים במבצע</label>
+                    <div style="display:flex;gap:8px;">
+                        <input type="number" id="bf-percent" placeholder="למשל 20" min="1" max="90" style="flex:1;">
+                        <button class="btn-edit" style="white-space:nowrap;padding:0 14px;" onclick="bfApplyPercent()">החל % על כולם</button>
+                    </div>
+                </div>
+                <h3 class="gold font-bold mb-2" style="font-size:14px;">מוצרים במבצע <span id="bf-count" style="color:#888;font-weight:400;"></span></h3>
+                <div id="bf-current"><div class="text-center text-gray-500 py-8">טוען...</div></div>
+                <button class="btn-gold" onclick="bfSave()" style="margin-top:12px;">שמור שינויים באתר</button>
+                <div id="bf-status" style="display:none;"></div>
+            </div>
+            <h3 class="gold font-bold mb-3">הוסף מוצרים למבצע</h3>
+            <input type="text" id="bf-search" placeholder="חפש בושם..." oninput="renderBlackFridayAdmin()" style="margin-bottom:14px;">
+            <div id="bf-all"></div>
         </div>
     </div>
 
@@ -257,11 +290,14 @@ function switchTab(tab) {
     document.getElementById('panel-brands').style.display = tab === 'brands' ? 'block' : 'none';
     document.getElementById('panel-bestsellers').style.display = tab === 'bestsellers' ? 'block' : 'none';
     document.getElementById('panel-sections').style.display = tab === 'sections' ? 'block' : 'none';
+    document.getElementById('panel-blackfriday').style.display = tab === 'blackfriday' ? 'block' : 'none';
     document.getElementById('tab-add').className = 'tab' + (tab === 'add' ? ' active' : '');
     document.getElementById('tab-list').className = 'tab' + (tab === 'list' ? ' active' : '');
     document.getElementById('tab-brands').className = 'tab' + (tab === 'brands' ? ' active' : '');
     document.getElementById('tab-bestsellers').className = 'tab' + (tab === 'bestsellers' ? ' active' : '');
     document.getElementById('tab-sections').className = 'tab' + (tab === 'sections' ? ' active' : '');
+    document.getElementById('tab-blackfriday').className = 'tab' + (tab === 'blackfriday' ? ' active' : '');
+    if (tab === 'blackfriday') loadBlackFriday();
     if (tab === 'sections') loadSections();
     if (tab === 'list') loadPerfumes();
     if (tab === 'brands') loadBrands();
@@ -605,9 +641,141 @@ function secSave() {
     showStatus('sec-status', '🕐 השינוי נשמר לרשימת ההמתנה. לחצו \'🚀 פרסם הכל\' למטה כדי להעלות הכל יחד.', 'success');
 }
 
+// ===== Black Friday =====
+const BF_RE = /const blackFriday = .*;$/m;
+const BF_MAX = 24;
+let bfItems = [];   // [{ id, price }]
+let bfLoaded = false;
+
+function bfParse(html) {
+    const m = html.match(/const blackFriday = (.*);$/m);
+    if (!m) return null;
+    try { return JSON.parse(m[1]); } catch (e) { return null; }
+}
+
+function bfDefaultPrice(p) {
+    return p.salePrice || Math.round(p.price * 0.8);
+}
+
+async function loadBlackFriday() {
+    const box = document.getElementById('bf-current');
+    box.innerHTML = '<div class="text-center text-gray-500 py-8">טוען...</div>';
+    document.getElementById('bf-status').style.display = 'none';
+    try {
+        const html = await getFile();
+        allPerfumes = parsePerfumes(html);
+        // prefer an unpublished queued version so the owner keeps editing it
+        const cfg = queue.blackFriday || bfParse(html);
+        if (!cfg) {
+            box.innerHTML = '<div class="text-center text-red-400 py-8">הגדרות בלאק פריידי לא נמצאו ב-index.html — יש להעלות קודם את הגרסה החדשה של האתר</div>';
+            document.getElementById('bf-all').innerHTML = '';
+            return;
+        }
+        document.getElementById('bf-enabled').checked = !!cfg.enabled;
+        document.getElementById('bf-title-in').value = cfg.title || '';
+        document.getElementById('bf-subtitle-in').value = cfg.subtitle || '';
+        document.getElementById('bf-end').value = cfg.endDate || '';
+        bfItems = (cfg.items || []).filter(it => allPerfumes.some(p => p.id === it.id));
+        bfLoaded = true;
+        renderBlackFridayAdmin();
+    } catch (e) {
+        box.innerHTML = '<div class="text-center text-red-400 py-8">שגיאה: ' + e.message + '</div>';
+    }
+}
+
+function renderBlackFridayAdmin() {
+    if (!bfLoaded) return;
+    const cur = document.getElementById('bf-current');
+    document.getElementById('bf-count').textContent = '(' + bfItems.length + ')';
+    if (!bfItems.length) {
+        cur.innerHTML = '<div class="text-center text-gray-500 py-6">אין מוצרים במבצע — הוסיפו מלמטה 👇</div>';
+    } else {
+        cur.innerHTML = bfItems.map((it, i) => {
+            const p = allPerfumes.find(x => x.id === it.id);
+            if (!p) return '';
+            const pct = it.price > 0 && it.price < p.price ? Math.round((1 - it.price / p.price) * 100) : 0;
+            const warn = !(it.price > 0 && it.price < p.price);
+            const controls =
+                '<div style="display:flex;flex-direction:column;gap:4px;width:92px;flex-shrink:0;">' +
+                    '<input type="number" value="' + (it.price || '') + '" oninput="bfSetPrice(' + p.id + ', this.value)" style="padding:6px 8px;font-size:13px;' + (warn ? 'border-color:#f87171 !important;' : '') + '" placeholder="₪">' +
+                    '<span id="bf-pct-' + p.id + '" style="direction:ltr;font-size:11px;text-align:center;color:' + (warn ? '#f87171' : '#4ade80') + ';">' + (warn ? 'מחיר לא תקין' : '-' + pct + '%') + '</span>' +
+                '</div>' +
+                '<div style="display:flex;flex-direction:column;gap:4px;flex-shrink:0;">' +
+                    '<button class="btn-edit" ' + (i === 0 ? 'disabled style="opacity:.3;"' : '') + ' onclick="bfMove(' + p.id + ',-1)">▲</button>' +
+                    '<button class="btn-edit" ' + (i === bfItems.length - 1 ? 'disabled style="opacity:.3;"' : '') + ' onclick="bfMove(' + p.id + ',1)">▼</button>' +
+                '</div>' +
+                '<button class="btn-delete" onclick="bfRemove(' + p.id + ')">✕</button>';
+            return bsCard(p, controls);
+        }).join('');
+    }
+    const search = (document.getElementById('bf-search').value || '').toLowerCase();
+    const avail = allPerfumes.filter(p => !p.soldOut && !bfItems.some(it => it.id === p.id) &&
+        (p.name.toLowerCase().includes(search) || (p.brand || '').toLowerCase().includes(search)));
+    document.getElementById('bf-all').innerHTML = avail.length
+        ? avail.map(p => bsCard(p, '<button class="btn-edit" onclick="bfAdd(' + p.id + ')">➕ הוסף</button>')).join('')
+        : '<div class="text-center text-gray-500 py-8">לא נמצאו בשמים</div>';
+}
+
+function bfSetPrice(id, val) {
+    const it = bfItems.find(x => x.id === id);
+    const p = allPerfumes.find(x => x.id === id);
+    if (!it || !p) return;
+    it.price = parseInt(val) || 0;
+    const ok = it.price > 0 && it.price < p.price;
+    const el = document.getElementById('bf-pct-' + id);
+    if (el) { el.textContent = ok ? '-' + Math.round((1 - it.price / p.price) * 100) + '%' : 'מחיר לא תקין'; el.style.color = ok ? '#4ade80' : '#f87171'; }
+}
+
+function bfAdd(id) {
+    if (bfItems.length >= BF_MAX) { showStatus('bf-status', '⚠️ ניתן להוסיף עד ' + BF_MAX + ' מוצרים למבצע.', 'error'); return; }
+    const p = allPerfumes.find(x => x.id === id);
+    if (!p) return;
+    const pct = parseInt(document.getElementById('bf-percent').value);
+    const price = pct > 0 && pct < 100 ? Math.round(p.price * (1 - pct / 100)) : bfDefaultPrice(p);
+    bfItems.push({ id, price });
+    document.getElementById('bf-status').style.display = 'none';
+    renderBlackFridayAdmin();
+}
+
+function bfRemove(id) { bfItems = bfItems.filter(x => x.id !== id); renderBlackFridayAdmin(); }
+
+function bfMove(id, dir) {
+    const i = bfItems.findIndex(x => x.id === id), j = i + dir;
+    if (i < 0 || j < 0 || j >= bfItems.length) return;
+    [bfItems[i], bfItems[j]] = [bfItems[j], bfItems[i]];
+    renderBlackFridayAdmin();
+}
+
+function bfApplyPercent() {
+    const pct = parseInt(document.getElementById('bf-percent').value);
+    if (!(pct > 0 && pct < 100)) { showStatus('bf-status', '⚠️ הכניסו אחוז בין 1 ל-99', 'error'); return; }
+    bfItems.forEach(it => { const p = allPerfumes.find(x => x.id === it.id); if (p) it.price = Math.round(p.price * (1 - pct / 100)); });
+    document.getElementById('bf-status').style.display = 'none';
+    renderBlackFridayAdmin();
+}
+
+function bfSave() {
+    const bad = bfItems.filter(it => { const p = allPerfumes.find(x => x.id === it.id); return !p || !(it.price > 0 && it.price < p.price); });
+    if (bad.length) { showStatus('bf-status', '⚠️ יש מוצרים עם מחיר מבצע לא תקין (חייב להיות נמוך מהמחיר הרגיל). תקנו אותם לפני שמירה.', 'error'); return; }
+    const enabled = document.getElementById('bf-enabled').checked;
+    if (enabled && !bfItems.length) { showStatus('bf-status', '⚠️ הוסיפו לפחות מוצר אחד למבצע.', 'error'); return; }
+    const endDate = document.getElementById('bf-end').value || '';
+    if (enabled && endDate && new Date(endDate).getTime() <= Date.now()) { showStatus('bf-status', '⚠️ תאריך הסיום כבר עבר.', 'error'); return; }
+    queue.blackFriday = {
+        enabled,
+        title: document.getElementById('bf-title-in').value.trim() || 'BLACK FRIDAY',
+        subtitle: document.getElementById('bf-subtitle-in').value.trim(),
+        endDate,
+        items: bfItems.map(it => ({ id: it.id, price: it.price }))
+    };
+    saveQueue();
+    updateQueueUI();
+    showStatus('bf-status', '🕐 השינוי נשמר לרשימת ההמתנה. לחצו \'🚀 פרסם הכל\' למטה כדי להעלות הכל יחד.', 'success');
+}
+
 // ===== BATCH QUEUE (one commit for everything) =====
 function emptyQueue() {
-    return { perfumes: [], brands: [], edits: [], deletes: [], brandDeletes: [], bestSellers: null, sections: null, images: [] };
+    return { perfumes: [], brands: [], edits: [], deletes: [], brandDeletes: [], bestSellers: null, sections: null, blackFriday: null, images: [] };
 }
 let queue = emptyQueue();
 try {
@@ -622,7 +790,7 @@ try {
 function queueCount() {
     return queue.perfumes.length + queue.brands.length + queue.edits.length +
            queue.deletes.length + queue.brandDeletes.length +
-           (queue.bestSellers ? 1 : 0) + (queue.sections ? 1 : 0);
+           (queue.bestSellers ? 1 : 0) + (queue.sections ? 1 : 0) + (queue.blackFriday ? 1 : 0);
 }
 
 function saveQueue() { localStorage.setItem('lionAdminQueue', JSON.stringify(queue)); }
@@ -641,6 +809,7 @@ function updateQueueUI() {
     if (queue.brandDeletes.length) parts.push(queue.brandDeletes.length + ' מחיקת מותג');
     if (queue.bestSellers) parts.push('נמכרים ביותר');
     if (queue.sections) parts.push('מדורים');
+    if (queue.blackFriday) parts.push('בלאק פריידי');
     document.getElementById('queue-summary').textContent = '🕐 ממתינים לפרסום: ' + parts.join(' + ');
 }
 
@@ -676,6 +845,7 @@ function renderQueueList() {
     });
     if (queue.bestSellers) h += queueRow('👑', 'הנמכרים ביותר עודכנו', queue.bestSellers.length + ' מוצרים', 'bestSellers', 0, '#D4AF37');
     if (queue.sections) h += queueRow('🗂️', 'מדורים עודכנו', 'חדש/חזרו למלאי/מומלצים', 'sections', 0, '#D4AF37');
+    if (queue.blackFriday) h += queueRow('🖤', 'בלאק פריידי עודכן', (queue.blackFriday.enabled ? 'פעיל' : 'כבוי') + ' · ' + queue.blackFriday.items.length + ' מוצרים', 'blackFriday', 0, '#D4AF37');
     el.innerHTML = h || '<div class="text-center text-gray-500 py-6">הרשימה ריקה</div>';
 }
 
@@ -687,6 +857,7 @@ function removeQueued(type, i) {
     else if (type === 'brandDelete') queue.brandDeletes.splice(i, 1);
     else if (type === 'bestSellers') queue.bestSellers = null;
     else if (type === 'sections') queue.sections = null;
+    else if (type === 'blackFriday') queue.blackFriday = null;
     saveQueue();
     updateQueueUI();
     renderQueueList();
@@ -768,6 +939,12 @@ function applyQueueToHtml(html, ids) {
         });
     }
 
+    // 8) Black Friday (both index.html and product.html)
+    if (queue.blackFriday && BF_RE.test(c)) {
+        const line = 'const blackFriday = ' + JSON.stringify(queue.blackFriday).replace(/</g, '\\u003c') + ';';
+        c = c.replace(BF_RE, () => line);
+    }
+
     return c;
 }
 
@@ -827,6 +1004,7 @@ async function publishAll() {
         if (queue.brandDeletes.length) bits.push(queue.brandDeletes.length + ' brand-del');
         if (queue.bestSellers) bits.push('bestsellers');
         if (queue.sections) bits.push('sections');
+        if (queue.blackFriday) bits.push('black-friday');
         const msg = 'Batch update: ' + bits.join(', ');
         try {
             await commitBothFiles(newIndex, newProd, msg);

@@ -58,6 +58,7 @@
                 <button onclick="openMenu()" aria-label="תפריט" class="lx-icon-btn"><span class="lx-burger"><i></i><i></i></span></button>
                 <button onclick="lxShowAll()" class="lx-link lx-hide-sm">כל הבשמים</button>
                 <button onclick="menuGo('perfume-quiz')" class="lx-link lx-hide-sm">מצא את הבושם שלך</button>
+                <button onclick="menuGo('black-friday')" class="lx-link lx-link--bf" data-bf-link style="display:none;">🔥 Black Friday</button>
             </div>
             <a href="/" class="lx-logo" aria-label="Lion Perfumes">
                 <span class="lx-logo__main lx-metal">LION</span>
@@ -104,6 +105,28 @@
             <path d="M0,18 C380,18 520,78 720,78 C920,78 1060,18 1440,18" fill="none" stroke="#C9A04A" stroke-width="1.4" vector-effect="non-scaling-stroke"/>
             <path d="M0,46 C400,46 560,88 720,88 C880,88 1040,46 1440,46" fill="none" stroke="#C8621F" stroke-opacity=".45" stroke-width="1" vector-effect="non-scaling-stroke"/>
         </svg>
+    </section>
+
+    <!-- Black Friday (managed from admin panel) -->
+    <section id="black-friday" class="lx-bf" style="display:none;">
+        <div class="lx-bf__inner">
+            <div class="lx-bf__head">
+                <div class="lx-bf__titles">
+                    <p class="lx-bf__kicker">LIMITED TIME · מבצע לזמן מוגבל</p>
+                    <h2 class="lx-bf__title" id="bf-title">BLACK FRIDAY</h2>
+                    <p class="lx-bf__sub" id="bf-subtitle"></p>
+                </div>
+                <div class="lx-bf__timer" id="bf-timer" style="display:none;" aria-label="זמן שנותר למבצע">
+                    <div><b id="bf-d">0</b><span>ימים</span></div>
+                    <div><b id="bf-h">00</b><span>שעות</span></div>
+                    <div><b id="bf-m">00</b><span>דקות</span></div>
+                    <div><b id="bf-s">00</b><span>שניות</span></div>
+                </div>
+            </div>
+            <div id="black-friday-track" class="lx-rail lx-bf__rail">
+                <!-- rendered by JS -->
+            </div>
+        </div>
     </section>
 
     <!-- Brand Marquee -->
@@ -341,6 +364,7 @@
                     <span>הצג את כל הבשמים</span>
                 </button>
                 <div class="h-px bg-gold-400/15 my-2"></div>
+                <button onclick="menuGo('black-friday')" class="menu-item" data-bf-link style="display:none;"><span>🔥 Black Friday</span></button>
                 <button onclick="menuGo('sec-new-arrivals')" class="menu-item">
                     <i data-lucide="sparkles" class="w-5 h-5 text-gold-400"></i>
                     <span>חדש באתר</span>
@@ -485,6 +509,7 @@
                         (p.size ? '<span class="lx-chip">' + p.size + '</span>' : '') +
                     '</div>' +
                     (o.rank ? '<span class="lx-rank">N°' + o.rank + '</span>' : '') +
+                    (p.bf ? '<span class="lx-bf-tag">-' + Math.round((1 - p.salePrice / p.price) * 100) + '%</span>' : '') +
                     (p.soldOut ? '<span class="lx-soldout">אזל מהמלאי</span>'
                                : '<button type="button" class="lx-quick" aria-label="הוסף לעגלה" onclick="event.preventDefault();event.stopPropagation();addToCart(' + p.id + ')"><i data-lucide="plus"></i></button>') +
                     (multi ? '<button type="button" class="lx-nav lx-nav--prev" aria-label="תמונה קודמת" onclick="prevCardImage(event, ' + p.id + ')"><i data-lucide="chevron-left"></i></button>' +
@@ -2952,6 +2977,21 @@
             },
         ];
 
+        // ===== Black Friday (ניתן לנהל מפאנל הניהול — לשונית 🖤 בלאק פריידי) =====
+        const blackFriday = {"enabled":false,"title":"BLACK FRIDAY","subtitle":"הנחות ענק לזמן מוגבל","endDate":"","items":[]};
+        const bfActive = (function () {
+            if (!blackFriday.enabled || !Array.isArray(blackFriday.items) || !blackFriday.items.length) return false;
+            if (blackFriday.endDate && new Date(blackFriday.endDate).getTime() <= Date.now()) return false;
+            return true;
+        })();
+        if (bfActive) {
+            blackFriday.items.forEach(function (it) {
+                var p = perfumes.find(function (x) { return x.id === it.id; });
+                if (p && it.price > 0 && it.price < p.price) { p.salePrice = it.price; p.bf = true; }
+            });
+        }
+
+
         const brands = ["הכל", "BUJAIRAMI SYDNEY", "Shams", "KHADLAJ", "Riffs", "ASSAF", "Rayhaan", "Afnan", "Zimaya", "French Avenue", "Lattafa", "Rasasi", "Ibraq", "laverne", "Gulf Orchid", "Volare", "Reef", "Lavender", "Al Ezz", "Maison Asrar", "Maison Alhambra", "Fragrance World", "ARMAF"];
         
         let cart = [];
@@ -3623,6 +3663,15 @@
                 }
             }
             
+            // keep cart prices in sync with the live catalog (sales / Black Friday)
+            cart = (Array.isArray(cart) ? cart : []).map(function (item) {
+                var p = perfumes.find(function (x) { return x.id === item.id; });
+                if (!p) return item;
+                var n = Object.assign({}, item, { price: p.price });
+                if (p.salePrice) n.salePrice = p.salePrice; else delete n.salePrice;
+                return n;
+            });
+
             if (savedPayMore && savedPayMore !== 'null') {
                 payMoreAmount = parseFloat(savedPayMore) || 0;
                 document.getElementById('pay-more-input').value = payMoreAmount > 0 ? payMoreAmount : '';
@@ -3667,6 +3716,37 @@
                 .filter(p => p && !p.soldOut);
             if (!items.length) { document.getElementById('best-sellers').style.display = 'none'; return; }
             track.innerHTML = items.map((p, i) => lxCard(p, { rail: true, rank: i + 1 })).join('');
+        })();
+
+        // ===== Black Friday section =====
+        (function renderBlackFriday() {
+            const wrap = document.getElementById('black-friday');
+            const track = document.getElementById('black-friday-track');
+            if (!wrap || !track || !bfActive) return;
+            const items = blackFriday.items
+                .map(it => perfumes.find(p => p.id === it.id))
+                .filter(p => p && p.bf && !p.soldOut);
+            if (!items.length) return;
+            document.getElementById('bf-title').textContent = blackFriday.title || 'BLACK FRIDAY';
+            document.getElementById('bf-subtitle').textContent = blackFriday.subtitle || '';
+            track.innerHTML = items.map(p => lxCard(p, { rail: true })).join('');
+            wrap.style.display = '';
+            document.querySelectorAll('[data-bf-link]').forEach(el => el.style.display = '');
+
+            if (!blackFriday.endDate) return;
+            const end = new Date(blackFriday.endDate).getTime();
+            const pad = n => String(n).padStart(2, '0');
+            document.getElementById('bf-timer').style.display = '';
+            (function tick() {
+                const left = end - Date.now();
+                if (left <= 0) { location.reload(); return; }
+                const s = Math.floor(left / 1000);
+                document.getElementById('bf-d').textContent = Math.floor(s / 86400);
+                document.getElementById('bf-h').textContent = pad(Math.floor(s % 86400 / 3600));
+                document.getElementById('bf-m').textContent = pad(Math.floor(s % 3600 / 60));
+                document.getElementById('bf-s').textContent = pad(s % 60);
+                setTimeout(tick, 1000);
+            })();
         })();
 
         // ===== Curated product sections (ניתן לנהל מפאנל הניהול) =====

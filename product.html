@@ -2272,6 +2272,21 @@
             },
         ];
 
+        // ===== Black Friday (ניתן לנהל מפאנל הניהול — לשונית 🖤 בלאק פריידי) =====
+        const blackFriday = {"enabled":false,"title":"BLACK FRIDAY","subtitle":"הנחות ענק לזמן מוגבל","endDate":"","items":[]};
+        const bfActive = (function () {
+            if (!blackFriday.enabled || !Array.isArray(blackFriday.items) || !blackFriday.items.length) return false;
+            if (blackFriday.endDate && new Date(blackFriday.endDate).getTime() <= Date.now()) return false;
+            return true;
+        })();
+        if (bfActive) {
+            blackFriday.items.forEach(function (it) {
+                var p = perfumes.find(function (x) { return x.id === it.id; });
+                if (p && it.price > 0 && it.price < p.price) { p.salePrice = it.price; p.bf = true; }
+            });
+        }
+
+
         let cart = [];
         let payMoreAmount = 0;
         let currentProduct = null;
@@ -2373,7 +2388,7 @@
                         </div>
                         <h1 class="font-serif text-4xl md:text-5xl font-bold text-white mb-4">${currentProduct.name}</h1>
                         <div class="flex items-center gap-4 mb-6">
-                            ${currentProduct.salePrice ? `<span class="text-3xl font-bold text-gold-400">₪${currentProduct.salePrice}</span><span class="text-xl text-red-500 line-through mr-3">₪${currentProduct.price}</span>` : `<span class="text-3xl font-bold text-gold-400">₪${currentProduct.price}</span>`}
+                            ${currentProduct.bf ? `<div class="lx-bf-label">🔥 ${blackFriday.title || 'BLACK FRIDAY'}</div>` : ''}${currentProduct.salePrice ? `<span class="text-3xl font-bold text-gold-400">₪${currentProduct.salePrice}</span><span class="text-xl text-red-500 line-through mr-3">₪${currentProduct.price}</span>` : `<span class="text-3xl font-bold text-gold-400">₪${currentProduct.price}</span>`}
                             <span class="bg-gold-400/20 text-gold-400 px-3 py-1 rounded-full text-sm border border-gold-400/30">${currentProduct.size}</span>
                         </div>
                     </div>
@@ -2681,6 +2696,15 @@
                 }
             }
             
+            // keep cart prices in sync with the live catalog (sales / Black Friday)
+            cart = (Array.isArray(cart) ? cart : []).map(function (item) {
+                var p = perfumes.find(function (x) { return x.id === item.id; });
+                if (!p) return item;
+                var n = Object.assign({}, item, { price: p.price });
+                if (p.salePrice) n.salePrice = p.salePrice; else delete n.salePrice;
+                return n;
+            });
+
             if (savedPayMore && savedPayMore !== 'null') {
                 payMoreAmount = parseFloat(savedPayMore) || 0;
                 document.getElementById('pay-more-input').value = payMoreAmount > 0 ? payMoreAmount : '';
