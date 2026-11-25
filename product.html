@@ -2275,7 +2275,8 @@
         // ===== Black Friday (ניתן לנהל מפאנל הניהול — לשונית 🖤 בלאק פריידי) =====
         const blackFriday = {"enabled":false,"title":"BLACK FRIDAY","subtitle":"הנחות ענק לזמן מוגבל","endDate":"","items":[]};
         const bfActive = (function () {
-            if (!blackFriday.enabled || !Array.isArray(blackFriday.items) || !blackFriday.items.length) return false;
+            if (!blackFriday.enabled) return false;
+            if (!(blackFriday.items || []).length && !(blackFriday.bundles || []).length) return false;
             if (blackFriday.endDate && new Date(blackFriday.endDate).getTime() <= Date.now()) return false;
             return true;
         })();
@@ -2284,6 +2285,17 @@
                 var p = perfumes.find(function (x) { return x.id === it.id; });
                 if (p && it.price > 0 && it.price < p.price) { p.salePrice = it.price; p.bf = true; }
             });
+        }
+        // Black Friday bundles — exist ONLY while the sale is on, never in the regular catalog
+        const bfBundles = (bfActive && Array.isArray(blackFriday.bundles) ? blackFriday.bundles : []).map(function (b) {
+            var disc = b.oldPrice > b.price;
+            return { id: b.id, name: b.name, brand: 'BLACK FRIDAY BUNDLE', price: disc ? b.oldPrice : b.price,
+                     salePrice: disc ? b.price : 0, bf: disc, bundle: true, season: '', gender: 'unisex',
+                     size: b.size || '', images: (b.images && b.images.length) ? b.images : ['images/site/hero.webp'],
+                     description: b.description || '' };
+        });
+        function lxFindProduct(id) {
+            return perfumes.find(function (p) { return p.id === id; }) || bfBundles.find(function (p) { return p.id === id; });
         }
 
 
@@ -2303,7 +2315,7 @@
             const urlParams = new URLSearchParams(window.location.search);
             const productId = parseInt(urlParams.get('id'));
             
-            currentProduct = perfumes.find(p => p.id === productId);
+            currentProduct = lxFindProduct(productId);
             
             if (!currentProduct) {
                 document.getElementById('product-content').innerHTML = `
@@ -2515,7 +2527,7 @@
 
         // Cart Functions (same as index.html)
         function addToCart(id) {
-            const perfume = perfumes.find(p => p.id === id);
+            const perfume = lxFindProduct(id);
             const existing = cart.find(item => item.id === id);
             
             if (existing) {
@@ -2698,12 +2710,12 @@
             
             // keep cart prices in sync with the live catalog (sales / Black Friday)
             cart = (Array.isArray(cart) ? cart : []).map(function (item) {
-                var p = perfumes.find(function (x) { return x.id === item.id; });
-                if (!p) return item;
+                var p = lxFindProduct(item.id);
+                if (!p) return item.bundle ? null : item;   // sale ended → drop the bundle
                 var n = Object.assign({}, item, { price: p.price });
                 if (p.salePrice) n.salePrice = p.salePrice; else delete n.salePrice;
                 return n;
-            });
+            }).filter(Boolean);
 
             if (savedPayMore && savedPayMore !== 'null') {
                 payMoreAmount = parseFloat(savedPayMore) || 0;

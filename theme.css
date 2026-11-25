@@ -510,3 +510,4 @@ select option { background: #fff; color: var(--ink); }
   .lx-bf__timer b { font-size: 20px; }
 }
 @media (max-width: 767px) { .lx-link--bf { display: none !important; } }
+.lx-bf-bundle { position: absolute; z-index: 3; top: 76px; right: 12px; font-size: 12px; font-weight: 700; color: #0d0b0a; background: var(--metal); padding: 3px 10px; border-radius: 99px; }

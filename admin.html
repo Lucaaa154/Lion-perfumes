@@ -184,6 +184,38 @@
                 </div>
                 <h3 class="gold font-bold mb-2" style="font-size:14px;">מוצרים במבצע <span id="bf-count" style="color:#888;font-weight:400;"></span></h3>
                 <div id="bf-current"><div class="text-center text-gray-500 py-8">טוען...</div></div>
+
+                <div class="mt-5 p-4 rounded-xl" style="background:#111;border:1px solid #D4AF37;">
+                    <h3 class="gold font-bold mb-1" style="font-size:15px;">🎁 חבילות בלעדיות לבלאק פריידי <span id="bundle-count" style="color:#888;font-weight:400;"></span></h3>
+                    <p class="text-gray-500 text-xs mb-3">מוצר שקיים רק בזמן המבצע (למשל 3 בשמים במחיר אחד). מופיע ראשון במדור, נכנס לעגלה כמו כל מוצר, ונעלם אוטומטית כשהמבצע נגמר. הוא לא מופיע בקטלוג הרגיל.</p>
+                    <div id="bundle-list" class="mb-3"></div>
+                    <div id="bundle-form" style="border-top:1px solid #2a2a2a;padding-top:12px;">
+                        <div class="gold font-bold mb-2" style="font-size:13px;" id="bundle-form-title">➕ חבילה חדשה</div>
+                        <div class="mb-3"><label>שם החבילה *</label><input type="text" id="bundle-name" placeholder="3 בשמים ב-299₪"></div>
+                        <div class="mb-3">
+                            <label>בשמים בחבילה</label>
+                            <div id="bundle-includes" class="flex flex-wrap gap-2 mb-2"></div>
+                            <input type="text" id="bundle-inc-search" placeholder="חפש בושם להוספה לחבילה..." oninput="renderBundleIncSearch()">
+                            <div id="bundle-inc-results" class="mt-2"></div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3 mb-3">
+                            <div><label>מחיר החבילה (₪) *</label><input type="number" id="bundle-price" placeholder="299"></div>
+                            <div><label>מחיר לפני הנחה (₪)</label><input type="number" id="bundle-oldprice" placeholder="אוטומטי" oninput="bundleOldAuto=false"></div>
+                        </div>
+                        <div class="mb-3"><label>גודל / כמות</label><input type="text" id="bundle-size" placeholder="אוטומטי: 3 בשמים"></div>
+                        <div class="mb-3">
+                            <label>תמונות <span style="color:#666;font-weight:400;">(בלי תמונה = התמונות של הבשמים בחבילה)</span></label>
+                            <div class="upload-area mb-2" onclick="document.getElementById('bundle-img-upload').click()">
+                                <input type="file" id="bundle-img-upload" accept="image/*" multiple style="display:none" onchange="bundleUpload(event)">
+                                <p class="text-gray-400 text-sm">📷 העלה תמונה של החבילה</p>
+                            </div>
+                            <div id="bundle-img-previews" class="flex flex-wrap gap-2"></div>
+                        </div>
+                        <div class="mb-3"><label>תיאור <span style="color:#666;font-weight:400;">(ריק = רשימת הבשמים בחבילה)</span></label><textarea id="bundle-desc" rows="3"></textarea></div>
+                        <button class="btn-edit" style="width:100%;padding:10px;font-size:14px;" onclick="bundleSubmit()" id="bundle-submit">➕ הוסף חבילה</button>
+                        <button class="btn-secondary" style="padding:8px;font-size:13px;display:none;" id="bundle-cancel" onclick="bundleReset()">ביטול עריכה</button>
+                    </div>
+                </div>
                 <button class="btn-gold" onclick="bfSave()" style="margin-top:12px;">שמור שינויים באתר</button>
                 <div id="bf-status" style="display:none;"></div>
             </div>
@@ -676,8 +708,11 @@ async function loadBlackFriday() {
         document.getElementById('bf-subtitle-in').value = cfg.subtitle || '';
         document.getElementById('bf-end').value = cfg.endDate || '';
         bfItems = (cfg.items || []).filter(it => allPerfumes.some(p => p.id === it.id));
+        bfBundleList = Array.isArray(cfg.bundles) ? cfg.bundles : [];
         bfLoaded = true;
         renderBlackFridayAdmin();
+        bundleReset();
+        renderBundlesAdmin();
     } catch (e) {
         box.innerHTML = '<div class="text-center text-red-400 py-8">שגיאה: ' + e.message + '</div>';
     }
@@ -754,11 +789,153 @@ function bfApplyPercent() {
     renderBlackFridayAdmin();
 }
 
+// ----- Black Friday bundles (products that exist only during the sale) -----
+let bfBundleList = [];       // saved bundles: { id, name, price, oldPrice, size, images, description, includes }
+let bundleEditId = null;
+let bundleIncludes = [];
+let bundleImages = [];
+let bundleOldAuto = true;
+
+function bfImgSrc(path) {
+    const q = (queue.images || []).find(im => im.path === path);
+    return q ? 'data:image/' + (path.endsWith('.jpg') ? 'jpeg' : 'webp') + ';base64,' + q.data : path;
+}
+function escHtml(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); }
+
+function renderBundlesAdmin() {
+    document.getElementById('bundle-count').textContent = '(' + bfBundleList.length + ')';
+    document.getElementById('bundle-list').innerHTML = bfBundleList.map(b =>
+        '<div class="perfume-card">' +
+            '<img src="' + bfImgSrc((b.images || [])[0] || '') + '" onerror="this.style.display=\'none\'">' +
+            '<div style="flex:1;min-width:0;"><div style="font-weight:700;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">🎁 ' + escHtml(b.name) + '</div>' +
+            '<div style="color:#D4AF37;font-size:12px;">₪' + b.price + (b.oldPrice > b.price ? ' <s style="color:#888;">₪' + b.oldPrice + '</s>' : '') + ' · ' + (b.includes || []).length + ' בשמים</div></div>' +
+            '<button class="btn-edit" onclick="bundleEdit(' + b.id + ')">✏️</button>' +
+            '<button class="btn-delete" onclick="bundleDelete(' + b.id + ')">✕</button>' +
+        '</div>').join('');
+    renderBundleForm();
+}
+
+function bundleSuggestedOld() {
+    return bundleIncludes.reduce((s, id) => { const p = allPerfumes.find(x => x.id === id); return s + (p ? p.price : 0); }, 0);
+}
+
+function renderBundleForm() {
+    document.getElementById('bundle-includes').innerHTML = bundleIncludes.map(id => {
+        const p = allPerfumes.find(x => x.id === id);
+        return '<span style="background:#1a1a1a;border:1px solid #D4AF37;border-radius:99px;padding:4px 10px;font-size:12px;display:inline-flex;gap:6px;align-items:center;">' +
+            escHtml(p ? p.name : '#' + id) + ' <button onclick="bundleRemoveInclude(' + id + ')" style="background:none;border:none;color:#f87171;cursor:pointer;">✕</button></span>';
+    }).join('') || '<span style="color:#666;font-size:12px;">עוד לא נבחרו בשמים</span>';
+    if (bundleOldAuto) document.getElementById('bundle-oldprice').value = bundleIncludes.length ? bundleSuggestedOld() : '';
+    document.getElementById('bundle-size').placeholder = bundleIncludes.length ? 'אוטומטי: ' + bundleIncludes.length + ' בשמים' : 'למשל 3 × 100ml';
+    document.getElementById('bundle-img-previews').innerHTML = bundleImages.map((path, i) =>
+        '<div style="position:relative;"><img src="' + bfImgSrc(path) + '" style="width:60px;height:60px;object-fit:cover;border-radius:8px;border:1px solid #D4AF37;">' +
+        '<button onclick="bundleImages.splice(' + i + ',1);renderBundleForm()" style="position:absolute;top:-6px;left:-6px;background:#2a0f0f;color:#f87171;border:1px solid #6a2a2a;border-radius:50%;width:20px;height:20px;font-size:11px;cursor:pointer;">✕</button></div>').join('');
+    renderBundleIncSearch();
+}
+
+function renderBundleIncSearch() {
+    const q = (document.getElementById('bundle-inc-search').value || '').toLowerCase().trim();
+    const box = document.getElementById('bundle-inc-results');
+    if (!q) { box.innerHTML = ''; return; }
+    const res = allPerfumes.filter(p => !bundleIncludes.includes(p.id) &&
+        (p.name.toLowerCase().includes(q) || (p.brand || '').toLowerCase().includes(q))).slice(0, 6);
+    box.innerHTML = res.length ? res.map(p => bsCard(p, '<button class="btn-edit" onclick="bundleAddInclude(' + p.id + ')">➕</button>')).join('')
+                               : '<div class="text-gray-500 text-sm py-2">לא נמצאו בשמים</div>';
+}
+
+function bundleAddInclude(id) {
+    bundleIncludes.push(id);
+    document.getElementById('bundle-inc-search').value = '';
+    renderBundleForm();
+}
+function bundleRemoveInclude(id) { bundleIncludes = bundleIncludes.filter(x => x !== id); renderBundleForm(); }
+
+async function bundleUpload(event) {
+    const files = Array.from(event.target.files);
+    event.target.value = '';
+    const name = document.getElementById('bundle-name').value || 'bundle';
+    showStatus('bf-status', '⏳ מעלה תמונה...', 'loading');
+    try {
+        for (const file of files) {
+            const dataUrl = await readAsDataURL(file);
+            bundleImages.push(await uploadImage(dataUrl.split(',')[1], 'bundle-' + name, 'products'));
+        }
+        document.getElementById('bf-status').style.display = 'none';
+    } catch (e) { showStatus('bf-status', '❌ העלאת התמונה נכשלה: ' + e.message, 'error'); }
+    renderBundleForm();
+}
+
+function bundleReset() {
+    bundleEditId = null; bundleIncludes = []; bundleImages = []; bundleOldAuto = true;
+    ['bundle-name', 'bundle-price', 'bundle-oldprice', 'bundle-size', 'bundle-desc', 'bundle-inc-search'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('bundle-form-title').textContent = '➕ חבילה חדשה';
+    document.getElementById('bundle-submit').textContent = '➕ הוסף חבילה';
+    document.getElementById('bundle-cancel').style.display = 'none';
+    renderBundleForm();
+}
+
+function bundleEdit(id) {
+    const b = bfBundleList.find(x => x.id === id);
+    if (!b) return;
+    bundleEditId = id;
+    bundleIncludes = [...(b.includes || [])];
+    // keep only photos the owner uploaded (not the auto ones taken from the perfumes)
+    const auto = bundleIncludes.map(i => { const p = allPerfumes.find(x => x.id === i); return p && p.images[0]; });
+    bundleImages = (b.images || []).filter(im => !auto.includes(im));
+    bundleOldAuto = false;
+    document.getElementById('bundle-name').value = b.name || '';
+    document.getElementById('bundle-price').value = b.price || '';
+    document.getElementById('bundle-oldprice').value = b.oldPrice || '';
+    document.getElementById('bundle-size').value = b.autoSize ? '' : (b.size || '');
+    document.getElementById('bundle-desc').value = b.autoDesc ? '' : (b.description || '');
+    document.getElementById('bundle-form-title').textContent = '✏️ עריכת חבילה';
+    document.getElementById('bundle-submit').textContent = '💾 עדכן חבילה';
+    document.getElementById('bundle-cancel').style.display = 'block';
+    renderBundleForm();
+    document.getElementById('bundle-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function bundleDelete(id) {
+    if (!confirm('למחוק את החבילה?')) return;
+    bfBundleList = bfBundleList.filter(x => x.id !== id);
+    if (bundleEditId === id) bundleReset(); else renderBundlesAdmin();
+}
+
+function bundleSubmit() {
+    const name = document.getElementById('bundle-name').value.trim();
+    const price = parseInt(document.getElementById('bundle-price').value) || 0;
+    const oldPrice = parseInt(document.getElementById('bundle-oldprice').value) || 0;
+    if (!name) { showStatus('bf-status', '⚠️ חסר שם לחבילה', 'error'); return; }
+    if (!(price > 0)) { showStatus('bf-status', '⚠️ חסר מחיר לחבילה', 'error'); return; }
+    if (oldPrice && oldPrice <= price) { showStatus('bf-status', '⚠️ "מחיר לפני הנחה" חייב להיות גבוה ממחיר החבילה (או השאירו ריק)', 'error'); return; }
+    const inc = bundleIncludes.map(id => allPerfumes.find(x => x.id === id)).filter(Boolean);
+    let images = [...bundleImages];
+    if (!images.length) images = inc.map(p => p.images[0]).filter(Boolean);
+    if (!images.length) { showStatus('bf-status', '⚠️ העלו תמונה או בחרו בשמים לחבילה', 'error'); return; }
+    const sizeIn = document.getElementById('bundle-size').value.trim();
+    const descIn = document.getElementById('bundle-desc').value.trim();
+    const autoDesc = !descIn && inc.length > 0;
+    const description = descIn || (inc.length ? 'החבילה כוללת:\n' + inc.map(p => '• ' + p.name + (p.brand ? ' (' + p.brand + ')' : '') + (p.size ? ' — ' + p.size : '')).join('\n') : '');
+    const b = {
+        id: bundleEditId || Math.max(90000, ...bfBundleList.map(x => x.id)) + 1,
+        name, price, oldPrice: oldPrice || 0,
+        size: sizeIn || (inc.length ? inc.length + ' בשמים' : ''), autoSize: !sizeIn,
+        images, description, autoDesc,
+        includes: inc.map(p => p.id)
+    };
+    const i = bfBundleList.findIndex(x => x.id === b.id);
+    if (i > -1) bfBundleList[i] = b; else bfBundleList.push(b);
+    bundleReset();
+    renderBundlesAdmin();
+    showStatus('bf-status', '✅ החבילה ' + (i > -1 ? 'עודכנה' : 'נוספה') + '. לחצו "שמור שינויים באתר" ואז "🚀 פרסם הכל".', 'success');
+}
+
 function bfSave() {
     const bad = bfItems.filter(it => { const p = allPerfumes.find(x => x.id === it.id); return !p || !(it.price > 0 && it.price < p.price); });
     if (bad.length) { showStatus('bf-status', '⚠️ יש מוצרים עם מחיר מבצע לא תקין (חייב להיות נמוך מהמחיר הרגיל). תקנו אותם לפני שמירה.', 'error'); return; }
     const enabled = document.getElementById('bf-enabled').checked;
-    if (enabled && !bfItems.length) { showStatus('bf-status', '⚠️ הוסיפו לפחות מוצר אחד למבצע.', 'error'); return; }
+    if (enabled && !bfItems.length && !bfBundleList.length) { showStatus('bf-status', '⚠️ הוסיפו לפחות מוצר או חבילה אחת למבצע.', 'error'); return; }
+    if (bundleEditId || document.getElementById('bundle-name').value.trim()) { showStatus('bf-status', '⚠️ יש חבילה בטופס שעוד לא נוספה — לחצו "הוסף חבילה" / "עדכן חבילה" או "ביטול עריכה" קודם.', 'error'); return; }
     const endDate = document.getElementById('bf-end').value || '';
     if (enabled && endDate && new Date(endDate).getTime() <= Date.now()) { showStatus('bf-status', '⚠️ תאריך הסיום כבר עבר.', 'error'); return; }
     queue.blackFriday = {
@@ -766,7 +943,8 @@ function bfSave() {
         title: document.getElementById('bf-title-in').value.trim() || 'BLACK FRIDAY',
         subtitle: document.getElementById('bf-subtitle-in').value.trim(),
         endDate,
-        items: bfItems.map(it => ({ id: it.id, price: it.price }))
+        items: bfItems.map(it => ({ id: it.id, price: it.price })),
+        bundles: bfBundleList
     };
     saveQueue();
     updateQueueUI();
@@ -845,7 +1023,7 @@ function renderQueueList() {
     });
     if (queue.bestSellers) h += queueRow('👑', 'הנמכרים ביותר עודכנו', queue.bestSellers.length + ' מוצרים', 'bestSellers', 0, '#D4AF37');
     if (queue.sections) h += queueRow('🗂️', 'מדורים עודכנו', 'חדש/חזרו למלאי/מומלצים', 'sections', 0, '#D4AF37');
-    if (queue.blackFriday) h += queueRow('🖤', 'בלאק פריידי עודכן', (queue.blackFriday.enabled ? 'פעיל' : 'כבוי') + ' · ' + queue.blackFriday.items.length + ' מוצרים', 'blackFriday', 0, '#D4AF37');
+    if (queue.blackFriday) h += queueRow('🖤', 'בלאק פריידי עודכן', (queue.blackFriday.enabled ? 'פעיל' : 'כבוי') + ' · ' + queue.blackFriday.items.length + ' מוצרים' + ((queue.blackFriday.bundles || []).length ? ' · ' + queue.blackFriday.bundles.length + ' חבילות' : ''), 'blackFriday', 0, '#D4AF37');
     el.innerHTML = h || '<div class="text-center text-gray-500 py-6">הרשימה ריקה</div>';
 }
 
